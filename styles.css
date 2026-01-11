@@ -1,0 +1,1418 @@
+/* ========================================
+   RESET E BASE
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(180deg, #F5F5F7 0%, #E5E5E7 100%);
+    color: #1D1D1F;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+/* ========================================
+   CABEÇALHO
+   ======================================== */
+.header-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+}
+
+input[type="text"],
+select {
+    border: 1px solid #D1D1D6;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: white;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2386868B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+/* ========================================
+   ANÁLISE CARDS
+   ======================================== */
+.analysis-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.metric-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.metric-label {
+    font-size: 0.85em;
+    color: #1D1D1F;
+    font-weight: 500;
+    min-width: 140px;
+    flex-shrink: 0;
+}
+
+input[type="number"] {
+    border: 1px solid #D1D1D6;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: white;
+    font-size: 0.9em;
+    text-align: right;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    transition: all 0.2s;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* ========================================
+   STATUS BARS - INDICADOR ÚNICO
+   ======================================== */
+.status-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #E5E5E7;
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.status-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.indicator-muito-baixo { 
+    background: #FF3B30;
+    width: 20%;
+}
+
+.indicator-baixo { 
+    background: linear-gradient(90deg, #FF3B30 0%, #FF9500 100%);
+    width: 40%;
+}
+
+.indicator-medio { 
+    background: #FFCC00;
+    width: 60%;
+}
+
+.indicator-adequado { 
+    background: #34C759;
+    width: 80%;
+}
+
+.indicator-alto { 
+    background: #007AFF;
+    width: 100%;
+}
+
+/* ========================================
+   INTERFERENCE CHART (pH)
+   ======================================== */
+.interference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.nutrient-interference {
+    text-align: center;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #E5E5E7;
+}
+
+.nutrient-name {
+    font-size: 0.75em;
+    color: #86868B;
+    margin-bottom: 4px;
+}
+
+.interference-value {
+    font-size: 0.95em;
+    font-weight: 600;
+}
+
+.interference-positive { color: #34C759; }
+.interference-negative { color: #FF3B30; }
+.interference-neutral { color: #86868B; }
+
+/* ========================================
+   BOTÕES LADO A LADO
+   ======================================== */
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.recommend-btn {
+    background: #E5E5E7;
+    color: #86868B;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.95em;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.recommend-btn:hover {
+    background: #D1D1D6;
+}
+
+.recommend-btn:active {
+    background: #C7C7CC;
+}
+
+.recommend-btn::before {
+    content: '+';
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
+/* ========================================
+   MENU FLUTUANTE
+   ======================================== */
+.floating-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.12),
+        0 8px 32px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: none;
+    z-index: 1000;
+    animation: menuSlideUp 0.2s ease-out;
+}
+
+.floating-menu.active {
+    display: block;
+}
+
+@keyframes menuSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #E5E5E7;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95em;
+    color: #1D1D1F;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.menu-item:active {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.menu-item.selected {
+    background: rgba(0, 122, 255, 0.08);
+}
+
+.menu-item .checkmark {
+    width: 20px;
+    height: 20px;
+    color: #007AFF;
+    font-weight: 600;
+    visibility: hidden;
+}
+
+.menu-item.selected .checkmark {
+    visibility: visible;
+}
+
+/* ========================================
+   RECOMMENDATION CARD
+   ======================================== */
+.recommendation-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 12px;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    display: none;
+}
+
+.recommendation-card.active {
+    display: block;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.card-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #86868B;
+    font-size: 20px;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================
+   MINI CARDS
+   ======================================== */
+.mini-card {
+    background: #F5F5F7;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.mini-card-title {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #1D1D1F;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section-title {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.input-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.input-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-field label {
+    font-size: 0.8em;
+    color: #1D1D1F;
+    font-weight: 400;
+}
+
+.input-field input {
+    border: 1px solid #D1D1D6;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.9em;
+    background: white;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.input-field input:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.dropdown-clean {
+    border: 1px solid #D1D1D6;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: white;
+    font-size: 0.9em;
+    color: #1D1D1F;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2386868B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    transition: all 0.2s;
+}
+
+.dropdown-clean:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* ========================================
+   DROPDOWN CUSTOMIZADO AMOSTRAS
+   ======================================== */
+.dropdown-amostras-container {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-amostras-trigger {
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: white;
+    font-size: 0.95em;
+    color: #1A1A1A;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+}
+
+.dropdown-amostras-trigger:hover {
+    border-color: #4ADE80;
+}
+
+.dropdown-amostras-trigger.active {
+    border-color: #4ADE80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.dropdown-amostras-trigger.active svg {
+    transform: rotate(180deg);
+}
+
+.dropdown-amostras-trigger span {
+    flex: 1;
+    text-align: left;
+    color: #6B7280;
+}
+
+.dropdown-amostras-trigger.has-selection span {
+    color: #1A1A1A;
+    font-weight: 500;
+}
+
+.dropdown-amostras-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+    animation: dropdownSlide 0.2s ease-out;
+    min-width: 280px;
+}
+
+.dropdown-amostras-menu.active {
+    display: block;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.amostra-item {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.amostra-item:last-child {
+    border-bottom: none;
+}
+
+.amostra-item:hover {
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.amostra-item.selected {
+    background: rgba(74, 222, 128, 0.1);
+}
+
+.amostra-item span {
+    font-size: 0.95em;
+    color: #1A1A1A;
+    flex: 1;
+}
+
+.amostra-item.selected span {
+    font-weight: 600;
+    color: #4ADE80;
+}
+
+/* ========================================
+   CHECKBOX CUSTOMIZADO
+   ======================================== */
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D1D5DB;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.amostra-item:hover .checkbox-custom {
+    border-color: #4ADE80;
+}
+
+.amostra-item.selected .checkbox-custom {
+    background: #4ADE80;
+    border-color: #4ADE80;
+}
+
+.checkbox-custom .checkmark {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s;
+}
+
+.amostra-item.selected .checkbox-custom .checkmark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ========================================
+   CARDS DE RECOMENDAÇÃO - ULTRA COMPACTO
+   ======================================== */
+.card-recomendacao {
+    background: #F9FAFB;
+    border-left: 3px solid #4ADE80;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    animation: slideDown 0.15s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.badge-metodo-mini {
+    display: inline-block;
+    background: #4ADE80;
+    color: white;
+    font-size: 0.65em;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* ========================================
+   DROPDOWNS COMPACTOS
+   ======================================== */
+.select-micro {
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 7px 10px;
+    background: white;
+    font-size: 0.8em;
+    color: #1A1A1A;
+    cursor: pointer;
+    transition: all 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+}
+
+.select-micro:focus {
+    outline: none;
+    border-color: #4ADE80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.select-micro:hover {
+    border-color: #4ADE80;
+}
+
+/* ========================================
+   ITENS ESCOLHIDOS - CLICÁVEIS PARA EDITAR
+   ======================================== */
+.chosen-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border: 1px solid #4ADE80;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.8em;
+    color: #1A1A1A;
+    cursor: pointer;
+    transition: all 0.2s;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.chosen-item:hover {
+    background: rgba(74, 222, 128, 0.05);
+    border-color: #22C55E;
+}
+
+.chosen-item:hover span:last-child {
+    color: #4ADE80;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   PILLS SELECIONÁVEIS - ULTRA COMPACTAS
+   ======================================== */
+.pill-opcao {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.75em;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.pill-opcao:hover {
+    border-color: #4ADE80;
+    background: rgba(74, 222, 128, 0.05);
+    color: #1A1A1A;
+    transform: translateY(-1px);
+}
+
+.pill-opcao.selecionada {
+    background: #4ADE80;
+    border-color: #4ADE80;
+    color: white;
+    animation: pillPulse 0.3s ease-out;
+}
+
+@keyframes pillPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.pill-opcao.removida {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s;
+}
+
+/* ========================================
+   CARDS DE TIPOS DE SOLO
+   ======================================== */
+.card-tipo-solo {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.card-tipo-solo:hover {
+    border-color: #4ADE80;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(74, 222, 128, 0.15);
+}
+
+.card-tipo-solo.ativo {
+    border-color: #4ADE80;
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.05) 0%, rgba(74, 222, 128, 0.1) 100%);
+    box-shadow: 0 4px 10px rgba(74, 222, 128, 0.2);
+}
+
+.tipo-solo-icon {
+    font-size: 2.5em;
+    margin-bottom: 6px;
+}
+
+.tipo-solo-nome {
+    font-size: 0.85em;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.tipo-solo-desc {
+    font-size: 0.7em;
+    color: #6B7280;
+    text-align: left;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.tipo-solo-desc div {
+    margin-bottom: 3px;
+}
+
+.tipo-solo-composicao {
+    background: rgba(0,0,0,0.02);
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-align: left;
+}
+
+/* ========================================
+   BOTÕES DE REGÊNCIA
+   ======================================== */
+.btn-regencia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 10px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.8em;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+.btn-regencia:hover {
+    border-color: #4ADE80;
+    background: rgba(74, 222, 128, 0.05);
+    color: #1A1A1A;
+}
+
+.btn-regencia.active {
+    border-color: #4ADE80;
+    background: rgba(74, 222, 128, 0.1);
+    color: #4ADE80;
+    font-weight: 600;
+}
+
+/* ========================================
+   SELECTS CUSTOMIZADOS
+   ======================================== */
+.select-regencia,
+.select-fonte {
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: white;
+    font-size: 0.85em;
+    color: #1A1A1A;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select-regencia:focus,
+.select-fonte:focus {
+    outline: none;
+    border-color: #4ADE80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.select-regencia {
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* ========================================
+   TAGS DE AMOSTRAS SELECIONADAS
+   ======================================== */
+.amostra-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #4ADE80;
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.75em;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    animation: tagSlideIn 0.2s ease-out;
+    white-space: nowrap;
+}
+
+@keyframes tagSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.amostra-tag-remove {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    font-weight: 700;
+    padding: 0;
+    margin-left: 2px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.amostra-tag-remove:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+/* ========================================
+   BOTÃO CIRCULAR + MICRONUTRIENTES
+   ======================================== */
+.btn-add-micro {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #D1D1D6;
+    color: #86868B;
+    font-size: 1.2em;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.btn-add-micro:hover {
+    border-color: #007AFF;
+    color: #007AFF;
+    background: #F0F9FF;
+}
+
+.btn-add-micro.active {
+    background: #007AFF;
+    color: white;
+    border-color: #007AFF;
+    transform: rotate(45deg);
+}
+
+/* ========================================
+   DROPDOWN MÉTODOS MICRONUTRIENTES
+   ======================================== */
+.metodos-micro-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 8px;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.12),
+        0 8px 32px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: none;
+    z-index: 1000;
+    min-width: 180px;
+    animation: dropdownSlideDown 0.2s ease-out;
+}
+
+.metodos-micro-dropdown.active {
+    display: block;
+}
+
+@keyframes dropdownSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.metodo-option {
+    padding: 12px 16px;
+    font-size: 0.9em;
+    color: #1D1D1F;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #E5E5E7;
+}
+
+.metodo-option:last-child {
+    border-bottom: none;
+}
+
+.metodo-option:hover {
+    background: rgba(0, 122, 255, 0.08);
+}
+
+.metodo-option.selected {
+    background: rgba(0, 122, 255, 0.12);
+    color: #007AFF;
+    font-weight: 500;
+}
+
+/* ========================================
+   GRUPOS DE MICRONUTRIENTES
+   ======================================== */
+.grupo-micro-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 12px;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #007AFF;
+    animation: slideInGrupo 0.3s ease-out;
+}
+
+@keyframes slideInGrupo {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.grupo-micro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E5E5E7;
+}
+
+.grupo-micro-titulo {
+    font-size: 1em;
+    font-weight: 600;
+    color: #1D1D1F;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.grupo-micro-numero {
+    background: #007AFF;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+.grupo-micro-close {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #86868B;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+.grupo-micro-close:hover {
+    background: rgba(255, 59, 48, 0.1);
+    color: #FF3B30;
+}
+
+/* Seletor de Micronutrientes */
+.micro-selector {
+    margin-bottom: 16px;
+}
+
+.micro-selector-label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.micro-pills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.micro-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    border: 1.5px solid #D1D1D6;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.85em;
+    color: #1D1D1F;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.micro-pill:hover {
+    border-color: #007AFF;
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.micro-pill.selected {
+    background: #007AFF;
+    border-color: #007AFF;
+    color: white;
+}
+
+.micro-pill.selected:hover {
+    background: #0051D5;
+    border-color: #0051D5;
+}
+
+/* Configuração do Grupo */
+.grupo-config-section {
+    background: #F5F5F7;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.grupo-config-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.grupo-config-row:last-child {
+    margin-bottom: 0;
+}
+
+.grupo-config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.grupo-config-field label {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+}
+
+.grupo-config-field select {
+    border: 1px solid #D1D1D6;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: white;
+    font-size: 0.9em;
+    color: #1D1D1F;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2386868B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+    transition: all 0.2s;
+}
+
+.grupo-config-field select:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Fontes e Doses Individuais */
+.fontes-doses-section {
+    border-top: 1px solid #E5E5E7;
+    padding-top: 16px;
+    margin-top: 8px;
+}
+
+.fontes-doses-titulo {
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #86868B;
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fontes-doses-titulo::before {
+    content: '▼';
+    font-size: 0.7em;
+}
+
+.fonte-dose-item {
+    background: white;
+    border: 1px solid #E5E5E7;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 60px 1fr 100px;
+    gap: 12px;
+    align-items: center;
+    animation: fadeInItem 0.2s ease-out;
+}
+
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fonte-dose-item:last-child {
+    margin-bottom: 0;
+}
+
+.fonte-dose-nutriente {
+    font-weight: 600;
+    color: #007AFF;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fonte-dose-nutriente::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #007AFF;
+    border-radius: 50%;
+}
+
+.fonte-dose-select {
+    border: 1px solid #D1D1D6;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: white;
+    font-size: 0.85em;
+    color: #1D1D1F;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2386868B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+}
+
+.fonte-dose-input {
+    border: 1px solid #D1D1D6;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: white;
+    font-size: 0.85em;
+    text-align: right;
+    width: 100%;
+}
+
+.fonte-dose-input:focus,
+.fonte-dose-select:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+}
+
+.fonte-dose-unidade {
+    font-size: 0.75em;
+    color: #86868B;
+    margin-left: 4px;
+}
+
+/* Status do Grupo */
+.grupo-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(52, 199, 89, 0.1);
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.grupo-status-icon {
+    color: #34C759;
+    font-size: 1.1em;
+}
+
+.grupo-status-text {
+    font-size: 0.85em;
+    color: #34C759;
+    font-weight: 500;
+}
+
+.grupo-status.incompleto {
+    background: rgba(255, 149, 0, 0.1);
+}
+
+.grupo-status.incompleto .grupo-status-icon,
+.grupo-status.incompleto .grupo-status-text {
+    color: #FF9500;
+}
+
+/* Empty State */
+.grupo-empty-state {
+    text-align: center;
+    padding: 30px 20px;
+    color: #86868B;
+}
+
+.grupo-empty-icon {
+    font-size: 2.5em;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.grupo-empty-text {
+    font-size: 0.9em;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .header-grid,
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-grid-3,
+    .input-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .metodos-micro-dropdown {
+        right: auto;
+        left: 0;
+    }
+
+    .grupo-config-row {
+        grid-template-columns: 1fr;
+    }
+
+    .fonte-dose-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .fonte-dose-nutriente {
+        padding-bottom: 8px;
+        border-bottom: 1px solid #E5E5E7;
+    }
+}
