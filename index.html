@@ -534,10 +534,6 @@
                 <div style="background: #F5F5F7; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <span style="font-size: 0.9em; font-weight: 600; color: #1D1D1F;">Filtros de Regência</span>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="control-btn" title="Duplicar">📋</button>
-                            <button class="control-btn" title="Fechar">✕</button>
-                        </div>
                     </div>
                     <div class="input-grid-2" style="margin-bottom: 16px;">
                         <div class="input-field">
@@ -558,12 +554,9 @@
                         <label style="font-size: 0.85em; color: #1D1D1F; font-weight: 500; display: block; margin-bottom: 8px;">Método de Correção</label>
                         <select class="dropdown-clean" id="metodoPotassio" onchange="toggleCamposCorrecaoPotassio()">
                             <option value="">Selecione o método</option>
-                            <option value="elevar-nc">Elevar potássio para Nível crítico (nível crítico - solo)</option>
+                            <option value="elevar-nc">Elevar potássio para Nível crítico</option>
                             <option value="producao">Produção - Planta inteira</option>
                             <option value="exportacao">Exportação (Manutenção)</option>
-                            <option value="correcao-planta">Correção (Nível crítico) + planta inteira</option>
-                            <option value="correcao-exportacao">Correção (Nível crítico) + Exportação</option>
-                            <option value="planta-solo">Planta inteira menos o potássio no solo</option>
                         </select>
                     </div>
                     <div id="camposCorrecaoPotassio" style="display: none; background: #E8F5E9; padding: 16px; border-radius: 8px; margin-top: 16px; border: 1px solid #A5D6A7;">
@@ -577,49 +570,9 @@
                                 </select>
                             </div>
                             <div class="input-field" id="percentualPotassio" style="display: none;">
-                                <label>Percentual personalizado (%)</label>
+                                <label>Percentual (%)</label>
                                 <input type="number" step="0.1" placeholder="0.0" style="width: 100%;">
                             </div>
-                        </div>
-                    </div>
-                    <div class="input-grid-3" style="margin-top: 16px;">
-                        <div class="input-field">
-                            <label>Nível Crítico</label>
-                            <select class="dropdown-clean">
-                                <option value="">Nível crítico</option>
-                                <option value="rs-ctc">RS - Capacidade de Troca Catiônica (CTC) a pH 7,0</option>
-                                <option value="mg-mehlich">MG - Nível crítico de 70 mg dm⁻³ (método Mehlich-1)</option>
-                                <option value="sp-faixa">SP - Faixa adequada entre 0,16 e 0,30 cmolc dm⁻³</option>
-                                <option value="cerrado">Cerrado brasileiro</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label>Fertilizante p/ plantio/correção</label>
-                            <select class="dropdown-clean">
-                                <option value="">Fertilizante</option>
-                                <option value="kcl">Cloreto de Potássio (KCl)</option>
-                                <option value="k2so4">Sulfato de Potássio (K₂SO₄)</option>
-                                <option value="kno3">Nitrato de Potássio (KNO₃)</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label>Tem outro nutriente?</label>
-                            <select class="dropdown-clean" id="outroNutrientePotassio" onchange="toggleNutrientesAdicionaisPotassio()">
-                                <option value="">Outro nutriente</option>
-                                <option value="sim">Sim</option>
-                                <option value="nao">Não</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="nutrientesAdicionaisPotassio" style="display: none; margin-top: 16px;">
-                        <div style="background: #F5F5F7; padding: 16px; border-radius: 8px; border: 1px solid #E5E5E7;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <span style="font-size: 0.85em; font-weight: 600; color: #1D1D1F;">Nutrientes Adicionais no Fertilizante</span>
-                            </div>
-                            <div id="listaNutrientesPotassio"></div>
-                            <button onclick="adicionarNutrientePotassio()" style="background: transparent; border: none; color: #007AFF; font-size: 0.9em; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px 0; margin-top: 8px; transition: all 0.2s;" onmouseover="this.style.color='#0051D5'" onmouseout="this.style.color='#007AFF'">
-                                <span style="font-size: 1.2em; font-weight: 300;">+</span> Adicionar nutriente
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -677,10 +630,6 @@
                 <div style="background: #F5F5F7; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                         <span style="font-size: 0.9em; font-weight: 600; color: #1D1D1F;">Filtros de Regência</span>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="control-btn" title="Duplicar">📋</button>
-                            <button class="control-btn" title="Fechar">✕</button>
-                        </div>
                     </div>
                     <div class="input-grid-2" style="margin-bottom: 16px;">
                         <div class="input-field">
@@ -701,12 +650,9 @@
                         <label style="font-size: 0.85em; color: #1D1D1F; font-weight: 500; display: block; margin-bottom: 8px;">Método de Correção</label>
                         <select class="dropdown-clean" id="metodoFosforo" onchange="toggleCamposCorrecaoFosforo()">
                             <option value="">Selecione o método</option>
-                            <option value="elevar-nc">Elevar fósforo para Nível crítico (nível crítico - solo)</option>
+                            <option value="elevar-nc">Elevar fósforo para Nível crítico</option>
                             <option value="producao">Produção - Planta inteira</option>
                             <option value="exportacao">Exportação (Manutenção)</option>
-                            <option value="correcao-planta">Correção (Nível crítico) + planta inteira</option>
-                            <option value="correcao-exportacao">Correção (Nível crítico) + Exportação</option>
-                            <option value="planta-solo">Planta inteira menos o fósforo no solo</option>
                         </select>
                     </div>
                     <div id="camposCorrecaoFosforo" style="display: none; background: #E8F5E9; padding: 16px; border-radius: 8px; margin-top: 16px; border: 1px solid #A5D6A7;">
@@ -720,212 +666,52 @@
                                 </select>
                             </div>
                             <div class="input-field" id="percentualFosforo" style="display: none;">
-                                <label>Percentual personalizado (%)</label>
+                                <label>Percentual (%)</label>
                                 <input type="number" step="0.1" placeholder="0.0" style="width: 100%;">
                             </div>
-                        </div>
-                    </div>
-                    <div class="input-grid-3" style="margin-top: 16px;">
-                        <div class="input-field">
-                            <label>Nível Crítico</label>
-                            <select class="dropdown-clean">
-                                <option value="">Nível crítico</option>
-                                <option value="boletim100">Método do Boletim 100 – IAC (SP)</option>
-                                <option value="cerrados">Manual dos Cerrados – Embrapa</option>
-                                <option value="aproximacao">5ª Aproximação (Mehlich-1)</option>
-                                <option value="nicri">NiCri P com base no P-rem</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label>Fertilizante p/ plantio/correção</label>
-                            <select class="dropdown-clean">
-                                <option value="">Fertilizante</option>
-                                <option value="map">MAP (Monoamônio Fosfato)</option>
-                                <option value="dap">DAP (Diamônio Fosfato)</option>
-                                <option value="super-simples">Superfosfato Simples</option>
-                                <option value="super-triplo">Superfosfato Triplo</option>
-                                <option value="termofosfato">Termofosfato</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label>Tem outro nutriente?</label>
-                            <select class="dropdown-clean" id="outroNutrienteFosforo" onchange="toggleNutrientesAdicionaisFosforo()">
-                                <option value="">Outro nutriente</option>
-                                <option value="sim">Sim</option>
-                                <option value="nao">Não</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="nutrientesAdicionaisFosforo" style="display: none; margin-top: 16px;">
-                        <div style="background: #F5F5F7; padding: 16px; border-radius: 8px; border: 1px solid #E5E5E7;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                <span style="font-size: 0.85em; font-weight: 600; color: #1D1D1F;">Nutrientes Adicionais no Fertilizante</span>
-                            </div>
-                            <div id="listaNutrientesFosforo"></div>
-                            <button onclick="adicionarNutrienteFosforo()" style="background: transparent; border: none; color: #007AFF; font-size: 0.9em; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 8px 0; margin-top: 8px; transition: all 0.2s;" onmouseover="this.style.color='#0051D5'" onmouseout="this.style.color='#007AFF'">
-                                <span style="font-size: 1.2em; font-weight: 300;">+</span> Adicionar nutriente
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- MICRONUTRIENTES -->
+        <!-- ============================================ -->
+        <!-- MICRONUTRIENTES - NOVO SISTEMA DE GRUPOS -->
+        <!-- ============================================ -->
         <div class="analysis-section">
             <div class="section-title">Micronutrientes</div>
+            
+            <!-- Grid de inputs dos micronutrientes (SEM botões individuais) -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
                 <div class="metric-row" style="margin-bottom: 0;">
-                    <span class="metric-label">Fe (mg/dm³)</span>
-                    <input type="number" step="0.1" placeholder="0.0" oninput="updateFe(this)">
-                    <div class="status-bar" style="min-width: 100px; flex: 1;">
-                        <div class="status-indicator" id="fe-indicator"></div>
-                    </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnFe" onclick="toggleMetodosMicro('fe', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosFe">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('fe', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('fe', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('fe', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">Mn (mg/dm³)</span>
-                    <input type="number" step="0.1" placeholder="0.0" oninput="updateMn(this)">
+                    <input type="number" step="0.1" placeholder="0.0" id="inputMn" oninput="updateMn(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="mn-indicator"></div>
                     </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnMn" onclick="toggleMetodosMicro('mn', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosMn">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mn', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mn', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mn', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
+                </div>
+                <div class="metric-row" style="margin-bottom: 0;">
+                    <span class="metric-label">Zn (mg/dm³)</span>
+                    <input type="number" step="0.1" placeholder="0.0" id="inputZn" oninput="updateZn(this)">
+                    <div class="status-bar" style="min-width: 100px; flex: 1;">
+                        <div class="status-indicator" id="zn-indicator"></div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Card de Recomendação Fe -->
-            <div id="cardRecomendacaoFe" class="card-recomendacao" style="display: none;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 0.85em; font-weight: 600; color: #1A1A1A;">Fe</span>
-                        <span id="badgeMetodoFe" class="badge-metodo-mini">Solo</span>
-                    </div>
-                    <button onclick="fecharRecomendacao('fe')" style="background: none; border: none; color: #D1D5DB; cursor: pointer; font-size: 1.1em; padding: 0;">×</button>
-                </div>
-                <div id="regenciaSelectFe" style="margin-bottom: 6px;">
-                    <select class="select-micro" onchange="selecionarRegenciaTipo('fe', this.value)">
-                        <option value="">Tipo de regência...</option>
-                        <option value="autor">📚 Autor/Referência</option>
-                        <option value="tecnologia">⚙️ Tecnologia</option>
-                        <option value="cultivar">🌱 Cultivar</option>
-                    </select>
-                </div>
-                <div id="regenciaChosenFe" class="chosen-item" style="display: none;" onclick="editarRegenciaTipo('fe')">
-                    <span id="regenciaChosenTextFe"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="especificaSelectFe" style="display: none; margin-bottom: 6px;">
-                    <select class="select-micro" id="selectEspecificaFe" onchange="selecionarRegenciaEspecifica('fe', this.value)">
-                        <option value="">Selecione...</option>
-                    </select>
-                </div>
-                <div id="especificaChosenFe" class="chosen-item" style="display: none;" onclick="editarRegenciaEspecifica('fe')">
-                    <span id="especificaChosenTextFe"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="fonteSelectFe" style="display: none; margin-bottom: 6px;">
-                    <select class="select-micro" onchange="selecionarFonte('fe', this.value)">
-                        <option value="">Fonte...</option>
-                        <option value="sulfato-ferroso">Sulfato Ferroso (FeSO₄)</option>
-                        <option value="quelato-fe">Quelato de Fe (Fe-EDTA)</option>
-                        <option value="oxido-ferrico">Óxido Férrico (Fe₂O₃)</option>
-                    </select>
-                </div>
-                <div id="fonteChosenFe" class="chosen-item" style="display: none;" onclick="editarFonte('fe')">
-                    <span id="fonteChosenTextFe"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="statusFe" style="display: none; margin-top: 6px; padding: 6px 8px; background: rgba(74, 222, 128, 0.05); border-radius: 6px; font-size: 0.7em; color: #22C55E;">✓ Completo</div>
-            </div>
-
-            <!-- Card de Recomendação Mn -->
-            <div id="cardRecomendacaoMn" class="card-recomendacao" style="display: none;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="font-size: 0.85em; font-weight: 600; color: #1A1A1A;">Mn</span>
-                        <span id="badgeMetodoMn" class="badge-metodo-mini">Solo</span>
-                    </div>
-                    <button onclick="fecharRecomendacao('mn')" style="background: none; border: none; color: #D1D5DB; cursor: pointer; font-size: 1.1em; padding: 0;">×</button>
-                </div>
-                <div id="regenciaSelectMn" style="margin-bottom: 6px;">
-                    <select class="select-micro" onchange="selecionarRegenciaTipo('mn', this.value)">
-                        <option value="">Tipo de regência...</option>
-                        <option value="autor">📚 Autor/Referência</option>
-                        <option value="tecnologia">⚙️ Tecnologia</option>
-                        <option value="cultivar">🌱 Cultivar</option>
-                    </select>
-                </div>
-                <div id="regenciaChosenMn" class="chosen-item" style="display: none;" onclick="editarRegenciaTipo('mn')">
-                    <span id="regenciaChosenTextMn"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="especificaSelectMn" style="display: none; margin-bottom: 6px;">
-                    <select class="select-micro" id="selectEspecificaMn" onchange="selecionarRegenciaEspecifica('mn', this.value)">
-                        <option value="">Selecione...</option>
-                    </select>
-                </div>
-                <div id="especificaChosenMn" class="chosen-item" style="display: none;" onclick="editarRegenciaEspecifica('mn')">
-                    <span id="especificaChosenTextMn"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="fonteSelectMn" style="display: none; margin-bottom: 6px;">
-                    <select class="select-micro" onchange="selecionarFonte('mn', this.value)">
-                        <option value="">Fonte...</option>
-                        <option value="sulfato-manganes">Sulfato de Manganês (MnSO₄)</option>
-                        <option value="quelato-mn">Quelato de Mn (Mn-EDTA)</option>
-                        <option value="oxido-manganes">Óxido de Manganês (MnO)</option>
-                    </select>
-                </div>
-                <div id="fonteChosenMn" class="chosen-item" style="display: none;" onclick="editarFonte('mn')">
-                    <span id="fonteChosenTextMn"></span>
-                    <span style="font-size: 0.7em; color: #9CA3AF;">✎</span>
-                </div>
-                <div id="statusMn" style="display: none; margin-top: 6px; padding: 6px 8px; background: rgba(74, 222, 128, 0.05); border-radius: 6px; font-size: 0.7em; color: #22C55E;">✓ Completo</div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
                 <div class="metric-row" style="margin-bottom: 0;">
-                    <span class="metric-label">Zn (mg/dm³)</span>
-                    <input type="number" step="0.1" placeholder="0.0" oninput="updateZn(this)">
-                    <div class="status-bar" style="min-width: 100px; flex: 1;">
-                        <div class="status-indicator" id="zn-indicator"></div>
-                    </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnZn" onclick="toggleMetodosMicro('zn', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosZn">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('zn', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('zn', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('zn', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">Cu (mg/dm³)</span>
-                    <input type="number" step="0.1" placeholder="0.0" oninput="updateCu(this)">
+                    <input type="number" step="0.1" placeholder="0.0" id="inputCu" oninput="updateCu(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="cu-indicator"></div>
                     </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnCu" onclick="toggleMetodosMicro('cu', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosCu">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('cu', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('cu', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('cu', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
+                </div>
+                <div class="metric-row" style="margin-bottom: 0;">
+                    <span class="metric-label">Fe (mg/dm³)</span>
+                    <input type="number" step="0.1" placeholder="0.0" id="inputFe" oninput="updateFe(this)">
+                    <div class="status-bar" style="min-width: 100px; flex: 1;">
+                        <div class="status-indicator" id="fe-indicator"></div>
                     </div>
                 </div>
             </div>
@@ -933,32 +719,16 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
                 <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">B (mg/dm³)</span>
-                    <input type="number" step="0.1" placeholder="0.0" oninput="updateB(this)">
+                    <input type="number" step="0.1" placeholder="0.0" id="inputB" oninput="updateB(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="b-indicator"></div>
-                    </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnB" onclick="toggleMetodosMicro('b', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosB">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('b', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('b', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('b', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
                     </div>
                 </div>
                 <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">Mo (mg/dm³)</span>
-                    <input type="number" step="0.01" placeholder="0.00" oninput="updateMo(this)">
+                    <input type="number" step="0.01" placeholder="0.00" id="inputMo" oninput="updateMo(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="mo-indicator"></div>
-                    </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnMo" onclick="toggleMetodosMicro('mo', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosMo">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mo', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mo', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('mo', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -966,214 +736,33 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">Ni (mg/dm³)</span>
-                    <input type="number" step="0.01" placeholder="0.00" oninput="updateNi(this)">
+                    <input type="number" step="0.01" placeholder="0.00" id="inputNi" oninput="updateNi(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="ni-indicator"></div>
-                    </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnNi" onclick="toggleMetodosMicro('ni', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosNi">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('ni', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('ni', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('ni', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
                     </div>
                 </div>
                 <div class="metric-row" style="margin-bottom: 0;">
                     <span class="metric-label">Se (mg/dm³)</span>
-                    <input type="number" step="0.01" placeholder="0.00" oninput="updateSe(this)">
+                    <input type="number" step="0.01" placeholder="0.00" id="inputSe" oninput="updateSe(this)">
                     <div class="status-bar" style="min-width: 100px; flex: 1;">
                         <div class="status-indicator" id="se-indicator"></div>
                     </div>
-                    <div style="position: relative;">
-                        <button class="btn-add-micro" id="btnSe" onclick="toggleMetodosMicro('se', event)">+</button>
-                        <div class="metodos-micro-dropdown" id="metodosSe">
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('se', 'solo', event)">Solo</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('se', 'foliar', event)">Aplicação Foliar</div>
-                            <div class="metodo-option" onclick="selecionarMetodoMicro('se', 'solo-foliar', event)">Solo e Aplicação Foliar</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- BOTÃO MICRONUTRIENTES -->
-        <div style="position: relative; margin-top: 12px;">
-            <button class="recommend-btn" onclick="toggleMenuMicro()">Indicar Micronutrientes</button>
-            <div class="floating-menu" id="microMenu">
-                <div class="menu-item" onclick="toggleMicro('fe')"><span>Ferro (Fe)</span><span class="checkmark">✓</span></div>
-                <div class="menu-item" onclick="toggleMicro('mn')"><span>Manganês (Mn)</span><span class="checkmark">✓</span></div>
-                <div class="menu-item" onclick="toggleMicro('zn')"><span>Zinco (Zn)</span><span class="checkmark">✓</span></div>
-                <div class="menu-item" onclick="toggleMicro('cu')"><span>Cobre (Cu)</span><span class="checkmark">✓</span></div>
-                <div class="menu-item" onclick="toggleMicro('b')"><span>Boro (B)</span><span class="checkmark">✓</span></div>
-                <div class="menu-item" onclick="toggleMicro('mo')"><span>Molibdênio (Mo)</span><span class="checkmark">✓</span></div>
-            </div>
+        <!-- BOTÃO CRIAR GRUPO DE MICRONUTRIENTES -->
+        <div style="margin-top: 12px;">
+            <button class="recommend-btn" onclick="criarGrupoMicro()">
+                Criar Grupo de Recomendação
+            </button>
         </div>
 
-        <!-- CARD MICRONUTRIENTES -->
-        <div class="recommendation-card" id="cardMicro">
-            <div class="card-header">
-                <div class="card-title">Indicação de Micronutrientes</div>
-                <div class="card-controls">
-                    <button class="control-btn" onclick="minimizeCard('cardMicro')" title="Ocultar">−</button>
-                    <button class="control-btn" onclick="closeAllMicro()" title="Fechar">×</button>
-                </div>
-            </div>
-            <div class="card-content" id="contentMicro">
-                <!-- FERRO -->
-                <div class="mini-card" id="microFe" style="display: none;">
-                    <div class="mini-card-title">Ferro (Fe)<button class="control-btn" onclick="toggleMicro('fe')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="fe-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="fe-solo" style="width: auto;">Solo</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="fe-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="sulfato">Sulfato Ferroso (19-23% Fe)</option>
-                            <option value="quelato">Quelato de Ferro (6-14% Fe)</option>
-                            <option value="oxido">Óxido de Ferro (60-70% Fe)</option>
-                            <option value="eddha">Fe-EDDHA (6% Fe)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (kg/ha)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                        <div class="input-field"><label>Teor de Fe (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-
-                <!-- MANGANÊS -->
-                <div class="mini-card" id="microMn" style="display: none;">
-                    <div class="mini-card-title">Manganês (Mn)<button class="control-btn" onclick="toggleMicro('mn')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="mn-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="mn-solo" style="width: auto;">Solo</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="mn-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="sulfato">Sulfato de Manganês (26-28% Mn)</option>
-                            <option value="quelato">Quelato de Manganês (12% Mn)</option>
-                            <option value="oxido">Óxido de Manganês (41-68% Mn)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (kg/ha)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                        <div class="input-field"><label>Teor de Mn (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-
-                <!-- ZINCO -->
-                <div class="mini-card" id="microZn" style="display: none;">
-                    <div class="mini-card-title">Zinco (Zn)<button class="control-btn" onclick="toggleMicro('zn')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="zn-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="zn-solo" style="width: auto;">Solo</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="zn-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="sulfato">Sulfato de Zinco (20-22% Zn)</option>
-                            <option value="quelato">Quelato de Zinco (14% Zn)</option>
-                            <option value="oxido">Óxido de Zinco (50-80% Zn)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (kg/ha)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                        <div class="input-field"><label>Teor de Zn (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-
-                <!-- COBRE -->
-                <div class="mini-card" id="microCu" style="display: none;">
-                    <div class="mini-card-title">Cobre (Cu)<button class="control-btn" onclick="toggleMicro('cu')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="cu-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="cu-solo" style="width: auto;">Solo</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="cu-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="sulfato">Sulfato de Cobre (13-25% Cu)</option>
-                            <option value="quelato">Quelato de Cobre (13% Cu)</option>
-                            <option value="oxido">Óxido de Cobre (75-89% Cu)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (kg/ha)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                        <div class="input-field"><label>Teor de Cu (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-
-                <!-- BORO -->
-                <div class="mini-card" id="microB" style="display: none;">
-                    <div class="mini-card-title">Boro (B)<button class="control-btn" onclick="toggleMicro('b')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="b-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="b-solo" style="width: auto;">Solo</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="b-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="acido">Ácido Bórico (17% B)</option>
-                            <option value="borax">Bórax (11% B)</option>
-                            <option value="ulexita">Ulexita (10-12% B)</option>
-                            <option value="colemanita">Colemanita (10-15% B)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (kg/ha)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                        <div class="input-field"><label>Teor de B (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-
-                <!-- MOLIBDÊNIO -->
-                <div class="mini-card" id="microMo" style="display: none;">
-                    <div class="mini-card-title">Molibdênio (Mo)<button class="control-btn" onclick="toggleMicro('mo')" title="Remover">×</button></div>
-                    <div class="form-section">
-                        <div class="form-section-title">Forma de Aplicação</div>
-                        <div class="input-grid-3">
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="mo-foliar" style="width: auto;">Foliar</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="mo-solo" style="width: auto;">Solo</label>
-                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9em;"><input type="checkbox" id="mo-semente" style="width: auto;">Semente</label>
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <div class="form-section-title">Fonte do Nutriente</div>
-                        <select class="dropdown-clean" id="mo-fonte">
-                            <option value="">Selecione a fonte</option>
-                            <option value="molibdato-sodio">Molibdato de Sódio (39% Mo)</option>
-                            <option value="molibdato-amonio">Molibdato de Amônio (54% Mo)</option>
-                            <option value="trioxido">Trióxido de Molibdênio (66% Mo)</option>
-                        </select>
-                    </div>
-                    <div class="input-grid-2">
-                        <div class="input-field"><label>Dose Recomendada (g/ha)</label><input type="number" step="1" placeholder="0"></div>
-                        <div class="input-field"><label>Teor de Mo (%)</label><input type="number" step="0.1" placeholder="0.0"></div>
-                    </div>
-                </div>
-            </div>
+        <!-- CONTAINER DOS GRUPOS DE MICRONUTRIENTES -->
+        <div id="containerGruposMicro">
+            <!-- Grupos serão adicionados aqui dinamicamente -->
         </div>
+
     </div>
 
     <script src="script.js"></script>
