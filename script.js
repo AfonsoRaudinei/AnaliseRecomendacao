@@ -229,10 +229,36 @@ function calcularSBCTC() {
 function atualizarBarril(vPercent) {
     const fill = document.getElementById('barrelFill');
     const value = document.getElementById('barrelValue');
+    const percent = document.getElementById('barrelPercent');
     
     const vClamped = Math.min(Math.max(vPercent, 0), 100);
     fill.style.height = vClamped + '%';
-    value.textContent = Math.round(vClamped) + '%';
+    
+    // Atualizar valor dentro do barril
+    if (vClamped > 15) {
+        value.textContent = Math.round(vClamped) + '%';
+        value.classList.remove('empty');
+    } else {
+        value.textContent = Math.round(vClamped) + '%';
+        value.classList.add('empty');
+    }
+    
+    // Atualizar valor grande ao lado
+    if (percent) percent.textContent = Math.round(vClamped);
+}
+
+// Função para toggle dos campos de Grade
+function toggleGradeFields(tipo) {
+    const select = document.getElementById('superficie' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+    const fields = document.getElementById('gradeFields' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+    
+    if (select && fields) {
+        if (select.value === 'grade') {
+            fields.style.display = 'block';
+        } else {
+            fields.style.display = 'none';
+        }
+    }
 }
 
 function calcularVPercent() {
@@ -306,19 +332,17 @@ function aplicarTipoSolo(tipo) {
 // ========================================
 function updatePH(input) {
     const ph = parseFloat(input.value) || 0;
-    const indicator = document.getElementById('ph-indicator');
     
-    let width = 0;
-    let color = '#34C759';
+    // Calcular posição do marcador (pH 4-9 -> 0-100%)
+    const minPH = 4, maxPH = 9;
+    const position = Math.min(Math.max((ph - minPH) / (maxPH - minPH) * 100, 0), 100);
     
-    if (ph < 5) { width = 20; color = '#FF3B30'; }
-    else if (ph < 5.5) { width = 40; color = '#FF9500'; }
-    else if (ph < 6.5) { width = 70; color = '#34C759'; }
-    else if (ph < 7.5) { width = 85; color = '#007AFF'; }
-    else { width = 95; color = '#5856D6'; }
+    // Atualizar marcador
+    const marker = document.getElementById('ph-indicator-marker');
+    const bg = document.getElementById('ph-indicator-bg');
     
-    indicator.style.width = width + '%';
-    indicator.style.backgroundColor = color;
+    if (marker) marker.style.left = `calc(${position}% - 2px)`;
+    if (bg) bg.style.width = `${100 - position}%`;
     
     updateInterference(ph);
 }
@@ -336,16 +360,18 @@ function updateInterference(ph) {
         if (!el) return;
         
         const opt = nutrients[n].optimal;
-        let status = 'interference-neutral', value = '--';
+        let status = '', value = '--';
         
-        if (ph >= opt[0] && ph <= opt[1]) {
-            status = 'interference-positive';
-            value = '100%';
-        } else if (ph > 0) {
-            const dist = Math.min(Math.abs(ph - opt[0]), Math.abs(ph - opt[1]));
-            const pct = Math.max(30, 100 - dist * 20);
-            value = Math.round(pct) + '%';
-            status = pct < 50 ? 'interference-negative' : '';
+        if (ph > 0) {
+            if (ph >= opt[0] && ph <= opt[1]) {
+                status = 'interference-positive';
+                value = '100%';
+            } else {
+                const dist = Math.min(Math.abs(ph - opt[0]), Math.abs(ph - opt[1]));
+                const pct = Math.max(30, 100 - dist * 25);
+                value = Math.round(pct) + '%';
+                status = pct >= 70 ? 'interference-warning' : 'interference-negative';
+            }
         }
         
         el.textContent = value;
