@@ -335,7 +335,7 @@ select:focus {
 .results-container {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     margin-top: 16px;
     padding: 16px;
     background: #F9FAFB;
@@ -349,10 +349,11 @@ select:focus {
 }
 
 .result-card {
-    padding: 12px 16px;
-    border-radius: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
     color: white;
     flex: 1;
+    max-width: 180px;
 }
 
 .result-card.green { background: #4ADE80; }
@@ -360,7 +361,7 @@ select:focus {
 .result-card.orange { background: #F59E0B; }
 
 .result-label {
-    font-size: 10px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     opacity: 0.9;
@@ -368,26 +369,32 @@ select:focus {
 }
 
 .result-value {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1;
 }
 
-/* BARRIL V% */
+/* BARRIL V% - GRANDE E DESTACADO */
 .barrel-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04);
+    border: 1px solid #E5E7EB;
 }
 
 .barrel {
     width: 50px;
-    height: 90px;
-    background: #E5E5EA;
+    height: 100px;
+    background: linear-gradient(180deg, #E5E5EA 0%, #D1D1D6 100%);
     border-radius: 8px;
     position: relative;
     overflow: hidden;
-    border: 2px solid #D1D1D6;
+    border: 2px solid #C7C7CC;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .barrel-fill {
@@ -400,36 +407,50 @@ select:focus {
     border-radius: 0 0 6px 6px;
 }
 
-.barrel-empty {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: #9CA3AF;
-    opacity: 0.3;
-}
-
 .barrel-value {
     position: absolute;
-    top: 50%;
+    bottom: 8px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     font-size: 14px;
     font-weight: 700;
-    color: #1A1A1A;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    z-index: 2;
+}
+
+.barrel-value.empty {
+    color: #6B7280;
+    text-shadow: none;
+    bottom: auto;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .barrel-labels {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    font-size: 10px;
+    justify-content: space-between;
+    height: 100px;
+    font-size: 11px;
     font-weight: 600;
 }
 
-.barrel-label-top { color: #4ADE80; }
-.barrel-label-bottom { color: #9CA3AF; }
+.barrel-label-top { 
+    color: #9CA3AF;
+    font-size: 10px;
+}
+
+.barrel-label-bottom { 
+    color: #22C55E;
+    font-size: 12px;
+}
+
+.barrel-percent {
+    font-size: 20px;
+    font-weight: 700;
+    color: #22C55E;
+}
 
 /* MINI BARRIL (dentro do card calagem) */
 .mini-barrel-wrapper {
@@ -517,38 +538,84 @@ select:focus {
 }
 
 /* ========================================
-   INTERFERENCE GRID
+   INTERFERENCE GRID - DESIGN CLEAN
    ======================================== */
 .interference-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-    margin-top: 12px;
+    gap: 10px;
+    margin-top: 16px;
 }
 
 .nutrient-interference {
     text-align: center;
-    padding: 8px;
+    padding: 12px 8px;
     background: white;
-    border-radius: 6px;
-    border: 1px solid #E5E5E7;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s;
+}
+
+.nutrient-interference:hover {
+    border-color: #D1D5DB;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .nutrient-name {
-    font-size: 10px;
-    color: #86868B;
-    margin-bottom: 4px;
-    font-weight: 600;
+    font-size: 12px;
+    color: #6B7280;
+    margin-bottom: 6px;
+    font-weight: 500;
 }
 
 .interference-value {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    color: #86868B;
+    color: #9CA3AF;
 }
 
-.interference-positive { color: #34C759; }
-.interference-negative { color: #FF3B30; }
+.interference-value.interference-positive { color: #22C55E; }
+.interference-value.interference-negative { color: #EF4444; }
+.interference-value.interference-warning { color: #F59E0B; }
+
+/* pH STATUS BAR - GRADIENTE */
+.ph-status-bar {
+    flex: 1;
+    height: 8px;
+    background: linear-gradient(90deg, 
+        #EF4444 0%, 
+        #F97316 25%, 
+        #F59E0B 40%, 
+        #22C55E 55%, 
+        #22C55E 65%,
+        #3B82F6 80%,
+        #8B5CF6 100%
+    );
+    border-radius: 4px;
+    position: relative;
+    min-width: 200px;
+}
+
+.ph-indicator-marker {
+    position: absolute;
+    top: -4px;
+    width: 4px;
+    height: 16px;
+    background: #1F2937;
+    border-radius: 2px;
+    transition: left 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.ph-indicator-bg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #E5E7EB;
+    border-radius: 0 4px 4px 0;
+    transition: width 0.3s ease;
+}
 
 /* ========================================
    BOTÕES
@@ -607,13 +674,13 @@ select:focus {
 }
 
 .btn-generate {
-    width: 100%;
-    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    width: auto;
+    background: #007AFF;
     color: white;
     border: none;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 15px;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 16px;
@@ -621,8 +688,8 @@ select:focus {
 }
 
 .btn-generate:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+    background: #0051D5;
+    box-shadow: 0 2px 8px rgba(0,122,255,0.25);
 }
 
 .btn-remove {
@@ -1237,6 +1304,21 @@ select:focus {
 
 .amostra-tag-remove:hover {
     background: rgba(255,255,255,0.5);
+}
+
+/* CAMPOS GRADE (condicionais) */
+.grade-fields {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ========================================
