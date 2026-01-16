@@ -32,21 +32,21 @@
 
         <!-- AMOSTRAS -->
         <div class="analysis-section">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="section-title" style="margin-bottom: 0;">Amostras</div>
-                <div id="amostrasSelecionadasTags" style="display: flex; flex-wrap: wrap; gap: 6px; flex: 1;"></div>
-                <div style="position: relative;">
-                    <button class="btn-add-micro" id="btnAmostras" onclick="toggleDropdownAmostras(event)">+</button>
-                    <div class="dropdown-amostras-menu" id="amostrasMenu">
-                        <div class="amostra-item" onclick="toggleAmostra('a1', 'A1', this, event)">
+            <div class="section-header-inline">
+                <div class="section-title">Amostras</div>
+                <div id="amostrasSelecionadasTags" class="tags-container"></div>
+                <div class="dropdown-wrapper">
+                    <button class="btn-add" id="btnAmostras" onclick="toggleDropdownAmostras(event)">+</button>
+                    <div class="dropdown-menu" id="amostrasMenu">
+                        <div class="dropdown-item" onclick="toggleAmostra('a1', 'A1', this, event)">
                             <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             <span>Amostra 01 - Talhão A</span>
                         </div>
-                        <div class="amostra-item" onclick="toggleAmostra('a2', 'A2', this, event)">
+                        <div class="dropdown-item" onclick="toggleAmostra('a2', 'A2', this, event)">
                             <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             <span>Amostra 02 - Talhão B</span>
                         </div>
-                        <div class="amostra-item" onclick="toggleAmostra('a3', 'A3', this, event)">
+                        <div class="dropdown-item" onclick="toggleAmostra('a3', 'A3', this, event)">
                             <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                             <span>Amostra 03 - Talhão C</span>
                         </div>
@@ -64,196 +64,342 @@
                 <div class="status-bar"><div class="status-indicator" id="ph-indicator"></div></div>
             </div>
             <div class="interference-grid">
-                <div class="nutrient-interference"><div class="nutrient-name">N</div><div class="interference-value interference-neutral" id="int-n">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">P</div><div class="interference-value interference-neutral" id="int-p">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">K</div><div class="interference-value interference-neutral" id="int-k">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Ca</div><div class="interference-value interference-neutral" id="int-ca">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Mg</div><div class="interference-value interference-neutral" id="int-mg">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">S</div><div class="interference-value interference-neutral" id="int-s">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Fe</div><div class="interference-value interference-neutral" id="int-fe">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Mn</div><div class="interference-value interference-neutral" id="int-mn">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Zn</div><div class="interference-value interference-neutral" id="int-zn">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Cu</div><div class="interference-value interference-neutral" id="int-cu">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">B</div><div class="interference-value interference-neutral" id="int-b">--</div></div>
-                <div class="nutrient-interference"><div class="nutrient-name">Mo</div><div class="interference-value interference-neutral" id="int-mo">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">N</div><div class="interference-value" id="int-n">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">P</div><div class="interference-value" id="int-p">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">K</div><div class="interference-value" id="int-k">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Ca</div><div class="interference-value" id="int-ca">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Mg</div><div class="interference-value" id="int-mg">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">S</div><div class="interference-value" id="int-s">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Fe</div><div class="interference-value" id="int-fe">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Mn</div><div class="interference-value" id="int-mn">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Zn</div><div class="interference-value" id="int-zn">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Cu</div><div class="interference-value" id="int-cu">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">B</div><div class="interference-value" id="int-b">--</div></div>
+                <div class="nutrient-interference"><div class="nutrient-name">Mo</div><div class="interference-value" id="int-mo">--</div></div>
             </div>
         </div>
 
         <!-- TEXTURA DO SOLO -->
         <div class="analysis-section">
             <div class="section-title">Textura do Solo</div>
-            <div class="compact-row">
-                <div class="compact-field">
-                    <label>Areia %</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputAreia" oninput="formatDecimal(this); updateTextura()">
+            
+            <!-- Inputs de Textura -->
+            <div class="grid-3 mb-16">
+                <div class="metric-row-compact">
+                    <span class="metric-label">Areia (%)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputAreia" oninput="formatDecimal(this); updateTextura()">
+                    <div class="status-bar"><div class="status-indicator" id="areia-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>Silte %</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputSilte" oninput="formatDecimal(this); updateTextura()">
+                <div class="metric-row-compact">
+                    <span class="metric-label">Silte (%)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputSilte" oninput="formatDecimal(this); updateTextura()">
+                    <div class="status-bar"><div class="status-indicator" id="silte-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>Argila %</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputArgila" oninput="formatDecimal(this); updateTextura()">
+                <div class="metric-row-compact">
+                    <span class="metric-label">Argila (%)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputArgila" oninput="formatDecimal(this); updateTextura()">
+                    <div class="status-bar"><div class="status-indicator" id="argila-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>Total</label>
-                    <div class="value-display" id="totalTextura">0%</div>
+            </div>
+
+            <!-- Total e Classe -->
+            <div class="grid-2 mb-16">
+                <div class="info-box">
+                    <div class="info-label">Total</div>
+                    <div class="info-value-row">
+                        <span class="info-value" id="totalTextura">0</span>
+                        <span class="info-unit">%</span>
+                        <span class="info-icon" id="validacaoIcon">○</span>
+                    </div>
                 </div>
-                <div class="compact-field" style="flex: 2;">
-                    <label>Classe Textural</label>
-                    <div class="value-display highlight" id="classeTextural">-</div>
+                <div class="info-box">
+                    <div class="info-label">Classe Textural</div>
+                    <div class="info-value highlight" id="classeTextural">-</div>
                 </div>
+            </div>
+
+            <!-- Cards de Tipos de Solo -->
+            <div class="subsection-title">Tipos de Solo Comuns</div>
+            <div class="grid-3 mb-12">
+                <!-- Argiloso -->
+                <div id="cardArgiloso" class="card-tipo-solo" onclick="aplicarTipoSolo('argiloso')">
+                    <div class="tipo-solo-icon">🟫</div>
+                    <div class="tipo-solo-nome">ARGILOSO</div>
+                    <div class="tipo-solo-desc">
+                        <div>• Textura fina e fértil</div>
+                        <div>• Alta retenção de água</div>
+                        <div>• Suscetível à compactação</div>
+                    </div>
+                    <div class="tipo-solo-composicao">
+                        <div class="composicao-label">Composição típica:</div>
+                        <div class="composicao-value">Argila: 35-60%</div>
+                    </div>
+                </div>
+
+                <!-- Arenoso -->
+                <div id="cardArenoso" class="card-tipo-solo" onclick="aplicarTipoSolo('arenoso')">
+                    <div class="tipo-solo-icon">🟨</div>
+                    <div class="tipo-solo-nome">ARENOSO</div>
+                    <div class="tipo-solo-desc">
+                        <div>• Grãos visíveis</div>
+                        <div>• Pouca retenção de água</div>
+                        <div>• Adubação frequente</div>
+                    </div>
+                    <div class="tipo-solo-composicao">
+                        <div class="composicao-label">Composição típica:</div>
+                        <div class="composicao-value">Areia: 70-90%</div>
+                    </div>
+                </div>
+
+                <!-- Siltoso -->
+                <div id="cardSiltoso" class="card-tipo-solo" onclick="aplicarTipoSolo('siltoso')">
+                    <div class="tipo-solo-icon">🟧</div>
+                    <div class="tipo-solo-nome">SILTOSO</div>
+                    <div class="tipo-solo-desc">
+                        <div>• Textura fina e lisa</div>
+                        <div>• Fertilidade média</div>
+                        <div>• Baixa estabilidade</div>
+                    </div>
+                    <div class="tipo-solo-composicao">
+                        <div class="composicao-label">Composição típica:</div>
+                        <div class="composicao-value">Silte: 60-80%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dica -->
+            <div class="tip-box">
+                <strong class="tip-icon">💡 Dica:</strong> Clique em um dos cards acima para aplicar valores típicos
             </div>
         </div>
 
-        <!-- SOMA DE BASES -->
+        <!-- SOMA DE BASES + Al + H -->
         <div class="analysis-section">
             <div class="section-title">Soma de Bases e Acidez</div>
-            <div class="compact-row">
-                <div class="compact-field">
-                    <label>Ca</label>
+            
+            <div class="grid-2 mb-12">
+                <div class="metric-row-compact">
+                    <span class="metric-label">Ca (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputCa" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="ca-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>Mg</label>
+                <div class="metric-row-compact">
+                    <span class="metric-label">Mg (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputMg" oninput="formatDecimal(this); calcularSBCTC()">
-                </div>
-                <div class="compact-field">
-                    <label>K</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputK" oninput="formatDecimal(this); calcularSBCTC()">
-                </div>
-                <div class="compact-field">
-                    <label>Na</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputNa" oninput="formatDecimal(this); calcularSBCTC()">
-                </div>
-                <div class="compact-field">
-                    <label>Al</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputAl" oninput="formatDecimal(this); calcularSBCTC()">
-                </div>
-                <div class="compact-field">
-                    <label>H+Al</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputHAl" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="mg-indicator"></div></div>
                 </div>
             </div>
-            <div class="results-row">
-                <div class="result-badge green"><span class="result-label">SB</span><span class="result-value" id="valorSB">0.00</span></div>
-                <div class="result-badge blue"><span class="result-label">CTC</span><span class="result-value" id="valorCTC">0.00</span></div>
-                <div class="result-badge orange"><span class="result-label">V%</span><span class="result-value" id="valorV">0</span></div>
-                <div class="result-badge gray"><span class="result-label">Ca/Mg</span><span class="result-value" id="relacaoCaMg">--</span></div>
-                <div class="result-badge gray"><span class="result-label">Ca/K</span><span class="result-value" id="relacaoCaK">--</span></div>
-                <div class="result-badge gray"><span class="result-label">Mg/K</span><span class="result-value" id="relacaoMgK">--</span></div>
+
+            <div class="grid-2 mb-12">
+                <div class="metric-row-compact">
+                    <span class="metric-label">K (cmolc/dm³)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0.00" id="inputK" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="k-indicator"></div></div>
+                </div>
+                <div class="metric-row-compact">
+                    <span class="metric-label">Na (cmolc/dm³)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0.00" id="inputNa" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="na-indicator"></div></div>
+                </div>
+            </div>
+
+            <div class="grid-2 mb-12">
+                <div class="metric-row-compact">
+                    <span class="metric-label">Al (cmolc/dm³)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputAl" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="al-indicator"></div></div>
+                </div>
+                <div class="metric-row-compact">
+                    <span class="metric-label">H + Al (cmolc/dm³)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputHAl" oninput="formatDecimal(this); calcularSBCTC()">
+                    <div class="status-bar"><div class="status-indicator" id="hal-indicator"></div></div>
+                </div>
+            </div>
+
+            <!-- CARDS SB, CTC + BARRIL V% -->
+            <div class="results-container">
+                <div class="result-cards">
+                    <div class="result-card green">
+                        <div class="result-label">SB</div>
+                        <div class="result-value" id="valorSB">0.00</div>
+                    </div>
+                    <div class="result-card blue">
+                        <div class="result-label">CTC</div>
+                        <div class="result-value" id="valorCTC">0.00</div>
+                    </div>
+                </div>
+                
+                <!-- BARRIL V% -->
+                <div class="barrel-container">
+                    <div class="barrel">
+                        <div class="barrel-fill" id="barrelFill" style="height: 0%;"></div>
+                        <div class="barrel-empty" id="barrelEmpty"></div>
+                        <div class="barrel-value" id="barrelValue">0%</div>
+                    </div>
+                    <div class="barrel-labels">
+                        <span class="barrel-label-top">V%</span>
+                        <span class="barrel-label-bottom">H+Al</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RELAÇÕES DE BASES -->
+            <div class="relacoes-section">
+                <div class="subsection-title">Relações de Bases</div>
+                <div class="grid-3">
+                    <div class="relacao-item">
+                        <div class="relacao-label">Ca/Mg</div>
+                        <div class="relacao-value green" id="relacaoCaMg">--</div>
+                        <div class="relacao-bar"><div id="barraCaMg" class="relacao-fill green"></div></div>
+                        <div class="relacao-ideal" id="statusCaMg">3-5</div>
+                    </div>
+                    <div class="relacao-item">
+                        <div class="relacao-label">Ca/K</div>
+                        <div class="relacao-value blue" id="relacaoCaK">--</div>
+                        <div class="relacao-bar"><div id="barraCaK" class="relacao-fill blue"></div></div>
+                        <div class="relacao-ideal" id="statusCaK">10-30</div>
+                    </div>
+                    <div class="relacao-item">
+                        <div class="relacao-label">Mg/K</div>
+                        <div class="relacao-value orange" id="relacaoMgK">--</div>
+                        <div class="relacao-bar"><div id="barraMgK" class="relacao-fill orange"></div></div>
+                        <div class="relacao-ideal" id="statusMgK">3-10</div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- ENXOFRE E P-REM -->
         <div class="analysis-section">
             <div class="section-title">Enxofre e P-rem</div>
-            <div class="compact-row">
-                <div class="compact-field">
-                    <label>S (mg/dm³)</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+            <div class="grid-2">
+                <div class="metric-row-compact">
+                    <span class="metric-label">S (mg/dm³)</span>
+                    <input type="text" class="input-compact" maxlength="5" placeholder="0" oninput="formatDecimal(this)">
+                    <div class="status-bar"><div class="status-indicator" id="s-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>P-rem (mg/L)</label>
+                <div class="metric-row-compact">
+                    <span class="metric-label">P-rem (mg/L)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                    <div class="status-bar"><div class="status-indicator" id="prem-indicator"></div></div>
                 </div>
             </div>
         </div>
 
-        <!-- BOTÕES CORRETIVO + POTÁSSIO -->
-        <div class="button-group">
-            <button class="recommend-btn" onclick="toggleMenuCorretivo()">+ Corretivo</button>
-            <button class="recommend-btn" onclick="abrirSeletorRegencia('potassio')">+ Potássio</button>
-            <button class="recommend-btn" onclick="abrirSeletorRegencia('fosforo')">+ Fósforo</button>
-        </div>
-
-        <!-- MENU CORRETIVO -->
-        <div class="floating-menu" id="correctiveMenu">
-            <div class="menu-item" onclick="toggleCorrective('dolomitico')"><span>Calcário Dolomítico</span><span class="checkmark">✓</span></div>
-            <div class="menu-item" onclick="toggleCorrective('calcitico')"><span>Calcário Calcítico</span><span class="checkmark">✓</span></div>
-            <div class="menu-item" onclick="toggleCorrective('gesso')"><span>Gesso Agrícola</span><span class="checkmark">✓</span></div>
-        </div>
-
-        <!-- MODAL SELETOR DE REGÊNCIA -->
-        <div class="modal-overlay" id="modalRegencia" onclick="fecharModalRegencia(event)">
-            <div class="modal-content" onclick="event.stopPropagation()">
-                <div class="modal-header">
-                    <span id="modalRegenciaTitulo">Selecione o tipo de regência</span>
-                    <button class="modal-close" onclick="fecharModalRegencia()">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="regencia-option" onclick="selecionarRegencia('autor')">
-                        <span>📚 Autor/Referência</span>
+        <!-- BOTÃO CORRETIVO -->
+        <div class="button-row">
+            <div class="dropdown-wrapper">
+                <button class="btn-action" onclick="toggleMenuCorretivo(event)">+ Corretivo</button>
+                <div class="dropdown-menu bottom" id="correctiveMenu">
+                    <div class="dropdown-item" data-type="dolomitico" onclick="toggleCorrective('dolomitico', this, event)">
+                        <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <span>Calcário Dolomítico</span>
                     </div>
-                    <div class="regencia-option" onclick="selecionarRegencia('tecnologia')">
-                        <span>⚙️ Tecnologia</span>
+                    <div class="dropdown-item" data-type="calcitico" onclick="toggleCorrective('calcitico', this, event)">
+                        <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <span>Calcário Calcítico</span>
                     </div>
-                    <div class="regencia-option" onclick="selecionarRegencia('cultivar')">
-                        <span>🌱 Cultivar</span>
+                    <div class="dropdown-item" data-type="gesso" onclick="toggleCorrective('gesso', this, event)">
+                        <div class="checkbox-custom"><svg class="checkmark" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                        <span>Gesso Agrícola</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- CARD CALAGEM -->
-        <div class="recommendation-card" id="cardCalagem">
+        <div class="recommendation-card" id="cardCalagem" style="display: none;">
             <div class="card-header">
                 <div class="card-title">Calagem</div>
                 <div class="card-controls">
-                    <button class="control-btn" onclick="minimizeCard('cardCalagem')">−</button>
+                    <button class="control-btn" onclick="minimizeCard('cardCalagem')" title="Minimizar">−</button>
+                    <button class="control-btn" onclick="fecharCard('cardCalagem')" title="Fechar">×</button>
                 </div>
             </div>
             <div class="card-content" id="contentCalagem">
-                <div class="form-row">
-                    <label>Método</label>
-                    <select class="dropdown-compact" id="metodoCalagem">
-                        <option value="">Selecione...</option>
+                <!-- Método -->
+                <div class="form-section">
+                    <div class="form-label">Método de Calagem</div>
+                    <select class="dropdown-full">
+                        <option value="">Selecione o método</option>
                         <option value="albrecht">Equilíbrio Albrecht</option>
+                        <option value="albrecht-mod">Equilíbrio Albrecht Modificado (Y)</option>
                         <option value="saturacao">Saturação por Bases (V%)</option>
-                        <option value="embrapa">EMBRAPA</option>
-                    </select>
-                </div>
-                
-                <div class="section-subtitle">Nível Crítico (cmol/dm³)</div>
-                <div class="compact-row">
-                    <div class="compact-field"><label>Ca</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
-                    <div class="compact-field"><label>Mg</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
-                    <div class="compact-field"><label>K</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
-                </div>
-
-                <div class="section-subtitle">Bases do Solo em %</div>
-                <div class="compact-row">
-                    <div class="compact-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseCa" oninput="formatDecimal(this)"></div>
-                    <div class="compact-field"><label>Mg%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseMg" oninput="formatDecimal(this)"></div>
-                    <div class="compact-field"><label>K%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseK" oninput="formatDecimal(this)"></div>
-                    <div class="compact-field"><label>V%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseV" oninput="formatDecimal(this)"></div>
-                </div>
-
-                <div class="form-row">
-                    <label>Estratégia</label>
-                    <select class="dropdown-compact">
-                        <option value="">Selecione...</option>
-                        <option value="padrao">Recomendação padrão</option>
-                        <option value="elevar-nc">Elevar % e respeitar NC</option>
+                        <option value="embrapa">Método tradicional (EMBRAPA)</option>
+                        <option value="ncpt">Método NCpT</option>
                     </select>
                 </div>
 
-                <!-- CALCÁRIO DOLOMÍTICO -->
+                <!-- Nível Crítico + Bases do Solo em LINHA ÚNICA -->
+                <div class="form-section">
+                    <div class="form-label">Nível Crítico (cmol/dm³) + Bases do Solo (%)</div>
+                    <div class="inline-fields">
+                        <div class="inline-field">
+                            <label>Ca</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                        </div>
+                        <div class="inline-field">
+                            <label>Mg</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                        </div>
+                        <div class="inline-field">
+                            <label>K</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.00" oninput="formatDecimal(this)">
+                        </div>
+                        <div class="field-divider"></div>
+                        <div class="inline-field">
+                            <label>Ca%</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseCa" oninput="formatDecimal(this); calcularVPercent()">
+                        </div>
+                        <div class="inline-field">
+                            <label>Mg%</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseMg" oninput="formatDecimal(this); calcularVPercent()">
+                        </div>
+                        <div class="inline-field">
+                            <label>K%</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseK" oninput="formatDecimal(this); calcularVPercent()">
+                        </div>
+                        <div class="inline-field">
+                            <label>Na%</label>
+                            <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="baseNa" oninput="formatDecimal(this); calcularVPercent()">
+                        </div>
+                        <!-- Mini Barril V% -->
+                        <div class="mini-barrel-wrapper">
+                            <div class="mini-barrel">
+                                <div class="mini-barrel-fill" id="miniBarrelFill" style="height: 0%;"></div>
+                            </div>
+                            <span class="mini-barrel-value" id="miniBarrelValue">V% 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estratégia -->
+                <div class="form-section">
+                    <div class="form-label">Elevar % das Bases</div>
+                    <select class="dropdown-full">
+                        <option value="">Selecione a estratégia</option>
+                        <option value="padrao">Seguir a recomendação padrão</option>
+                        <option value="elevar-nc">Elevar % das bases e sempre respeitar o NC</option>
+                        <option value="elevar-proporcao">Elevar % das bases e manter a proporção escolhida</option>
+                    </select>
+                </div>
+
+                <!-- MINI-CARD DOLOMÍTICO -->
                 <div class="mini-card" id="miniDolomitico" style="display: none;">
                     <div class="mini-card-header">
                         <span>Calcário Dolomítico</span>
                         <button class="btn-remove" onclick="removeCorrective('dolomitico')">×</button>
                     </div>
-                    <div class="compact-row">
-                        <div class="compact-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doloCa" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>Mg%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doloMg" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PR%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doloPR" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PE%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doloPE" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PRNT%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doloPRNT" oninput="formatDecimal(this)"></div>
+                    <div class="inline-fields">
+                        <div class="inline-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>Mg%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PR%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PE%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PRNT%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
                     </div>
-                    <div class="form-row" style="margin-top: 8px;">
+                    <div class="form-row mt-12">
                         <label>Superfície</label>
-                        <select class="dropdown-compact" id="doloSuperficie">
+                        <select class="dropdown-compact">
                             <option value="">Selecione...</option>
                             <option value="superficial">Superficial</option>
                             <option value="niveladora">Niveladora</option>
@@ -261,22 +407,22 @@
                     </div>
                 </div>
 
-                <!-- CALCÁRIO CALCÍTICO -->
+                <!-- MINI-CARD CALCÍTICO -->
                 <div class="mini-card" id="miniCalcitico" style="display: none;">
                     <div class="mini-card-header">
                         <span>Calcário Calcítico</span>
                         <button class="btn-remove" onclick="removeCorrective('calcitico')">×</button>
                     </div>
-                    <div class="compact-row">
-                        <div class="compact-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="calcCa" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>Mg%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="calcMg" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PR%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="calcPR" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PE%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="calcPE" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>PRNT%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="calcPRNT" oninput="formatDecimal(this)"></div>
+                    <div class="inline-fields">
+                        <div class="inline-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>Mg%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PR%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PE%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>PRNT%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
                     </div>
-                    <div class="form-row" style="margin-top: 8px;">
+                    <div class="form-row mt-12">
                         <label>Superfície</label>
-                        <select class="dropdown-compact" id="calcSuperficie">
+                        <select class="dropdown-compact">
                             <option value="">Selecione...</option>
                             <option value="superficial">Superficial</option>
                             <option value="niveladora">Niveladora</option>
@@ -284,22 +430,31 @@
                     </div>
                 </div>
 
-                <!-- GESSO -->
+                <!-- MINI-CARD GESSO -->
                 <div class="mini-card" id="miniGesso" style="display: none;">
                     <div class="mini-card-header">
                         <span>Gesso Agrícola</span>
                         <button class="btn-remove" onclick="removeCorrective('gesso')">×</button>
                     </div>
-                    <div class="compact-row">
-                        <div class="compact-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="gessoCa" oninput="formatDecimal(this)"></div>
-                        <div class="compact-field"><label>S%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="gessoS" oninput="formatDecimal(this)"></div>
+                    <div class="form-section">
+                        <div class="form-label">Método de Gessagem</div>
+                        <select class="dropdown-full">
+                            <option value="">Selecione o método</option>
+                            <option value="enxofre">Pela Necessidade de Enxofre (S)</option>
+                            <option value="calcio-aluminio">Pelo Método da Necessidade de Cálcio (Ca) e Redução de Alumínio (Al)</option>
+                            <option value="sulfato">Pelo Teor de Sulfato (SO₄²⁻) na Água de Irrigação</option>
+                        </select>
+                    </div>
+                    <div class="inline-fields">
+                        <div class="inline-field"><label>Ca%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                        <div class="inline-field"><label>S%</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
                     </div>
                 </div>
 
                 <!-- BOTÃO GERAR RECOMENDAÇÃO -->
                 <button class="btn-generate" onclick="gerarRecomendacaoCalagem()">Gerar Recomendação</button>
 
-                <!-- RESULTADO DA RECOMENDAÇÃO -->
+                <!-- RESULTADO -->
                 <div id="resultadoCalagem" class="resultado-box" style="display: none;">
                     <div class="resultado-titulo">Recomendação</div>
                     <div class="resultado-items">
@@ -358,6 +513,23 @@
             </div>
         </div>
 
+        <!-- POTÁSSIO -->
+        <div class="analysis-section">
+            <div class="section-title">Potássio</div>
+            <div class="metric-row-compact">
+                <span class="metric-label">K (mg/dm³)</span>
+                <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                <div class="status-bar"><div class="status-indicator" id="k-mg-indicator"></div></div>
+            </div>
+        </div>
+
+        <!-- BOTÃO POTÁSSIO -->
+        <div class="button-row">
+            <div class="dropdown-wrapper">
+                <button class="btn-action" onclick="abrirSeletorRegencia('potassio')">+ Potássio</button>
+            </div>
+        </div>
+
         <!-- CARD POTÁSSIO -->
         <div class="recommendation-card" id="cardPotassio" style="display: none;">
             <div class="card-header">
@@ -368,19 +540,14 @@
                 </div>
             </div>
             <div class="card-content" id="contentPotassio">
-                <!-- Tag de regência selecionada -->
-                <div class="regencia-selecionada" id="regenciaPotassio">
+                <div class="regencia-selecionada">
                     <span class="regencia-tag" id="tagPotassio">📚 Autor</span>
                     <button class="btn-change" onclick="abrirSeletorRegencia('potassio')">Alterar</button>
                 </div>
-
                 <div class="form-row">
                     <label>Referência</label>
-                    <select class="dropdown-compact" id="selectRefPotassio" onchange="atualizarRefEspecifica('potassio')">
-                        <option value="">Selecione...</option>
-                    </select>
+                    <select class="dropdown-compact" id="selectRefPotassio"></select>
                 </div>
-
                 <div class="form-row">
                     <label>Método</label>
                     <select class="dropdown-compact" id="metodoPotassio">
@@ -390,32 +557,26 @@
                         <option value="exportacao">Exportação (Manutenção)</option>
                     </select>
                 </div>
-
-                <div class="section-subtitle">Fonte e Dose</div>
-                <div class="compact-row">
-                    <div class="compact-field" style="flex: 2;">
+                <div class="subsection-title mt-12">Fonte e Dose</div>
+                <div class="inline-fields">
+                    <div class="inline-field" style="flex: 2;">
                         <label>Adubo</label>
-                        <select class="dropdown-compact" id="aduboPotassio">
+                        <select class="dropdown-full" id="aduboPotassio">
                             <option value="">Selecione...</option>
-                            <option value="kcl">KCl - Cloreto de Potássio (60% K₂O)</option>
-                            <option value="sulfato-k">Sulfato de Potássio (50% K₂O)</option>
-                            <option value="nitrato-k">Nitrato de Potássio (44% K₂O)</option>
+                            <option value="kcl">KCl - Cloreto de Potássio</option>
+                            <option value="sulfato-k">Sulfato de Potássio</option>
                         </select>
                     </div>
-                    <div class="compact-field">
+                    <div class="inline-field">
                         <label>Dose</label>
                         <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="dosePotassio" oninput="formatDecimal(this)">
                     </div>
-                    <div class="compact-field">
-                        <span class="unidade">kg/ha</span>
-                    </div>
+                    <span class="unit-label">kg/ha</span>
                 </div>
-
                 <button class="btn-generate" onclick="gerarRecomendacaoPotassio()">Gerar Recomendação</button>
-
-                <div id="resultadoPotassio" class="resultado-box-simples" style="display: none;">
+                <div id="resultadoPotassio" class="resultado-simples" style="display: none;">
                     <span class="resultado-icon">🔷</span>
-                    <span class="resultado-texto" id="textoPotassio"></span>
+                    <span id="textoPotassio"></span>
                 </div>
             </div>
         </div>
@@ -423,19 +584,29 @@
         <!-- FÓSFORO -->
         <div class="analysis-section">
             <div class="section-title">Fósforo</div>
-            <div class="compact-row">
-                <div class="compact-field">
-                    <label>P Mehlich</label>
+            <div class="grid-2 mb-12">
+                <div class="metric-row-compact">
+                    <span class="metric-label">P Mehlich (mg/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                    <div class="status-bar"><div class="status-indicator" id="pmehlich-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>P Resina</label>
+                <div class="metric-row-compact">
+                    <span class="metric-label">P Resina (mg/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                    <div class="status-bar"><div class="status-indicator" id="presina-indicator"></div></div>
                 </div>
-                <div class="compact-field">
-                    <label>PR %</label>
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
-                </div>
+            </div>
+            <div class="metric-row-compact">
+                <span class="metric-label">PR %</span>
+                <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
+                <div class="status-bar"><div class="status-indicator" id="pr-indicator"></div></div>
+            </div>
+        </div>
+
+        <!-- BOTÃO FÓSFORO -->
+        <div class="button-row">
+            <div class="dropdown-wrapper">
+                <button class="btn-action" onclick="abrirSeletorRegencia('fosforo')">+ Fósforo</button>
             </div>
         </div>
 
@@ -449,19 +620,14 @@
                 </div>
             </div>
             <div class="card-content" id="contentFosforo">
-                <!-- Tag de regência selecionada -->
-                <div class="regencia-selecionada" id="regenciaFosforo">
+                <div class="regencia-selecionada">
                     <span class="regencia-tag" id="tagFosforo">📚 Autor</span>
                     <button class="btn-change" onclick="abrirSeletorRegencia('fosforo')">Alterar</button>
                 </div>
-
                 <div class="form-row">
                     <label>Referência</label>
-                    <select class="dropdown-compact" id="selectRefFosforo" onchange="atualizarRefEspecifica('fosforo')">
-                        <option value="">Selecione...</option>
-                    </select>
+                    <select class="dropdown-compact" id="selectRefFosforo"></select>
                 </div>
-
                 <div class="form-row">
                     <label>Método</label>
                     <select class="dropdown-compact" id="metodoFosforo">
@@ -471,33 +637,28 @@
                         <option value="exportacao">Exportação (Manutenção)</option>
                     </select>
                 </div>
-
-                <div class="section-subtitle">Fonte e Dose</div>
-                <div class="compact-row">
-                    <div class="compact-field" style="flex: 2;">
+                <div class="subsection-title mt-12">Fonte e Dose</div>
+                <div class="inline-fields">
+                    <div class="inline-field" style="flex: 2;">
                         <label>Adubo</label>
-                        <select class="dropdown-compact" id="aduboFosforo">
+                        <select class="dropdown-full" id="aduboFosforo">
                             <option value="">Selecione...</option>
-                            <option value="map">MAP - Monoamônio Fosfato (52% P₂O₅)</option>
-                            <option value="dap">DAP - Diamônio Fosfato (46% P₂O₅)</option>
-                            <option value="super-simples">Superfosfato Simples (18% P₂O₅)</option>
-                            <option value="super-triplo">Superfosfato Triplo (46% P₂O₅)</option>
+                            <option value="map">MAP - Monoamônio Fosfato</option>
+                            <option value="dap">DAP - Diamônio Fosfato</option>
+                            <option value="super-simples">Superfosfato Simples</option>
+                            <option value="super-triplo">Superfosfato Triplo</option>
                         </select>
                     </div>
-                    <div class="compact-field">
+                    <div class="inline-field">
                         <label>Dose</label>
                         <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="doseFosforo" oninput="formatDecimal(this)">
                     </div>
-                    <div class="compact-field">
-                        <span class="unidade">kg/ha</span>
-                    </div>
+                    <span class="unit-label">kg/ha</span>
                 </div>
-
                 <button class="btn-generate" onclick="gerarRecomendacaoFosforo()">Gerar Recomendação</button>
-
-                <div id="resultadoFosforo" class="resultado-box-simples" style="display: none;">
+                <div id="resultadoFosforo" class="resultado-simples" style="display: none;">
                     <span class="resultado-icon">🔶</span>
-                    <span class="resultado-texto" id="textoFosforo"></span>
+                    <span id="textoFosforo"></span>
                 </div>
             </div>
         </div>
@@ -505,25 +666,48 @@
         <!-- MICRONUTRIENTES -->
         <div class="analysis-section">
             <div class="section-title">Micronutrientes</div>
-            <div class="compact-row">
-                <div class="compact-field"><label>Mn</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputMn" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Zn</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputZn" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Cu</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputCu" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Fe</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputFe" oninput="formatDecimal(this)"></div>
+            <div class="grid-4 mb-8">
+                <div class="micro-field"><label>Mn</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Zn</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Cu</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Fe</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
             </div>
-            <div class="compact-row">
-                <div class="compact-field"><label>B</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputB" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Mo</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputMo" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Ni</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputNi" oninput="formatDecimal(this)"></div>
-                <div class="compact-field"><label>Se</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputSe" oninput="formatDecimal(this)"></div>
+            <div class="grid-4">
+                <div class="micro-field"><label>B</label><input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Mo</label><input type="text" class="input-compact" maxlength="5" placeholder="0.00" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Ni</label><input type="text" class="input-compact" maxlength="5" placeholder="0.00" oninput="formatDecimal(this)"></div>
+                <div class="micro-field"><label>Se</label><input type="text" class="input-compact" maxlength="5" placeholder="0.00" oninput="formatDecimal(this)"></div>
             </div>
         </div>
 
-        <!-- BOTÃO CRIAR GRUPO -->
-        <button class="recommend-btn" onclick="criarGrupoMicro()" style="margin-top: 12px;">+ Grupo de Micronutrientes</button>
+        <!-- BOTÃO GRUPO MICRO -->
+        <div class="button-row">
+            <button class="btn-action" onclick="criarGrupoMicro()">+ Grupo de Micronutrientes</button>
+        </div>
 
-        <!-- CONTAINER DOS GRUPOS -->
+        <!-- CONTAINER GRUPOS MICRO -->
         <div id="containerGruposMicro"></div>
+
+        <!-- MODAL SELETOR REGÊNCIA -->
+        <div class="modal-overlay" id="modalRegencia" onclick="fecharModalRegencia(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <div class="modal-header">
+                    <span id="modalRegenciaTitulo">Tipo de regência</span>
+                    <button class="modal-close" onclick="fecharModalRegencia()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="regencia-option" onclick="selecionarRegencia('autor')">
+                        <span>📚 Autor/Referência</span>
+                    </div>
+                    <div class="regencia-option" onclick="selecionarRegencia('tecnologia')">
+                        <span>⚙️ Tecnologia</span>
+                    </div>
+                    <div class="regencia-option" onclick="selecionarRegencia('cultivar')">
+                        <span>🌱 Cultivar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
