@@ -4,17 +4,10 @@
 function formatDecimal(input) {
     let value = input.value.replace(/[^0-9,.]/g, '');
     value = value.replace(',', '.');
-    
     const parts = value.split('.');
-    if (parts[0] && parts[0].length > 3) {
-        parts[0] = parts[0].substring(0, 3);
-    }
-    if (parts[1] && parts[1].length > 1) {
-        parts[1] = parts[1].substring(0, 1);
-    }
-    
-    value = parts.join('.');
-    input.value = value;
+    if (parts[0] && parts[0].length > 3) parts[0] = parts[0].substring(0, 3);
+    if (parts[1] && parts[1].length > 1) parts[1] = parts[1].substring(0, 1);
+    input.value = parts.join('.');
 }
 
 // ========================================
@@ -23,16 +16,10 @@ function formatDecimal(input) {
 const dadosRegencia = {
     autor: [
         { value: 'araujo-2023', label: 'Araújo (2023)' },
-        { value: 'kurihara-2013-1', label: 'Kurihara et al. (2013)¹' },
-        { value: 'kurihara-2013-138', label: 'Kurihara et al. (2013)138' },
+        { value: 'kurihara-2013', label: 'Kurihara et al. (2013)' },
         { value: 'santos-2008', label: 'Santos et al. (2008)' },
-        { value: 'bataglia-1977', label: 'Bataglia & Mascarenhas (1977)' },
-        { value: 'borkert-1986', label: 'Borkert (1986)' },
-        { value: 'cordeiro-1977', label: 'Cordeiro et al. (1977)' },
-        { value: 'darwich-1993', label: 'Darwich (1993)' },
         { value: 'embrapa', label: 'EMBRAPA' },
-        { value: 'portafos', label: 'Portafos' },
-        { value: 'tanaka-1994', label: 'Tanaka et al. (1994)' }
+        { value: 'malavolta', label: 'Malavolta (1980)' }
     ],
     tecnologia: [
         { value: 'enlist', label: 'Enlist' },
@@ -41,41 +28,122 @@ const dadosRegencia = {
     ],
     cultivar: [
         { value: '73i75RSF', label: '73i75RSF' },
-        { value: '75i74RSF', label: '75i74RSF' },
-        { value: '77EA40', label: '77EA40' },
-        { value: 'ADV4681-Ipro-SR1', label: 'ADV4681 Ipro - SR1' },
         { value: 'AS3595i2x', label: 'AS3595i2x' },
-        { value: 'AS3640i2x', label: 'AS3640i2x' },
-        { value: 'AS3700XTD', label: 'AS3700XTD' },
-        { value: 'CZ37B43', label: 'CZ37B43' },
-        { value: 'Dagma-7621', label: 'Dagma 7621' },
-        { value: 'DESAFIO-8473RFS', label: 'DESAFIO (8473 RFS)' },
-        { value: 'DM-72IX74', label: 'DM 72IX74' },
-        { value: 'FOCO-74177RFS', label: 'FOCO (74177 RFS)' },
-        { value: 'Guepardo-IPRO', label: 'Guepardo IPRO' },
         { value: 'M6210Ipro', label: 'M6210 Ipro' },
-        { value: 'NEOGEN720', label: 'NEOGEN 720' },
-        { value: 'Olimpo-80182RFS', label: 'Olimpo (80182 RFS)' },
-        { value: 'SUPERA-i2x', label: 'SUPERA i2x (BRASMAX)' }
+        { value: 'NEOGEN720', label: 'NEOGEN 720' }
     ]
 };
 
-let regenciaSelecionada = {
-    potassio: { tipo: 'autor', especifica: '' },
-    fosforo: { tipo: 'autor', especifica: '' }
-};
-
+// Estado global
+let regenciaSelecionada = { potassio: { tipo: 'autor' }, fosforo: { tipo: 'autor' } };
 let nutrienteAtual = '';
+let corretivosAtivos = { dolomitico: false, calcitico: false, gesso: false };
+let amostrasSelecionadas = {};
 
 // ========================================
-// MODAL DE REGÊNCIA
+// FECHAR TODOS OS DROPDOWNS
+// ========================================
+function closeAllDropdowns() {
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.btn-add').forEach(b => b.classList.remove('active'));
+}
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown-wrapper') && !e.target.closest('.dropdown-menu')) {
+        closeAllDropdowns();
+    }
+});
+
+// ========================================
+// AMOSTRAS
+// ========================================
+function toggleDropdownAmostras(event) {
+    event.stopPropagation();
+    closeAllDropdowns();
+    document.getElementById('amostrasMenu').classList.toggle('active');
+    document.getElementById('btnAmostras').classList.toggle('active');
+}
+
+function toggleAmostra(id, label, element, event) {
+    event.stopPropagation();
+    if (amostrasSelecionadas[id]) {
+        delete amostrasSelecionadas[id];
+        element.classList.remove('selected');
+    } else {
+        amostrasSelecionadas[id] = label;
+        element.classList.add('selected');
+    }
+    renderAmostrasTags();
+}
+
+function removerAmostra(id) {
+    delete amostrasSelecionadas[id];
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        if (item.getAttribute('onclick')?.includes(`'${id}'`)) item.classList.remove('selected');
+    });
+    renderAmostrasTags();
+}
+
+function renderAmostrasTags() {
+    const container = document.getElementById('amostrasSelecionadasTags');
+    if (!container) return;
+    if (Object.keys(amostrasSelecionadas).length === 0) {
+        container.innerHTML = '<span style="color:#9CA3AF;font-size:12px;font-style:italic;">Nenhuma selecionada</span>';
+        return;
+    }
+    container.innerHTML = Object.entries(amostrasSelecionadas).map(([id, label]) => `
+        <div class="amostra-tag"><span>${label}</span><button class="amostra-tag-remove" onclick="removerAmostra('${id}')">×</button></div>
+    `).join('');
+}
+
+// ========================================
+// CORRETIVOS
+// ========================================
+function toggleMenuCorretivo(event) {
+    event.stopPropagation();
+    closeAllDropdowns();
+    document.getElementById('correctiveMenu').classList.toggle('active');
+}
+
+function toggleCorrective(tipo, element, event) {
+    event.stopPropagation();
+    corretivosAtivos[tipo] = !corretivosAtivos[tipo];
+    element.classList.toggle('selected');
+    
+    const cardNames = { dolomitico: 'Dolomitico', calcitico: 'Calcitico', gesso: 'Gesso' };
+    const miniCard = document.getElementById(`mini${cardNames[tipo]}`);
+    
+    if (corretivosAtivos[tipo]) {
+        if (miniCard) miniCard.style.display = 'block';
+        document.getElementById('cardCalagem').style.display = 'block';
+    } else {
+        if (miniCard) miniCard.style.display = 'none';
+        if (!corretivosAtivos.dolomitico && !corretivosAtivos.calcitico && !corretivosAtivos.gesso) {
+            document.getElementById('cardCalagem').style.display = 'none';
+        }
+    }
+}
+
+function removeCorrective(tipo) {
+    corretivosAtivos[tipo] = false;
+    const cardNames = { dolomitico: 'Dolomitico', calcitico: 'Calcitico', gesso: 'Gesso' };
+    const miniCard = document.getElementById(`mini${cardNames[tipo]}`);
+    if (miniCard) miniCard.style.display = 'none';
+    
+    document.querySelector(`.dropdown-item[data-type="${tipo}"]`)?.classList.remove('selected');
+    
+    if (!corretivosAtivos.dolomitico && !corretivosAtivos.calcitico && !corretivosAtivos.gesso) {
+        document.getElementById('cardCalagem').style.display = 'none';
+    }
+}
+
+// ========================================
+// MODAL REGÊNCIA
 // ========================================
 function abrirSeletorRegencia(nutriente) {
     nutrienteAtual = nutriente;
-    const modal = document.getElementById('modalRegencia');
-    document.getElementById('modalRegenciaTitulo').textContent = 
-        `Tipo de regência para ${nutriente === 'potassio' ? 'Potássio' : 'Fósforo'}`;
-    modal.classList.add('active');
+    document.getElementById('modalRegenciaTitulo').textContent = `Regência para ${nutriente === 'potassio' ? 'Potássio' : 'Fósforo'}`;
+    document.getElementById('modalRegencia').classList.add('active');
 }
 
 function fecharModalRegencia(event) {
@@ -87,139 +155,21 @@ function selecionarRegencia(tipo) {
     regenciaSelecionada[nutrienteAtual].tipo = tipo;
     
     const tagId = `tag${nutrienteAtual.charAt(0).toUpperCase() + nutrienteAtual.slice(1)}`;
-    const tag = document.getElementById(tagId);
     const emojis = { autor: '📚', tecnologia: '⚙️', cultivar: '🌱' };
     const labels = { autor: 'Autor', tecnologia: 'Tecnologia', cultivar: 'Cultivar' };
-    tag.textContent = `${emojis[tipo]} ${labels[tipo]}`;
+    document.getElementById(tagId).textContent = `${emojis[tipo]} ${labels[tipo]}`;
     
     atualizarDropdownReferencia(nutrienteAtual, tipo);
-    
-    const cardId = `card${nutrienteAtual.charAt(0).toUpperCase() + nutrienteAtual.slice(1)}`;
-    document.getElementById(cardId).style.display = 'block';
-    
+    document.getElementById(`card${nutrienteAtual.charAt(0).toUpperCase() + nutrienteAtual.slice(1)}`).style.display = 'block';
     fecharModalRegencia();
 }
 
 function atualizarDropdownReferencia(nutriente, tipo) {
-    const selectId = `selectRef${nutriente.charAt(0).toUpperCase() + nutriente.slice(1)}`;
-    const select = document.getElementById(selectId);
-    
+    const select = document.getElementById(`selectRef${nutriente.charAt(0).toUpperCase() + nutriente.slice(1)}`);
     select.innerHTML = '<option value="">Selecione...</option>';
     (dadosRegencia[tipo] || []).forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt.value;
-        option.textContent = opt.label;
-        select.appendChild(option);
+        select.innerHTML += `<option value="${opt.value}">${opt.label}</option>`;
     });
-}
-
-// ========================================
-// CORRETIVOS
-// ========================================
-let corretivosAtivos = { dolomitico: false, calcitico: false, gesso: false };
-
-function toggleMenuCorretivo() {
-    document.getElementById('correctiveMenu').classList.toggle('active');
-}
-
-function toggleCorrective(tipo) {
-    corretivosAtivos[tipo] = !corretivosAtivos[tipo];
-    
-    const cardNames = { dolomitico: 'Dolomitico', calcitico: 'Calcitico', gesso: 'Gesso' };
-    const miniCard = document.getElementById(`mini${cardNames[tipo]}`);
-    const menuItem = document.querySelector(`.menu-item[onclick*="${tipo}"]`);
-    
-    if (corretivosAtivos[tipo]) {
-        if (miniCard) miniCard.style.display = 'block';
-        if (menuItem) menuItem.classList.add('selected');
-    } else {
-        if (miniCard) miniCard.style.display = 'none';
-        if (menuItem) menuItem.classList.remove('selected');
-    }
-    
-    document.getElementById('correctiveMenu').classList.remove('active');
-}
-
-function removeCorrective(tipo) {
-    corretivosAtivos[tipo] = false;
-    const cardNames = { dolomitico: 'Dolomitico', calcitico: 'Calcitico', gesso: 'Gesso' };
-    const miniCard = document.getElementById(`mini${cardNames[tipo]}`);
-    const menuItem = document.querySelector(`.menu-item[onclick*="${tipo}"]`);
-    
-    if (miniCard) miniCard.style.display = 'none';
-    if (menuItem) menuItem.classList.remove('selected');
-}
-
-// ========================================
-// RECOMENDAÇÃO CALAGEM
-// ========================================
-function gerarRecomendacaoCalagem() {
-    const resultado = document.getElementById('resultadoCalagem');
-    resultado.style.display = 'block';
-    
-    document.getElementById('recDolomitico').style.display = corretivosAtivos.dolomitico ? 'flex' : 'none';
-    document.getElementById('recCalcitico').style.display = corretivosAtivos.calcitico ? 'flex' : 'none';
-    document.getElementById('recGesso').style.display = corretivosAtivos.gesso ? 'flex' : 'none';
-    
-    if (corretivosAtivos.dolomitico) {
-        document.getElementById('valorDolomitico').textContent = (Math.random() * 3 + 1).toFixed(1);
-    }
-    if (corretivosAtivos.calcitico) {
-        document.getElementById('valorCalcitico').textContent = (Math.random() * 2 + 0.5).toFixed(1);
-    }
-    if (corretivosAtivos.gesso) {
-        document.getElementById('valorGesso').textContent = (Math.random() * 2 + 0.5).toFixed(1);
-    }
-    
-    atualizarGraficoCalagem();
-}
-
-function atualizarGraficoCalagem() {
-    const caAntes = parseFloat(document.getElementById('inputCa')?.value) || 1.5;
-    const mgAntes = parseFloat(document.getElementById('inputMg')?.value) || 0.5;
-    const sAntes = 5;
-    
-    const caDepois = caAntes * 2;
-    const mgDepois = mgAntes * 2;
-    const sDepois = sAntes * 2.5;
-    
-    const maxCa = 5, maxMg = 2, maxS = 20;
-    
-    document.getElementById('barraCaAntes').style.width = `${Math.min((caAntes/maxCa)*100, 100)}%`;
-    document.getElementById('barraCaDepois').style.width = `${Math.min((caDepois/maxCa)*100, 100)}%`;
-    document.getElementById('valCaAntes').textContent = caAntes.toFixed(1);
-    document.getElementById('valCaDepois').textContent = caDepois.toFixed(1);
-    
-    document.getElementById('barraMgAntes').style.width = `${Math.min((mgAntes/maxMg)*100, 100)}%`;
-    document.getElementById('barraMgDepois').style.width = `${Math.min((mgDepois/maxMg)*100, 100)}%`;
-    document.getElementById('valMgAntes').textContent = mgAntes.toFixed(1);
-    document.getElementById('valMgDepois').textContent = mgDepois.toFixed(1);
-    
-    document.getElementById('barraSAntes').style.width = `${Math.min((sAntes/maxS)*100, 100)}%`;
-    document.getElementById('barraSDepois').style.width = `${Math.min((sDepois/maxS)*100, 100)}%`;
-    document.getElementById('valSAntes').textContent = sAntes.toFixed(0);
-    document.getElementById('valSDepois').textContent = sDepois.toFixed(0);
-}
-
-// ========================================
-// RECOMENDAÇÃO POTÁSSIO/FÓSFORO
-// ========================================
-function gerarRecomendacaoPotassio() {
-    const dose = document.getElementById('dosePotassio').value || '0';
-    const adubo = document.getElementById('aduboPotassio');
-    const aduboNome = adubo.selectedIndex > 0 ? adubo.options[adubo.selectedIndex].text : 'Não selecionado';
-    
-    document.getElementById('textoPotassio').textContent = `${dose} kg/ha de ${aduboNome}`;
-    document.getElementById('resultadoPotassio').style.display = 'flex';
-}
-
-function gerarRecomendacaoFosforo() {
-    const dose = document.getElementById('doseFosforo').value || '0';
-    const adubo = document.getElementById('aduboFosforo');
-    const aduboNome = adubo.selectedIndex > 0 ? adubo.options[adubo.selectedIndex].text : 'Não selecionado';
-    
-    document.getElementById('textoFosforo').textContent = `${dose} kg/ha de ${aduboNome}`;
-    document.getElementById('resultadoFosforo').style.display = 'flex';
 }
 
 // ========================================
@@ -231,12 +181,20 @@ function minimizeCard(cardId) {
 }
 
 function fecharCard(cardId) {
-    const card = document.getElementById(cardId);
-    if (card) card.style.display = 'none';
+    document.getElementById(cardId).style.display = 'none';
+    
+    if (cardId === 'cardCalagem') {
+        corretivosAtivos = { dolomitico: false, calcitico: false, gesso: false };
+        document.querySelectorAll('#correctiveMenu .dropdown-item').forEach(i => i.classList.remove('selected'));
+        ['miniDolomitico', 'miniCalcitico', 'miniGesso'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+    }
 }
 
 // ========================================
-// CÁLCULOS
+// CÁLCULOS - SB, CTC, V%
 // ========================================
 function calcularSBCTC() {
     const ca = parseFloat(document.getElementById('inputCa')?.value) || 0;
@@ -251,96 +209,230 @@ function calcularSBCTC() {
     
     document.getElementById('valorSB').textContent = sb.toFixed(2);
     document.getElementById('valorCTC').textContent = ctc.toFixed(2);
-    document.getElementById('valorV').textContent = v.toFixed(0);
     
+    // Atualizar barril
+    atualizarBarril(v);
+    
+    // Relações
     document.getElementById('relacaoCaMg').textContent = mg > 0 ? (ca / mg).toFixed(1) : '--';
     document.getElementById('relacaoCaK').textContent = k > 0 ? (ca / k).toFixed(1) : '--';
     document.getElementById('relacaoMgK').textContent = k > 0 ? (mg / k).toFixed(1) : '--';
+    
+    // Barras
+    if (mg > 0) document.getElementById('barraCaMg').style.width = Math.min((ca/mg/10)*100, 100) + '%';
+    if (k > 0) {
+        document.getElementById('barraCaK').style.width = Math.min((ca/k/50)*100, 100) + '%';
+        document.getElementById('barraMgK').style.width = Math.min((mg/k/20)*100, 100) + '%';
+    }
 }
 
+function atualizarBarril(vPercent) {
+    const fill = document.getElementById('barrelFill');
+    const value = document.getElementById('barrelValue');
+    
+    const vClamped = Math.min(Math.max(vPercent, 0), 100);
+    fill.style.height = vClamped + '%';
+    value.textContent = Math.round(vClamped) + '%';
+}
+
+function calcularVPercent() {
+    const baseCa = parseFloat(document.getElementById('baseCa')?.value) || 0;
+    const baseMg = parseFloat(document.getElementById('baseMg')?.value) || 0;
+    const baseK = parseFloat(document.getElementById('baseK')?.value) || 0;
+    const baseNa = parseFloat(document.getElementById('baseNa')?.value) || 0;
+    
+    const v = baseCa + baseMg + baseK + baseNa;
+    
+    const fill = document.getElementById('miniBarrelFill');
+    const value = document.getElementById('miniBarrelValue');
+    
+    if (fill) fill.style.height = Math.min(v, 100) + '%';
+    if (value) value.textContent = `V% ${Math.round(v)}`;
+}
+
+// ========================================
+// TEXTURA
+// ========================================
 function updateTextura() {
     const areia = parseFloat(document.getElementById('inputAreia')?.value) || 0;
     const silte = parseFloat(document.getElementById('inputSilte')?.value) || 0;
     const argila = parseFloat(document.getElementById('inputArgila')?.value) || 0;
     
     const total = areia + silte + argila;
-    document.getElementById('totalTextura').textContent = `${total}%`;
+    document.getElementById('totalTextura').textContent = total.toFixed(0);
+    
+    const icon = document.getElementById('validacaoIcon');
+    if (total === 100) {
+        icon.textContent = '✓';
+        icon.style.color = '#4ADE80';
+    } else if (total > 0) {
+        icon.textContent = '⚠';
+        icon.style.color = '#F59E0B';
+    } else {
+        icon.textContent = '○';
+        icon.style.color = '#D1D5DB';
+    }
     
     let classe = '-';
     if (total >= 99 && total <= 101) {
-        if (argila >= 60) classe = 'Muito Argiloso';
-        else if (argila >= 35) classe = 'Argiloso';
-        else if (areia >= 70) classe = 'Arenoso';
-        else if (silte >= 50) classe = 'Siltoso';
-        else classe = 'Franco';
+        if (argila >= 60) classe = 'Muito Argilosa';
+        else if (argila >= 35) classe = 'Argilosa';
+        else if (argila >= 15) classe = areia >= 45 ? 'Franco-Arenosa' : silte >= 40 ? 'Franco-Siltosa' : 'Franca';
+        else classe = areia >= 85 ? 'Arenosa' : silte >= 50 ? 'Siltosa' : 'Franco-Arenosa';
     }
     document.getElementById('classeTextural').textContent = classe;
 }
 
+function aplicarTipoSolo(tipo) {
+    const tipos = {
+        argiloso: { areia: 30, silte: 20, argila: 50 },
+        arenoso: { areia: 80, silte: 10, argila: 10 },
+        siltoso: { areia: 15, silte: 70, argila: 15 }
+    };
+    const v = tipos[tipo];
+    
+    document.getElementById('inputAreia').value = v.areia;
+    document.getElementById('inputSilte').value = v.silte;
+    document.getElementById('inputArgila').value = v.argila;
+    
+    document.querySelectorAll('.card-tipo-solo').forEach(c => c.classList.remove('ativo'));
+    document.getElementById('card' + tipo.charAt(0).toUpperCase() + tipo.slice(1))?.classList.add('ativo');
+    
+    updateTextura();
+}
+
+// ========================================
+// pH E INTERFERÊNCIA
+// ========================================
 function updatePH(input) {
     const ph = parseFloat(input.value) || 0;
     const indicator = document.getElementById('ph-indicator');
     
-    let color, width;
-    if (ph < 5) { color = '#FF3B30'; width = 25; }
-    else if (ph < 5.5) { color = '#FF9500'; width = 40; }
-    else if (ph < 6.5) { color = '#34C759'; width = 70; }
-    else if (ph < 7.5) { color = '#007AFF'; width = 85; }
-    else { color = '#5856D6'; width = 95; }
+    let width = 0;
+    let color = '#34C759';
     
-    indicator.style.width = `${width}%`;
+    if (ph < 5) { width = 20; color = '#FF3B30'; }
+    else if (ph < 5.5) { width = 40; color = '#FF9500'; }
+    else if (ph < 6.5) { width = 70; color = '#34C759'; }
+    else if (ph < 7.5) { width = 85; color = '#007AFF'; }
+    else { width = 95; color = '#5856D6'; }
+    
+    indicator.style.width = width + '%';
     indicator.style.backgroundColor = color;
-}
-
-// ========================================
-// AMOSTRAS
-// ========================================
-let amostrasSelecionadas = {};
-
-function toggleDropdownAmostras(event) {
-    event.stopPropagation();
-    document.getElementById('amostrasMenu').classList.toggle('active');
-}
-
-function toggleAmostra(id, label, element, event) {
-    event.stopPropagation();
     
-    if (amostrasSelecionadas[id]) {
-        delete amostrasSelecionadas[id];
-        element.classList.remove('selected');
-    } else {
-        amostrasSelecionadas[id] = label;
-        element.classList.add('selected');
-    }
-    renderAmostrasTags();
+    updateInterference(ph);
 }
 
-function renderAmostrasTags() {
-    const container = document.getElementById('amostrasSelecionadasTags');
-    if (!container) return;
-    container.innerHTML = Object.entries(amostrasSelecionadas)
-        .map(([id, label]) => `<span class="regencia-tag">${label}</span>`).join('');
+function updateInterference(ph) {
+    const nutrients = {
+        n: { optimal: [6.0, 7.0] }, p: { optimal: [6.0, 7.0] }, k: { optimal: [6.0, 7.5] },
+        ca: { optimal: [6.0, 7.5] }, mg: { optimal: [6.0, 8.0] }, s: { optimal: [5.5, 7.5] },
+        fe: { optimal: [5.0, 6.5] }, mn: { optimal: [5.0, 6.5] }, zn: { optimal: [5.0, 7.0] },
+        cu: { optimal: [5.0, 7.0] }, b: { optimal: [5.0, 7.0] }, mo: { optimal: [6.0, 8.0] }
+    };
+    
+    Object.keys(nutrients).forEach(n => {
+        const el = document.getElementById('int-' + n);
+        if (!el) return;
+        
+        const opt = nutrients[n].optimal;
+        let status = 'interference-neutral', value = '--';
+        
+        if (ph >= opt[0] && ph <= opt[1]) {
+            status = 'interference-positive';
+            value = '100%';
+        } else if (ph > 0) {
+            const dist = Math.min(Math.abs(ph - opt[0]), Math.abs(ph - opt[1]));
+            const pct = Math.max(30, 100 - dist * 20);
+            value = Math.round(pct) + '%';
+            status = pct < 50 ? 'interference-negative' : '';
+        }
+        
+        el.textContent = value;
+        el.className = 'interference-value ' + status;
+    });
+}
+
+// ========================================
+// RECOMENDAÇÕES
+// ========================================
+function gerarRecomendacaoCalagem() {
+    const resultado = document.getElementById('resultadoCalagem');
+    resultado.style.display = 'block';
+    
+    ['dolomitico', 'calcitico', 'gesso'].forEach(tipo => {
+        const recEl = document.getElementById('rec' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+        const valEl = document.getElementById('valor' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+        if (corretivosAtivos[tipo]) {
+            recEl.style.display = 'flex';
+            valEl.textContent = (Math.random() * 3 + 0.5).toFixed(1);
+        } else {
+            recEl.style.display = 'none';
+        }
+    });
+    
+    atualizarGraficoCalagem();
+}
+
+function atualizarGraficoCalagem() {
+    const ca = parseFloat(document.getElementById('inputCa')?.value) || 1.5;
+    const mg = parseFloat(document.getElementById('inputMg')?.value) || 0.5;
+    const s = 5;
+    
+    const caD = ca * 2, mgD = mg * 2, sD = s * 2.5;
+    const maxCa = 5, maxMg = 2, maxS = 20;
+    
+    document.getElementById('barraCaAntes').style.width = Math.min((ca/maxCa)*100, 100) + '%';
+    document.getElementById('barraCaDepois').style.width = Math.min((caD/maxCa)*100, 100) + '%';
+    document.getElementById('valCaAntes').textContent = ca.toFixed(1);
+    document.getElementById('valCaDepois').textContent = caD.toFixed(1);
+    
+    document.getElementById('barraMgAntes').style.width = Math.min((mg/maxMg)*100, 100) + '%';
+    document.getElementById('barraMgDepois').style.width = Math.min((mgD/maxMg)*100, 100) + '%';
+    document.getElementById('valMgAntes').textContent = mg.toFixed(1);
+    document.getElementById('valMgDepois').textContent = mgD.toFixed(1);
+    
+    document.getElementById('barraSAntes').style.width = Math.min((s/maxS)*100, 100) + '%';
+    document.getElementById('barraSDepois').style.width = Math.min((sD/maxS)*100, 100) + '%';
+    document.getElementById('valSAntes').textContent = s.toFixed(0);
+    document.getElementById('valSDepois').textContent = sD.toFixed(0);
+}
+
+function gerarRecomendacaoPotassio() {
+    const dose = document.getElementById('dosePotassio').value || '0';
+    const adubo = document.getElementById('aduboPotassio');
+    const nome = adubo.selectedIndex > 0 ? adubo.options[adubo.selectedIndex].text : 'Não selecionado';
+    
+    document.getElementById('textoPotassio').textContent = `${dose} kg/ha de ${nome}`;
+    document.getElementById('resultadoPotassio').style.display = 'flex';
+}
+
+function gerarRecomendacaoFosforo() {
+    const dose = document.getElementById('doseFosforo').value || '0';
+    const adubo = document.getElementById('aduboFosforo');
+    const nome = adubo.selectedIndex > 0 ? adubo.options[adubo.selectedIndex].text : 'Não selecionado';
+    
+    document.getElementById('textoFosforo').textContent = `${dose} kg/ha de ${nome}`;
+    document.getElementById('resultadoFosforo').style.display = 'flex';
 }
 
 // ========================================
 // MICRONUTRIENTES
 // ========================================
 const micronutrientesDisponiveis = [
-    { id: 'mn', nome: 'Mn' }, { id: 'zn', nome: 'Zn' },
-    { id: 'cu', nome: 'Cu' }, { id: 'fe', nome: 'Fe' },
-    { id: 'b', nome: 'B' }, { id: 'mo', nome: 'Mo' },
-    { id: 'ni', nome: 'Ni' }, { id: 'se', nome: 'Se' }
+    { id: 'mn', nome: 'Mn' }, { id: 'zn', nome: 'Zn' }, { id: 'cu', nome: 'Cu' }, { id: 'fe', nome: 'Fe' },
+    { id: 'b', nome: 'B' }, { id: 'mo', nome: 'Mo' }, { id: 'ni', nome: 'Ni' }, { id: 'se', nome: 'Se' }
 ];
 
 const fontesMicro = {
-    mn: [{ value: 'sulfato', label: 'Sulfato de Manganês' }, { value: 'quelato', label: 'Quelato Mn' }],
-    zn: [{ value: 'sulfato', label: 'Sulfato de Zinco' }, { value: 'quelato', label: 'Quelato Zn' }],
-    cu: [{ value: 'sulfato', label: 'Sulfato de Cobre' }, { value: 'quelato', label: 'Quelato Cu' }],
+    mn: [{ value: 'sulfato', label: 'Sulfato de Mn' }, { value: 'quelato', label: 'Quelato Mn' }],
+    zn: [{ value: 'sulfato', label: 'Sulfato de Zn' }, { value: 'quelato', label: 'Quelato Zn' }],
+    cu: [{ value: 'sulfato', label: 'Sulfato de Cu' }, { value: 'quelato', label: 'Quelato Cu' }],
     fe: [{ value: 'sulfato', label: 'Sulfato Ferroso' }, { value: 'quelato', label: 'Quelato Fe' }],
     b: [{ value: 'acido', label: 'Ácido Bórico' }, { value: 'borax', label: 'Bórax' }],
-    mo: [{ value: 'molibdato', label: 'Molibdato de Sódio' }],
-    ni: [{ value: 'sulfato', label: 'Sulfato de Níquel' }],
-    se: [{ value: 'selenato', label: 'Selenato de Sódio' }]
+    mo: [{ value: 'molibdato', label: 'Molibdato de Na' }],
+    ni: [{ value: 'sulfato', label: 'Sulfato de Ni' }],
+    se: [{ value: 'selenato', label: 'Selenato de Na' }]
 };
 
 let gruposMicro = [];
@@ -349,19 +441,11 @@ let contadorGrupos = 0;
 function criarGrupoMicro() {
     contadorGrupos++;
     const grupoId = `grupo-${contadorGrupos}`;
-    
-    gruposMicro.push({
-        id: grupoId,
-        numero: contadorGrupos,
-        nutrientes: []
-    });
-    
+    gruposMicro.push({ id: grupoId, numero: contadorGrupos, nutrientes: [] });
     renderGrupoMicro(grupoId, contadorGrupos);
 }
 
 function renderGrupoMicro(grupoId, numero) {
-    const container = document.getElementById('containerGruposMicro');
-    
     const html = `
         <div class="grupo-micro-card" id="${grupoId}">
             <div class="grupo-micro-header">
@@ -371,24 +455,19 @@ function renderGrupoMicro(grupoId, numero) {
                 </div>
                 <button class="btn-remove" onclick="removerGrupoMicro('${grupoId}')">×</button>
             </div>
-            
             <div class="micro-pills-container" id="pills-${grupoId}">
-                ${micronutrientesDisponiveis.map(m => `
-                    <button class="micro-pill" onclick="toggleMicroPill('${grupoId}', '${m.id}', this)">${m.nome}</button>
-                `).join('')}
+                ${micronutrientesDisponiveis.map(m => `<button class="micro-pill" onclick="toggleMicroPill('${grupoId}', '${m.id}', this)">${m.nome}</button>`).join('')}
             </div>
-            
-            <div class="compact-row">
-                <div class="compact-field">
+            <div class="inline-fields mb-12">
+                <div class="inline-field">
                     <label>Aplicação</label>
                     <select class="dropdown-compact">
                         <option value="">Selecione...</option>
                         <option value="solo">Solo</option>
                         <option value="foliar">Foliar</option>
-                        <option value="solo-foliar">Solo + Foliar</option>
                     </select>
                 </div>
-                <div class="compact-field">
+                <div class="inline-field">
                     <label>Regência</label>
                     <select class="dropdown-compact" id="regencia-${grupoId}" onchange="atualizarRegenciaGrupo('${grupoId}')">
                         <option value="autor">Autor</option>
@@ -396,28 +475,21 @@ function renderGrupoMicro(grupoId, numero) {
                         <option value="cultivar">Cultivar</option>
                     </select>
                 </div>
-                <div class="compact-field" style="flex: 2;">
+                <div class="inline-field" style="flex:2;">
                     <label>Referência</label>
-                    <select class="dropdown-compact" id="ref-${grupoId}">
-                        <option value="">Selecione...</option>
-                    </select>
+                    <select class="dropdown-full" id="ref-${grupoId}"><option value="">Selecione...</option></select>
                 </div>
             </div>
-            
-            <div class="section-subtitle">Fontes e Doses</div>
-            <div id="fontes-${grupoId}">
-                <p style="color: #86868B; font-size: 12px;">Selecione os micronutrientes acima</p>
-            </div>
+            <div class="subsection-title">Fontes e Doses</div>
+            <div id="fontes-${grupoId}"><p style="color:#9CA3AF;font-size:12px;">Selecione micronutrientes acima</p></div>
         </div>
     `;
-    
-    container.insertAdjacentHTML('beforeend', html);
+    document.getElementById('containerGruposMicro').insertAdjacentHTML('beforeend', html);
     atualizarRegenciaGrupo(grupoId);
 }
 
 function toggleMicroPill(grupoId, microId, element) {
     element.classList.toggle('selected');
-    
     const grupo = gruposMicro.find(g => g.id === grupoId);
     if (!grupo) return;
     
@@ -433,7 +505,7 @@ function renderFontesDosesGrupo(grupoId) {
     const container = document.getElementById(`fontes-${grupoId}`);
     
     if (!grupo || grupo.nutrientes.length === 0) {
-        container.innerHTML = '<p style="color: #86868B; font-size: 12px;">Selecione os micronutrientes acima</p>';
+        container.innerHTML = '<p style="color:#9CA3AF;font-size:12px;">Selecione micronutrientes acima</p>';
         return;
     }
     
@@ -446,36 +518,31 @@ function renderFontesDosesGrupo(grupoId) {
         const unidade = microId === 'mo' ? 'g/ha' : 'kg/ha';
         
         return `
-            <div class="compact-row" style="margin-bottom: 6px;">
-                <div class="compact-field" style="max-width: 50px;"><label>${micro.nome}</label></div>
-                <div class="compact-field" style="flex: 2;">
-                    <select class="dropdown-compact">
+            <div class="inline-fields mb-8">
+                <div class="inline-field" style="min-width:40px;"><label>${micro.nome}</label></div>
+                <div class="inline-field" style="flex:2;">
+                    <select class="dropdown-full">
                         <option value="">Fonte...</option>
                         ${fontes.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
                     </select>
                 </div>
-                <div class="compact-field">
+                <div class="inline-field">
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
                 </div>
-                <span class="unidade">${unidade}</span>
+                <span class="unit-label">${unidade}</span>
             </div>
         `;
     }).join('');
 }
 
 function atualizarRegenciaGrupo(grupoId) {
-    const select = document.getElementById(`regencia-${grupoId}`);
-    const refSelect = document.getElementById(`ref-${grupoId}`);
-    if (!select || !refSelect) return;
+    const tipo = document.getElementById(`regencia-${grupoId}`)?.value || 'autor';
+    const select = document.getElementById(`ref-${grupoId}`);
+    if (!select) return;
     
-    const tipo = select.value;
-    refSelect.innerHTML = '<option value="">Selecione...</option>';
-    
+    select.innerHTML = '<option value="">Selecione...</option>';
     (dadosRegencia[tipo] || []).forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt.value;
-        option.textContent = opt.label;
-        refSelect.appendChild(option);
+        select.innerHTML += `<option value="${opt.value}">${opt.label}</option>`;
     });
 }
 
@@ -485,17 +552,8 @@ function removerGrupoMicro(grupoId) {
 }
 
 // ========================================
-// EVENT LISTENERS
+// INICIALIZAÇÃO
 // ========================================
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.floating-menu') && !event.target.closest('.recommend-btn')) {
-        document.querySelectorAll('.floating-menu').forEach(m => m.classList.remove('active'));
-    }
-    if (!event.target.closest('#amostrasMenu') && !event.target.closest('#btnAmostras')) {
-        document.getElementById('amostrasMenu')?.classList.remove('active');
-    }
-});
-
 document.addEventListener('DOMContentLoaded', function() {
     renderAmostrasTags();
 });
