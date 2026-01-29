@@ -30,6 +30,32 @@
             </div>
         </div>
 
+        <!-- CULTURA ALVO - NOVO -->
+        <div class="analysis-section">
+            <div class="section-title">Cultura Alvo</div>
+            <div class="inline-fields">
+                <div class="inline-field" style="flex: 2;">
+                    <label>Cultura</label>
+                    <select class="dropdown-full" id="selectCultura">
+                        <option value="">Selecione a cultura...</option>
+                        <option value="soja">Soja</option>
+                        <option value="milho">Milho</option>
+                        <option value="cafe">Café</option>
+                        <option value="algodao">Algodão</option>
+                        <option value="trigo">Trigo</option>
+                        <option value="feijao">Feijão</option>
+                        <option value="arroz">Arroz</option>
+                        <option value="cana">Cana-de-açúcar</option>
+                    </select>
+                </div>
+                <div class="inline-field">
+                    <label>Produtividade</label>
+                    <input type="text" class="input-compact" maxlength="7" placeholder="0" id="inputProdutividade" oninput="formatDecimal(this)">
+                </div>
+                <span class="unit-label">sc/ha</span>
+            </div>
+        </div>
+
         <!-- AMOSTRAS -->
         <div class="analysis-section">
             <div class="section-header-inline">
@@ -178,6 +204,31 @@
             </div>
         </div>
 
+        <!-- CULTURA ALVO -->
+        <div class="analysis-section">
+            <div class="section-title">Cultura Alvo</div>
+            <div class="grid-2">
+                <div class="form-row">
+                    <label>Cultura</label>
+                    <select class="dropdown-full" id="selectCultura">
+                        <option value="">Selecione a cultura...</option>
+                        <option value="soja">Soja</option>
+                        <option value="milho">Milho</option>
+                        <option value="cafe">Café</option>
+                        <option value="cana">Cana-de-açúcar</option>
+                        <option value="algodao">Algodão</option>
+                        <option value="feijao">Feijão</option>
+                        <option value="trigo">Trigo</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Produtividade</label>
+                    <input type="text" class="input-compact" maxlength="7" placeholder="0" id="inputProdutividade" oninput="formatDecimal(this)">
+                    <span class="unit-label">sc/ha</span>
+                </div>
+            </div>
+        </div>
+
         <!-- SOMA DE BASES + Al + H -->
         <div class="analysis-section">
             <div class="section-title">Soma de Bases e Acidez</div>
@@ -186,11 +237,13 @@
                 <div class="metric-row-compact">
                     <span class="metric-label">Ca (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputCa" oninput="formatDecimal(this); calcularSBCTC()">
+                    <span class="percent-badge" id="percentCa">0%</span>
                     <div class="status-bar"><div class="status-indicator" id="ca-indicator"></div></div>
                 </div>
                 <div class="metric-row-compact">
                     <span class="metric-label">Mg (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.0" id="inputMg" oninput="formatDecimal(this); calcularSBCTC()">
+                    <span class="percent-badge" id="percentMg">0%</span>
                     <div class="status-bar"><div class="status-indicator" id="mg-indicator"></div></div>
                 </div>
             </div>
@@ -199,11 +252,13 @@
                 <div class="metric-row-compact">
                     <span class="metric-label">K (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.00" id="inputK" oninput="formatDecimal(this); calcularSBCTC()">
+                    <span class="percent-badge" id="percentK">0%</span>
                     <div class="status-bar"><div class="status-indicator" id="k-indicator"></div></div>
                 </div>
                 <div class="metric-row-compact">
                     <span class="metric-label">Na (cmolc/dm³)</span>
                     <input type="text" class="input-compact" maxlength="5" placeholder="0.00" id="inputNa" oninput="formatDecimal(this); calcularSBCTC()">
+                    <span class="percent-badge" id="percentNa">0%</span>
                     <div class="status-bar"><div class="status-indicator" id="na-indicator"></div></div>
                 </div>
             </div>
@@ -222,7 +277,7 @@
             </div>
 
             <!-- CARDS SB, CTC + BARRIL V% -->
-            <div class="results-container">
+            <div class="results-container-compact">
                 <div class="result-cards">
                     <div class="result-card green">
                         <div class="result-label">SB</div>
@@ -234,7 +289,7 @@
                     </div>
                 </div>
                 
-                <!-- BARRIL V% - DESTACADO -->
+                <!-- BARRIL V% - DESTACADO E PRÓXIMO -->
                 <div class="barrel-container">
                     <div class="barrel">
                         <div class="barrel-fill" id="barrelFill" style="height: 0%;"></div>
