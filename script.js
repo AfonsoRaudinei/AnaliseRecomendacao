@@ -201,16 +201,26 @@ function calcularSBCTC() {
     const mg = parseFloat(document.getElementById('inputMg')?.value) || 0;
     const k = parseFloat(document.getElementById('inputK')?.value) || 0;
     const na = parseFloat(document.getElementById('inputNa')?.value) || 0;
+    const al = parseFloat(document.getElementById('inputAl')?.value) || 0;
     const hal = parseFloat(document.getElementById('inputHAl')?.value) || 0;
     
     const sb = ca + mg + k + na;
     const ctc = sb + hal;
     const v = ctc > 0 ? (sb / ctc) * 100 : 0;
     
+    // Calcular m% (saturação por alumínio)
+    const ctcEfetiva = sb + al;
+    const m = ctcEfetiva > 0 ? (al / ctcEfetiva) * 100 : 0;
+    
+    // Calcular Al% na CTC
+    const alPercent = ctc > 0 ? (al / ctc) * 100 : 0;
+    
     document.getElementById('valorSB').textContent = sb.toFixed(2);
     document.getElementById('valorCTC').textContent = ctc.toFixed(2);
+    document.getElementById('valorM').textContent = Math.round(m);
+    document.getElementById('valorAlPercent').textContent = Math.round(alPercent);
     
-    // Calcular e exibir porcentagens de saturação
+    // Calcular e exibir porcentagens individuais
     if (ctc > 0) {
         const percCa = (ca / ctc) * 100;
         const percMg = (mg / ctc) * 100;
@@ -221,6 +231,12 @@ function calcularSBCTC() {
         document.getElementById('percentMg').textContent = percMg.toFixed(1) + '%';
         document.getElementById('percentK').textContent = percK.toFixed(1) + '%';
         document.getElementById('percentNa').textContent = percNa.toFixed(1) + '%';
+        
+        // Atualizar barras de status
+        document.getElementById('ca-indicator').style.width = Math.min(percCa, 100) + '%';
+        document.getElementById('mg-indicator').style.width = Math.min(percMg, 100) + '%';
+        document.getElementById('k-indicator').style.width = Math.min(percK * 10, 100) + '%';
+        document.getElementById('na-indicator').style.width = Math.min(percNa * 10, 100) + '%';
     } else {
         document.getElementById('percentCa').textContent = '0%';
         document.getElementById('percentMg').textContent = '0%';
@@ -504,6 +520,60 @@ function gerarRecomendacaoFosforo() {
     
     document.getElementById('textoFosforo').textContent = `${dose} kg/ha de ${nome}`;
     document.getElementById('resultadoFosforo').style.display = 'flex';
+}
+
+// ========================================
+// MICRONUTRIENTES - STATUS
+// ========================================
+const micronutrientesNiveis = {
+    mn: { baixo: 5, ideal: 10, alto: 50, excessivo: 100 },
+    zn: { baixo: 1, ideal: 2, alto: 10, excessivo: 20 },
+    cu: { baixo: 0.5, ideal: 1, alto: 5, excessivo: 10 },
+    fe: { baixo: 10, ideal: 20, alto: 100, excessivo: 200 },
+    b: { baixo: 0.3, ideal: 0.6, alto: 2, excessivo: 3 },
+    mo: { baixo: 0.1, ideal: 0.2, alto: 0.5, excessivo: 1 },
+    ni: { baixo: 0.1, ideal: 0.2, alto: 1, excessivo: 2 },
+    se: { baixo: 0.05, ideal: 0.1, alto: 0.5, excessivo: 1 }
+};
+
+function updateMicroStatus(micro, valor) {
+    const val = parseFloat(valor) || 0;
+    const niveis = micronutrientesNiveis[micro];
+    const fill = document.getElementById('status' + micro.charAt(0).toUpperCase() + micro.slice(1));
+    
+    if (!fill || !niveis) return;
+    
+    let cor = '';
+    let largura = 0;
+    
+    if (val === 0) {
+        // Sem valor
+        cor = '#E5E5EA';
+        largura = 0;
+    } else if (val < niveis.baixo) {
+        // Muito baixo - Vermelho
+        cor = 'linear-gradient(90deg, #EF4444 0%, #DC2626 100%)';
+        largura = (val / niveis.baixo) * 30;
+    } else if (val < niveis.ideal) {
+        // Baixo - Laranja
+        cor = 'linear-gradient(90deg, #F97316 0%, #EA580C 100%)';
+        largura = 30 + ((val - niveis.baixo) / (niveis.ideal - niveis.baixo)) * 20;
+    } else if (val <= niveis.alto) {
+        // Adequado - Verde
+        cor = 'linear-gradient(90deg, #22C55E 0%, #16A34A 100%)';
+        largura = 50 + ((val - niveis.ideal) / (niveis.alto - niveis.ideal)) * 40;
+    } else if (val <= niveis.excessivo) {
+        // Alto - Amarelo
+        cor = 'linear-gradient(90deg, #EAB308 0%, #CA8A04 100%)';
+        largura = 90 + ((val - niveis.alto) / (niveis.excessivo - niveis.alto)) * 8;
+    } else {
+        // Excessivo - Vermelho escuro
+        cor = 'linear-gradient(90deg, #DC2626 0%, #991B1B 100%)';
+        largura = 100;
+    }
+    
+    fill.style.background = cor;
+    fill.style.width = Math.min(largura, 100) + '%';
 }
 
 // ========================================
