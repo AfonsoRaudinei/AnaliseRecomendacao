@@ -354,13 +354,13 @@ select:focus {
     background: white;
     border: 1px solid #E5E7EB;
     border-radius: 12px;
-    padding: 24px;
+    padding: 16px;
     margin-bottom: 16px;
 }
 
 .triangulo-svg {
     width: 100%;
-    max-width: 500px;
+    max-width: 320px;
     height: auto;
     margin: 0 auto;
     display: block;
@@ -372,7 +372,7 @@ select:focus {
 
 @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 0.9; }
 }
 
 /* CARDS MINI TIPO SOLO */
@@ -433,7 +433,8 @@ select:focus {
 }
 
 .result-cards {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     flex: 1;
 }
@@ -446,9 +447,18 @@ select:focus {
     max-width: 180px;
 }
 
-.result-card.green { background: #4ADE80; }
-.result-card.blue { background: #3B82F6; }
-.result-card.orange { background: #F59E0B; }
+.result-card.green { 
+    background: linear-gradient(135deg, #4ADE80 0%, #22C55E 100%);
+}
+.result-card.blue { 
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+}
+.result-card.orange { 
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+}
+.result-card.red { 
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+}
 
 .result-label {
     font-size: 9px;
@@ -1044,6 +1054,24 @@ select:focus {
 
 .micro-field .input-compact {
     width: 100% !important;
+}
+
+/* BARRAS DE STATUS MICRO */
+.micro-status-bar {
+    width: 100%;
+    height: 5px;
+    background: #E5E5EA;
+    border-radius: 2.5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.micro-status-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 2.5px;
+    transition: all 0.4s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 /* ========================================
