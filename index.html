@@ -149,52 +149,86 @@
                 </div>
             </div>
 
-            <!-- Cards de Tipos de Solo -->
-            <div class="subsection-title">Tipos de Solo Comuns</div>
+            <!-- Triângulo Textural -->
+            <div class="triangulo-textural-container">
+                <svg id="trianguloTextural" viewBox="0 0 500 433" class="triangulo-svg">
+                    <!-- Triângulo base -->
+                    <polygon points="250,0 500,433 0,433" fill="none" stroke="#D1D5DB" stroke-width="2"/>
+                    
+                    <!-- Linhas de grade - Argila (vertical) -->
+                    <line x1="250" y1="0" x2="125" y2="216.5" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="250" y1="0" x2="150" y2="173.2" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="250" y1="0" x2="175" y2="129.9" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="250" y1="0" x2="200" y2="86.6" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="250" y1="0" x2="225" y2="43.3" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Linhas de grade - Silte (diagonal direita) -->
+                    <line x1="0" y1="433" x2="100" y2="433" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="0" y1="433" x2="125" y2="389.7" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="0" y1="433" x2="150" y2="346.4" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="0" y1="433" x2="175" y2="303.1" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="0" y1="433" x2="200" y2="259.8" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Linhas de grade - Areia (diagonal esquerda) -->
+                    <line x1="500" y1="433" x2="400" y2="433" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="500" y1="433" x2="375" y2="389.7" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="500" y1="433" x2="350" y2="346.4" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="500" y1="433" x2="325" y2="303.1" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    <line x1="500" y1="433" x2="300" y2="259.8" stroke="#E5E7EB" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Zonas de Classificação (coloridas) -->
+                    <!-- Muito Argilosa (topo) -->
+                    <polygon points="250,0 200,86.6 300,86.6" fill="#8B4513" opacity="0.15"/>
+                    <text x="250" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#8B4513">Muito Argilosa</text>
+                    
+                    <!-- Argilosa -->
+                    <polygon points="200,86.6 150,173.2 350,173.2 300,86.6" fill="#A0522D" opacity="0.15"/>
+                    <text x="250" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#A0522D">Argilosa</text>
+                    
+                    <!-- Média -->
+                    <polygon points="150,173.2 100,259.8 400,259.8 350,173.2" fill="#DAA520" opacity="0.15"/>
+                    <text x="250" y="220" text-anchor="middle" font-size="11" font-weight="600" fill="#8B7500">Média</text>
+                    
+                    <!-- Arenosa -->
+                    <polygon points="100,259.8 50,346.4 150,346.4 200,259.8" fill="#F4A460" opacity="0.15"/>
+                    <text x="125" y="310" text-anchor="middle" font-size="11" font-weight="600" fill="#CD853F">Arenosa</text>
+                    
+                    <!-- Siltosa -->
+                    <polygon points="300,259.8 350,346.4 450,346.4 400,259.8" fill="#D2691E" opacity="0.15"/>
+                    <text x="375" y="310" text-anchor="middle" font-size="11" font-weight="600" fill="#8B4513">Siltosa</text>
+                    
+                    <!-- Marcador da posição atual -->
+                    <circle id="marcadorPosicao" cx="250" cy="289" r="8" fill="#007AFF" stroke="white" stroke-width="3" opacity="0" style="transition: all 0.3s;"/>
+                    
+                    <!-- Labels dos eixos -->
+                    <text x="250" y="-10" text-anchor="middle" font-size="12" font-weight="600" fill="#6B7280">Argila (%)</text>
+                    <text x="10" y="445" text-anchor="start" font-size="12" font-weight="600" fill="#6B7280">Silte (%)</text>
+                    <text x="490" y="445" text-anchor="end" font-size="12" font-weight="600" fill="#6B7280">Areia (%)</text>
+                </svg>
+            </div>
+
+            <!-- Cards de Tipos de Solo (simplificados) -->
+            <div class="subsection-title">Valores Típicos de Referência</div>
             <div class="grid-3 mb-12">
                 <!-- Argiloso -->
-                <div id="cardArgiloso" class="card-tipo-solo" onclick="aplicarTipoSolo('argiloso')">
-                    <div class="tipo-solo-icon">🟫</div>
-                    <div class="tipo-solo-nome">ARGILOSO</div>
-                    <div class="tipo-solo-desc">
-                        <div>• Textura fina e fértil</div>
-                        <div>• Alta retenção de água</div>
-                        <div>• Suscetível à compactação</div>
-                    </div>
-                    <div class="tipo-solo-composicao">
-                        <div class="composicao-label">Composição típica:</div>
-                        <div class="composicao-value">Argila: 35-60%</div>
-                    </div>
+                <div id="cardArgiloso" class="card-tipo-solo-mini" onclick="aplicarTipoSolo('argiloso')">
+                    <div class="tipo-solo-icon-mini">🟫</div>
+                    <div class="tipo-solo-nome-mini">ARGILOSO</div>
+                    <div class="tipo-solo-valores">Argila: 35-60%</div>
                 </div>
 
                 <!-- Arenoso -->
-                <div id="cardArenoso" class="card-tipo-solo" onclick="aplicarTipoSolo('arenoso')">
-                    <div class="tipo-solo-icon">🟨</div>
-                    <div class="tipo-solo-nome">ARENOSO</div>
-                    <div class="tipo-solo-desc">
-                        <div>• Grãos visíveis</div>
-                        <div>• Pouca retenção de água</div>
-                        <div>• Adubação frequente</div>
-                    </div>
-                    <div class="tipo-solo-composicao">
-                        <div class="composicao-label">Composição típica:</div>
-                        <div class="composicao-value">Areia: 70-90%</div>
-                    </div>
+                <div id="cardArenoso" class="card-tipo-solo-mini" onclick="aplicarTipoSolo('arenoso')">
+                    <div class="tipo-solo-icon-mini">🟨</div>
+                    <div class="tipo-solo-nome-mini">ARENOSO</div>
+                    <div class="tipo-solo-valores">Areia: 70-90%</div>
                 </div>
 
                 <!-- Siltoso -->
-                <div id="cardSiltoso" class="card-tipo-solo" onclick="aplicarTipoSolo('siltoso')">
-                    <div class="tipo-solo-icon">🟧</div>
-                    <div class="tipo-solo-nome">SILTOSO</div>
-                    <div class="tipo-solo-desc">
-                        <div>• Textura fina e lisa</div>
-                        <div>• Fertilidade média</div>
-                        <div>• Baixa estabilidade</div>
-                    </div>
-                    <div class="tipo-solo-composicao">
-                        <div class="composicao-label">Composição típica:</div>
-                        <div class="composicao-value">Silte: 60-80%</div>
-                    </div>
+                <div id="cardSiltoso" class="card-tipo-solo-mini" onclick="aplicarTipoSolo('siltoso')">
+                    <div class="tipo-solo-icon-mini">🟧</div>
+                    <div class="tipo-solo-nome-mini">SILTOSO</div>
+                    <div class="tipo-solo-valores">Silte: 60-80%</div>
                 </div>
             </div>
 
