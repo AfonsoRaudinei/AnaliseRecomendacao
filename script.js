@@ -194,7 +194,7 @@ function fecharCard(cardId) {
 }
 
 // ========================================
-// CÁLCULOS - SB, CTC, V%
+// CÁLCULOS - SB, CTC, V% COM PORCENTAGENS
 // ========================================
 function calcularSBCTC() {
     const ca = parseFloat(document.getElementById('inputCa')?.value) || 0;
@@ -209,6 +209,24 @@ function calcularSBCTC() {
     
     document.getElementById('valorSB').textContent = sb.toFixed(2);
     document.getElementById('valorCTC').textContent = ctc.toFixed(2);
+    
+    // Calcular e exibir porcentagens de saturação
+    if (ctc > 0) {
+        const percCa = (ca / ctc) * 100;
+        const percMg = (mg / ctc) * 100;
+        const percK = (k / ctc) * 100;
+        const percNa = (na / ctc) * 100;
+        
+        document.getElementById('percentCa').textContent = percCa.toFixed(1) + '%';
+        document.getElementById('percentMg').textContent = percMg.toFixed(1) + '%';
+        document.getElementById('percentK').textContent = percK.toFixed(1) + '%';
+        document.getElementById('percentNa').textContent = percNa.toFixed(1) + '%';
+    } else {
+        document.getElementById('percentCa').textContent = '0%';
+        document.getElementById('percentMg').textContent = '0%';
+        document.getElementById('percentK').textContent = '0%';
+        document.getElementById('percentNa').textContent = '0%';
+    }
     
     // Atualizar barril
     atualizarBarril(v);
