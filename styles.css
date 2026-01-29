@@ -165,13 +165,13 @@ select:focus {
 }
 
 /* ========================================
-   METRIC ROWS
+   METRIC ROWS COM BADGE DE PORCENTAGEM
    ======================================== */
 .metric-row,
 .metric-row-compact {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     flex-wrap: wrap;
 }
 
@@ -186,13 +186,31 @@ select:focus {
     min-width: 120px;
 }
 
+/* BADGE DE PORCENTAGEM - ESTILO iOS */
+.percent-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 45px;
+    height: 24px;
+    padding: 0 8px;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1565C0;
+    letter-spacing: 0.3px;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
 .status-bar {
     flex: 1;
     height: 6px;
     background: #E5E5EA;
     border-radius: 3px;
     overflow: hidden;
-    min-width: 80px;
+    min-width: 60px;
 }
 
 .status-indicator {
@@ -330,14 +348,14 @@ select:focus {
 }
 
 /* ========================================
-   RESULTS CONTAINER COM BARRIL
+   RESULTS CONTAINER COMPACTO COM BARRIL
    ======================================== */
-.results-container {
+.results-container-compact {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     margin-top: 16px;
-    padding: 16px;
+    padding: 12px;
     background: #F9FAFB;
     border-radius: 10px;
 }
@@ -374,21 +392,21 @@ select:focus {
     line-height: 1;
 }
 
-/* BARRIL V% - GRANDE E DESTACADO */
+/* BARRIL V% - COMPACTO E PRÓXIMO */
 .barrel-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
+    gap: 8px;
+    padding: 8px 12px;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     border: 1px solid #E5E7EB;
 }
 
 .barrel {
-    width: 50px;
-    height: 100px;
+    width: 45px;
+    height: 90px;
     background: linear-gradient(180deg, #E5E5EA 0%, #D1D1D6 100%);
     border-radius: 8px;
     position: relative;
@@ -409,10 +427,10 @@ select:focus {
 
 .barrel-value {
     position: absolute;
-    bottom: 8px;
+    bottom: 6px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: white;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -431,7 +449,7 @@ select:focus {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100px;
+    height: 90px;
     font-size: 11px;
     font-weight: 600;
 }
@@ -443,11 +461,11 @@ select:focus {
 
 .barrel-label-bottom { 
     color: #22C55E;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .barrel-percent {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: #22C55E;
 }
@@ -1333,7 +1351,7 @@ select:focus {
     .inline-fields { flex-direction: column; align-items: stretch; }
     .inline-field { width: 100%; }
     .field-divider { display: none; }
-    .results-container { flex-direction: column; }
+    .results-container-compact { flex-direction: column; }
     .barrel-container { justify-content: center; }
 }
 
