@@ -325,6 +325,52 @@ function updateTextura() {
         else classe = areia >= 85 ? 'Arenosa' : silte >= 50 ? 'Siltosa' : 'Franco-Arenosa';
     }
     document.getElementById('classeTextural').textContent = classe;
+    
+    // Atualizar posição no triângulo textural
+    atualizarTrianguloTextural(areia, silte, argila);
+}
+
+function atualizarTrianguloTextural(areia, silte, argila) {
+    const marcador = document.getElementById('marcadorPosicao');
+    if (!marcador) return;
+    
+    const total = areia + silte + argila;
+    
+    // Mostrar/ocultar marcador
+    if (total >= 99 && total <= 101) {
+        marcador.style.opacity = '1';
+        
+        // Converter porcentagens para coordenadas do triângulo
+        // Triângulo: topo (250,0), base esquerda (0,433), base direita (500,433)
+        // Argila = altura (0% embaixo, 100% em cima)
+        // Areia = eixo horizontal esquerdo (0% direita, 100% esquerda)
+        // Silte = eixo horizontal direito (0% esquerda, 100% direita)
+        
+        const percArgila = argila / 100;
+        const percAreia = areia / 100;
+        const percSilte = silte / 100;
+        
+        // Posição Y (altura baseada na argila)
+        const y = 433 - (percArgila * 433);
+        
+        // Posição X (interpolação entre silte e areia)
+        // Quando argila = 0: x varia de 0 (100% silte) a 500 (100% areia)
+        // Quando argila = 100: x = 250 (topo)
+        const baseWidth = 500;
+        const topX = 250;
+        const width = baseWidth * (1 - percArgila);
+        const leftEdge = topX - (width / 2);
+        const x = leftEdge + (percAreia * width);
+        
+        marcador.setAttribute('cx', x);
+        marcador.setAttribute('cy', y);
+        
+        // Animar pulsação quando válido
+        marcador.style.animation = 'pulse 2s infinite';
+    } else {
+        marcador.style.opacity = '0';
+        marcador.style.animation = 'none';
+    }
 }
 
 function aplicarTipoSolo(tipo) {
@@ -339,7 +385,7 @@ function aplicarTipoSolo(tipo) {
     document.getElementById('inputSilte').value = v.silte;
     document.getElementById('inputArgila').value = v.argila;
     
-    document.querySelectorAll('.card-tipo-solo').forEach(c => c.classList.remove('ativo'));
+    document.querySelectorAll('.card-tipo-solo-mini').forEach(c => c.classList.remove('ativo'));
     document.getElementById('card' + tipo.charAt(0).toUpperCase() + tipo.slice(1))?.classList.add('ativo');
     
     updateTextura();
