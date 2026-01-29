@@ -401,7 +401,7 @@ function aplicarTipoSolo(tipo) {
     document.getElementById('inputSilte').value = v.silte;
     document.getElementById('inputArgila').value = v.argila;
     
-    document.querySelectorAll('.card-tipo-solo-mini').forEach(c => c.classList.remove('ativo'));
+    document.querySelectorAll('.card-tipo-solo-micro').forEach(c => c.classList.remove('ativo'));
     document.getElementById('card' + tipo.charAt(0).toUpperCase() + tipo.slice(1))?.classList.add('ativo');
     
     updateTextura();
