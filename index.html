@@ -116,99 +116,108 @@
             
             <!-- ROW PRINCIPAL: Inputs esquerda + Triângulo direita -->
             <div class="textura-layout-row">
-                <!-- ESQUERDA: Inputs + Total + Classe -->
+                <!-- ESQUERDA: Inputs compactos com barras coloridas -->
                 <div class="textura-col-inputs">
-                    <div class="textura-inputs-vertical">
-                        <div class="metric-row-compact">
-                            <span class="metric-label">Areia (%)</span>
-                            <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputAreia" oninput="formatDecimal(this); updateTextura()">
-                            <div class="status-bar"><div class="status-indicator" id="areia-indicator"></div></div>
+                    <!-- Areia: cor do triângulo base (verde claro) -->
+                    <div class="textura-row">
+                        <span class="textura-label">Areia</span>
+                        <input type="text" class="textura-input" maxlength="5" placeholder="0" id="inputAreia" oninput="formatDecimal(this); updateTextura()">
+                        <span class="textura-pct">%</span>
+                        <div class="textura-bar-wrap">
+                            <div class="textura-bar textura-bar-areia">
+                                <div class="textura-bar-fill" id="barAreia"></div>
+                            </div>
                         </div>
-                        <div class="metric-row-compact">
-                            <span class="metric-label">Silte (%)</span>
-                            <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputSilte" oninput="formatDecimal(this); updateTextura()">
-                            <div class="status-bar"><div class="status-indicator" id="silte-indicator"></div></div>
+                    </div>
+                    <!-- Silte: cor lima do triângulo -->
+                    <div class="textura-row">
+                        <span class="textura-label">Silte</span>
+                        <input type="text" class="textura-input" maxlength="5" placeholder="0" id="inputSilte" oninput="formatDecimal(this); updateTextura()">
+                        <span class="textura-pct">%</span>
+                        <div class="textura-bar-wrap">
+                            <div class="textura-bar textura-bar-silte">
+                                <div class="textura-bar-fill" id="barSilte"></div>
+                            </div>
                         </div>
-                        <div class="metric-row-compact">
-                            <span class="metric-label">Argila (%)</span>
-                            <input type="text" class="input-compact" maxlength="5" placeholder="0" id="inputArgila" oninput="formatDecimal(this); updateTextura()">
-                            <div class="status-bar"><div class="status-indicator" id="argila-indicator"></div></div>
+                    </div>
+                    <!-- Argila: cor verde escuro do topo -->
+                    <div class="textura-row">
+                        <span class="textura-label">Argila</span>
+                        <input type="text" class="textura-input" maxlength="5" placeholder="0" id="inputArgila" oninput="formatDecimal(this); updateTextura()">
+                        <span class="textura-pct">%</span>
+                        <div class="textura-bar-wrap">
+                            <div class="textura-bar textura-bar-argila">
+                                <div class="textura-bar-fill" id="barArgila"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Total e Classe inline -->
-                    <div class="textura-info-row">
-                        <div class="info-box">
-                            <div class="info-label">Total</div>
-                            <div class="info-value-row">
-                                <span class="info-value" id="totalTextura">0</span>
-                                <span class="info-unit">%</span>
-                                <span class="info-icon" id="validacaoIcon">○</span>
-                            </div>
+                    <!-- Total + Classe compacto -->
+                    <div class="textura-footer">
+                        <div class="textura-total">
+                            <span class="textura-total-valor" id="totalTextura">0</span>
+                            <span class="textura-total-unit">% </span>
+                            <span class="textura-total-icon" id="validacaoIcon">○</span>
                         </div>
-                        <div class="info-box">
-                            <div class="info-label">Classe Textural</div>
-                            <div class="info-value highlight" id="classeTextural">-</div>
-                        </div>
+                        <div class="textura-classe" id="classeTextural">—</div>
                     </div>
                 </div>
 
-                <!-- DIREITA: Triângulo -->
+                <!-- DIREITA: Triângulo maior -->
                 <div class="textura-col-triangulo">
                     <svg id="trianguloTextural" viewBox="0 0 500 435" class="triangulo-svg-mini">
-                        <!-- Zonas TONS DE VERDE (preenchem até as bordas do triângulo) -->
-                        <polygon points="250,2 200,88.6 300,88.6" fill="#166534" opacity="0.45"/>
-                        <polygon points="200,88.6 150,175.2 350,175.2 300,88.6" fill="#15803D" opacity="0.45"/>
+                        <!-- Zonas com MESMAS cores das barras -->
+                        <!-- Muito Argilosa: verde escuro (= barra Argila) -->
+                        <polygon points="250,2 200,88.6 300,88.6" fill="#166534" opacity="0.55"/>
+                        <!-- Argilosa -->
+                        <polygon points="200,88.6 150,175.2 350,175.2 300,88.6" fill="#15803D" opacity="0.5"/>
+                        <!-- Média -->
                         <polygon points="150,175.2 100,261.8 400,261.8 350,175.2" fill="#16A34A" opacity="0.45"/>
-                        <polygon points="100,261.8 50,348.4 150,348.4 200,261.8" fill="#4ADE80" opacity="0.45"/>
-                        <polygon points="300,261.8 350,348.4 450,348.4 400,261.8" fill="#84CC16" opacity="0.45"/>
-                        <!-- Zona central inferior (entre arenosa e siltosa) -->
-                        <polygon points="200,261.8 150,348.4 350,348.4 300,261.8" fill="#16A34A" opacity="0.2"/>
-                        <!-- Faixa inferior completa -->
-                        <polygon points="50,348.4 0,435 500,435 450,348.4" fill="#22C55E" opacity="0.15"/>
+                        <!-- Arenosa: verde claro (= barra Areia) -->
+                        <polygon points="100,261.8 50,348.4 150,348.4 200,261.8" fill="#4ADE80" opacity="0.5"/>
+                        <!-- Siltosa: lima (= barra Silte) -->
+                        <polygon points="300,261.8 350,348.4 450,348.4 400,261.8" fill="#84CC16" opacity="0.5"/>
+                        <!-- Centro inferior -->
+                        <polygon points="200,261.8 150,348.4 350,348.4 300,261.8" fill="#22C55E" opacity="0.25"/>
+                        <!-- Base completa -->
+                        <polygon points="50,348.4 0,435 500,435 450,348.4" fill="#4ADE80" opacity="0.2"/>
 
-                        <!-- Triângulo base (borda por cima das zonas) -->
-                        <polygon points="250,2 500,435 0,435" fill="none" stroke="#6B7280" stroke-width="1.8"/>
+                        <!-- Borda do triângulo -->
+                        <polygon points="250,2 500,435 0,435" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
 
-                        <!-- Linhas de grade -->
-                        <line x1="250" y1="2" x2="125" y2="218.5" stroke="#D1D5DB" stroke-width="0.7" opacity="0.5"/>
-                        <line x1="250" y1="2" x2="175" y2="131.9" stroke="#D1D5DB" stroke-width="0.7" opacity="0.5"/>
-                        <line x1="0" y1="435" x2="150" y2="348.4" stroke="#D1D5DB" stroke-width="0.7" opacity="0.5"/>
-                        <line x1="500" y1="435" x2="350" y2="348.4" stroke="#D1D5DB" stroke-width="0.7" opacity="0.5"/>
-
-                        <!-- Marcadores de Referência -->
-                        <circle cx="250" cy="218" r="3.5" fill="#8B4513" stroke="white" stroke-width="1.2"/>
-                        <circle cx="125" cy="348" r="3.5" fill="#DAA520" stroke="white" stroke-width="1.2"/>
-                        <circle cx="375" cy="348" r="3.5" fill="#D2691E" stroke="white" stroke-width="1.2"/>
+                        <!-- Grade sutil -->
+                        <line x1="250" y1="2" x2="125" y2="218.5" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
+                        <line x1="250" y1="2" x2="175" y2="131.9" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
+                        <line x1="0" y1="435" x2="150" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
+                        <line x1="500" y1="435" x2="350" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
 
                         <!-- Marcador posição atual -->
-                        <circle id="marcadorPosicao" cx="250" cy="300" r="5" fill="#FBBF24" stroke="white" stroke-width="2" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 3px rgba(251,191,36,0.6));"/>
+                        <circle id="marcadorPosicao" cx="250" cy="300" r="6" fill="#FBBF24" stroke="white" stroke-width="2.5" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(251,191,36,0.5));"/>
 
                         <!-- Labels eixos -->
-                        <text x="250" y="18" text-anchor="middle" font-size="9" font-weight="600" fill="#4B5563">Argila</text>
-                        <text x="8" y="432" text-anchor="start" font-size="9" font-weight="600" fill="#4B5563">Silte</text>
-                        <text x="492" y="432" text-anchor="end" font-size="9" font-weight="600" fill="#4B5563">Areia</text>
+                        <text x="250" y="20" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280">Argila</text>
+                        <text x="12" y="430" text-anchor="start" font-size="10" font-weight="600" fill="#6B7280">Silte</text>
+                        <text x="488" y="430" text-anchor="end" font-size="10" font-weight="600" fill="#6B7280">Areia</text>
                     </svg>
                 </div>
             </div>
 
-            <!-- Cards de Tipos de Solo (micro inline) -->
-            <div class="subsection-title" style="margin-top:12px;">Valores de Referência</div>
-            <div class="grid-3 mb-12">
+            <!-- Cards de Tipos de Solo -->
+            <div class="grid-3" style="margin-top:14px;">
                 <div id="cardArgiloso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('argiloso')">
-                    <span class="tipo-solo-icon-micro">🟫</span>
+                    <span class="tipo-solo-dot" style="background:#166534;"></span>
                     <span class="tipo-solo-nome-micro">ARGILOSO</span>
-                    <span class="tipo-solo-valores-micro">35-60%</span>
+                    <span class="tipo-solo-valores-micro">35–60%</span>
                 </div>
                 <div id="cardArenoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('arenoso')">
-                    <span class="tipo-solo-icon-micro">🟨</span>
+                    <span class="tipo-solo-dot" style="background:#4ADE80;"></span>
                     <span class="tipo-solo-nome-micro">ARENOSO</span>
-                    <span class="tipo-solo-valores-micro">70-90%</span>
+                    <span class="tipo-solo-valores-micro">70–90%</span>
                 </div>
                 <div id="cardSiltoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('siltoso')">
-                    <span class="tipo-solo-icon-micro">🟧</span>
+                    <span class="tipo-solo-dot" style="background:#84CC16;"></span>
                     <span class="tipo-solo-nome-micro">SILTOSO</span>
-                    <span class="tipo-solo-valores-micro">60-80%</span>
+                    <span class="tipo-solo-valores-micro">60–80%</span>
                 </div>
             </div>
 
