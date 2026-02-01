@@ -194,6 +194,33 @@ function fecharCard(cardId) {
 }
 
 // ========================================
+// NÍVEIS DE REFERÊNCIA PARA NUTRIENTES
+// ========================================
+const niveisNutrientes = {
+    ca: { muitoBaixo: 1.5, baixo: 2.5, medio: 4.0, adequado: 6.0 },
+    mg: { muitoBaixo: 0.4, baixo: 0.8, medio: 1.2, adequado: 1.5 },
+    k: { muitoBaixo: 0.08, baixo: 0.15, medio: 0.25, adequado: 0.35 },
+    na: { muitoBaixo: 0.05, baixo: 0.1, medio: 0.2, adequado: 0.3 }
+};
+
+function classificarNutriente(valor, niveis) {
+    if (valor === 0) return { texto: '--', classe: '' };
+    if (valor < niveis.muitoBaixo) return { texto: 'Muito Baixo', classe: 'muito-baixo' };
+    if (valor < niveis.baixo) return { texto: 'Baixo', classe: 'baixo' };
+    if (valor < niveis.medio) return { texto: 'Médio', classe: 'medio' };
+    if (valor < niveis.adequado) return { texto: 'Adequado', classe: 'adequado' };
+    return { texto: 'Alto', classe: 'alto' };
+}
+
+function atualizarStatusBadge(elementId, status) {
+    const badge = document.getElementById(elementId);
+    if (!badge) return;
+    
+    badge.textContent = status.texto;
+    badge.className = 'status-badge ' + status.classe;
+}
+
+// ========================================
 // CÁLCULOS - SB, CTC, V% COM PORCENTAGENS
 // ========================================
 function calcularSBCTC() {
@@ -219,6 +246,17 @@ function calcularSBCTC() {
     document.getElementById('valorCTC').textContent = ctc.toFixed(2);
     document.getElementById('valorM').textContent = Math.round(m);
     document.getElementById('valorAlPercent').textContent = Math.round(alPercent);
+    
+    // Atualizar status badges dos nutrientes
+    const statusCa = classificarNutriente(ca, niveisNutrientes.ca);
+    const statusMg = classificarNutriente(mg, niveisNutrientes.mg);
+    const statusK = classificarNutriente(k, niveisNutrientes.k);
+    const statusNa = classificarNutriente(na, niveisNutrientes.na);
+    
+    atualizarStatusBadge('statusBadgeCa', statusCa);
+    atualizarStatusBadge('statusBadgeMg', statusMg);
+    atualizarStatusBadge('statusBadgeK', statusK);
+    atualizarStatusBadge('statusBadgeNa', statusNa);
     
     // Calcular e exibir porcentagens individuais
     if (ctc > 0) {
@@ -367,11 +405,11 @@ function atualizarTrianguloTextural(areia, silte, argila) {
         const percSilte = silte / 100;
         
         // Posição Y (altura baseada na argila)
-        const y = 433 - (percArgila * 433);
+        // Topo = y:2, Base = y:435
+        const y = 435 - (percArgila * 433);
         
         // Posição X (interpolação entre silte e areia)
-        // Quando argila = 0: x varia de 0 (100% silte) a 500 (100% areia)
-        // Quando argila = 100: x = 250 (topo)
+        // Base esquerda (0,435), base direita (500,435), topo (250,2)
         const baseWidth = 500;
         const topX = 250;
         const width = baseWidth * (1 - percArgila);
@@ -577,7 +615,7 @@ function updateMicroStatus(micro, valor) {
 }
 
 // ========================================
-// MICRONUTRIENTES
+// MICRONUTRIENTES - GRUPOS MINIMALISTAS
 // ========================================
 const micronutrientesDisponiveis = [
     { id: 'mn', nome: 'Mn' }, { id: 'zn', nome: 'Zn' }, { id: 'cu', nome: 'Cu' }, { id: 'fe', nome: 'Fe' },
@@ -597,102 +635,176 @@ const fontesMicro = {
 
 let gruposMicro = [];
 let contadorGrupos = 0;
+let grupoAtualEditando = null;
+let selecaoTemporariaMicro = [];
 
 function criarGrupoMicro() {
     contadorGrupos++;
     const grupoId = `grupo-${contadorGrupos}`;
-    gruposMicro.push({ id: grupoId, numero: contadorGrupos, nutrientes: [] });
-    renderGrupoMicro(grupoId, contadorGrupos);
+    
+    // Iniciar com seleção vazia
+    gruposMicro.push({ 
+        id: grupoId, 
+        numero: contadorGrupos, 
+        nutrientes: [],
+        aplicacao: 'solo',
+        regencia: 'autor'
+    });
+    
+    grupoAtualEditando = grupoId;
+    selecaoTemporariaMicro = [];
+    
+    // Abrir modal de seleção
+    abrirModalMicro();
 }
 
-function renderGrupoMicro(grupoId, numero) {
-    const html = `
-        <div class="grupo-micro-card" id="${grupoId}">
-            <div class="grupo-micro-header">
-                <div class="grupo-micro-titulo">
-                    <span class="grupo-micro-numero">${numero}</span>
-                    Grupo de Micronutrientes
-                </div>
-                <button class="btn-remove" onclick="removerGrupoMicro('${grupoId}')">×</button>
+function abrirModalMicro() {
+    const modal = document.getElementById('modalMicronutrientes');
+    const grid = document.getElementById('microSelectorGrid');
+    
+    // Preencher grid com micronutrientes
+    grid.innerHTML = micronutrientesDisponiveis.map(m => `
+        <div class="micro-selector-item ${selecaoTemporariaMicro.includes(m.id) ? 'selected' : ''}" 
+             onclick="toggleMicroSelecao('${m.id}')">
+            <div class="micro-selector-check">
+                <svg class="checkmark-micro" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                    <path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
-            <div class="micro-pills-container" id="pills-${grupoId}">
-                ${micronutrientesDisponiveis.map(m => `<button class="micro-pill" onclick="toggleMicroPill('${grupoId}', '${m.id}', this)">${m.nome}</button>`).join('')}
-            </div>
-            <div class="inline-fields mb-12">
-                <div class="inline-field">
-                    <label>Aplicação</label>
-                    <select class="dropdown-compact">
-                        <option value="">Selecione...</option>
-                        <option value="solo">Solo</option>
-                        <option value="foliar">Foliar</option>
-                    </select>
-                </div>
-                <div class="inline-field">
-                    <label>Regência</label>
-                    <select class="dropdown-compact" id="regencia-${grupoId}" onchange="atualizarRegenciaGrupo('${grupoId}')">
-                        <option value="autor">Autor</option>
-                        <option value="tecnologia">Tecnologia</option>
-                        <option value="cultivar">Cultivar</option>
-                    </select>
-                </div>
-                <div class="inline-field" style="flex:2;">
-                    <label>Referência</label>
-                    <select class="dropdown-full" id="ref-${grupoId}"><option value="">Selecione...</option></select>
-                </div>
-            </div>
-            <div class="subsection-title">Fontes e Doses</div>
-            <div id="fontes-${grupoId}"><p style="color:#9CA3AF;font-size:12px;">Selecione micronutrientes acima</p></div>
+            <span>${m.nome}</span>
         </div>
-    `;
-    document.getElementById('containerGruposMicro').insertAdjacentHTML('beforeend', html);
-    atualizarRegenciaGrupo(grupoId);
+    `).join('');
+    
+    modal.classList.add('active');
 }
 
-function toggleMicroPill(grupoId, microId, element) {
-    element.classList.toggle('selected');
-    const grupo = gruposMicro.find(g => g.id === grupoId);
-    if (!grupo) return;
+function toggleMicroSelecao(microId) {
+    const idx = selecaoTemporariaMicro.indexOf(microId);
+    if (idx === -1) {
+        selecaoTemporariaMicro.push(microId);
+    } else {
+        selecaoTemporariaMicro.splice(idx, 1);
+    }
     
-    const idx = grupo.nutrientes.indexOf(microId);
-    if (idx === -1) grupo.nutrientes.push(microId);
-    else grupo.nutrientes.splice(idx, 1);
-    
-    renderFontesDosesGrupo(grupoId);
+    // Atualizar visual
+    document.querySelectorAll('.micro-selector-item').forEach((item, i) => {
+        const micro = micronutrientesDisponiveis[i];
+        if (selecaoTemporariaMicro.includes(micro.id)) {
+            item.classList.add('selected');
+        } else {
+            item.classList.remove('selected');
+        }
+    });
 }
 
-function renderFontesDosesGrupo(grupoId) {
-    const grupo = gruposMicro.find(g => g.id === grupoId);
-    const container = document.getElementById(`fontes-${grupoId}`);
-    
-    if (!grupo || grupo.nutrientes.length === 0) {
-        container.innerHTML = '<p style="color:#9CA3AF;font-size:12px;">Selecione micronutrientes acima</p>';
+function confirmarSelecaoMicro() {
+    if (selecaoTemporariaMicro.length === 0) {
+        alert('Selecione pelo menos um micronutriente');
         return;
     }
     
+    const grupo = gruposMicro.find(g => g.id === grupoAtualEditando);
+    if (grupo) {
+        grupo.nutrientes = [...selecaoTemporariaMicro];
+        renderGrupoMicro(grupo.id, grupo.numero);
+    }
+    
+    fecharModalMicro();
+}
+
+function fecharModalMicro(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('modalMicronutrientes').classList.remove('active');
+}
+
+function renderGrupoMicro(grupoId, numero) {
+    const grupo = gruposMicro.find(g => g.id === grupoId);
+    if (!grupo) return;
+    
+    // Verificar se já existe
+    let container = document.getElementById(grupoId);
+    if (!container) {
+        container = document.createElement('div');
+        container.id = grupoId;
+        container.className = 'grupo-micro-card-clean';
+        document.getElementById('containerGruposMicro').appendChild(container);
+    }
+    
+    // Ordenar nutrientes
     const ordem = micronutrientesDisponiveis.map(m => m.id);
     grupo.nutrientes.sort((a, b) => ordem.indexOf(a) - ordem.indexOf(b));
     
-    container.innerHTML = grupo.nutrientes.map(microId => {
-        const micro = micronutrientesDisponiveis.find(m => m.id === microId);
-        const fontes = fontesMicro[microId] || [];
-        const unidade = microId === 'mo' ? 'g/ha' : 'kg/ha';
+    const html = `
+        <div class="grupo-micro-header-clean">
+            <div class="grupo-micro-numero-badge">${numero}</div>
+            <div class="grupo-micro-titulo-clean">Grupo de Micronutrientes</div>
+            <button class="btn-edit-micro" onclick="editarGrupoMicro('${grupoId}')" title="Editar seleção">✎</button>
+            <button class="btn-remove" onclick="removerGrupoMicro('${grupoId}')">×</button>
+        </div>
         
-        return `
-            <div class="inline-fields mb-8">
-                <div class="inline-field" style="min-width:40px;"><label>${micro.nome}</label></div>
-                <div class="inline-field" style="flex:2;">
-                    <select class="dropdown-full">
-                        <option value="">Fonte...</option>
-                        ${fontes.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="inline-field">
-                    <input type="text" class="input-compact" maxlength="5" placeholder="0.0" oninput="formatDecimal(this)">
-                </div>
-                <span class="unit-label">${unidade}</span>
+        <div class="form-row-inline">
+            <div class="form-field-inline">
+                <label>Aplicação</label>
+                <select class="dropdown-compact" id="aplicacao-${grupoId}" onchange="atualizarGrupo('${grupoId}')">
+                    <option value="solo" ${grupo.aplicacao === 'solo' ? 'selected' : ''}>Solo</option>
+                    <option value="foliar" ${grupo.aplicacao === 'foliar' ? 'selected' : ''}>Foliar</option>
+                </select>
             </div>
-        `;
-    }).join('');
+            <div class="form-field-inline">
+                <label>Regência</label>
+                <select class="dropdown-compact" id="regencia-${grupoId}" onchange="atualizarRegenciaGrupo('${grupoId}')">
+                    <option value="autor">Autor</option>
+                    <option value="tecnologia">Tecnologia</option>
+                    <option value="cultivar">Cultivar</option>
+                </select>
+            </div>
+            <div class="form-field-inline" style="flex:1.5;">
+                <label>Referência</label>
+                <select class="dropdown-full" id="ref-${grupoId}"></select>
+            </div>
+        </div>
+        
+        <div class="subsection-title" style="margin-top: 12px;">Fontes e Doses</div>
+        <div class="fontes-doses-clean">
+            ${grupo.nutrientes.map(microId => {
+                const micro = micronutrientesDisponiveis.find(m => m.id === microId);
+                const fontes = fontesMicro[microId] || [];
+                const unidade = microId === 'mo' ? 'g/ha' : 'kg/ha';
+                
+                return `
+                    <div class="fonte-dose-row">
+                        <div class="micro-nome-badge">${micro.nome}</div>
+                        <select class="fonte-select">
+                            <option value="">Fonte...</option>
+                            ${fontes.map(f => `<option value="${f.value}">${f.label}</option>`).join('')}
+                        </select>
+                        <input type="text" class="dose-input" maxlength="7" placeholder="0.0" oninput="formatDecimal(this)">
+                        <span class="dose-unit">${unidade}</span>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+    
+    container.innerHTML = html;
+    atualizarRegenciaGrupo(grupoId);
+}
+
+function editarGrupoMicro(grupoId) {
+    const grupo = gruposMicro.find(g => g.id === grupoId);
+    if (!grupo) return;
+    
+    grupoAtualEditando = grupoId;
+    selecaoTemporariaMicro = [...grupo.nutrientes];
+    abrirModalMicro();
+}
+
+function atualizarGrupo(grupoId) {
+    const grupo = gruposMicro.find(g => g.id === grupoId);
+    if (!grupo) return;
+    
+    const aplicacao = document.getElementById(`aplicacao-${grupoId}`)?.value;
+    if (aplicacao) grupo.aplicacao = aplicacao;
 }
 
 function atualizarRegenciaGrupo(grupoId) {
