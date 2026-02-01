@@ -362,7 +362,7 @@ function updateTextura() {
     const icon = document.getElementById('validacaoIcon');
     if (total === 100) {
         icon.textContent = '✓';
-        icon.style.color = '#4ADE80';
+        icon.style.color = '#22C55E';
     } else if (total > 0) {
         icon.textContent = '⚠';
         icon.style.color = '#F59E0B';
@@ -371,7 +371,13 @@ function updateTextura() {
         icon.style.color = '#D1D5DB';
     }
     
-    let classe = '-';
+    // Barras coloridas: largura proporcional ao valor (0-100%)
+    document.getElementById('barAreia').style.width = Math.min(areia, 100) + '%';
+    document.getElementById('barSilte').style.width = Math.min(silte, 100) + '%';
+    document.getElementById('barArgila').style.width = Math.min(argila, 100) + '%';
+    
+    // Classe textural
+    let classe = '—';
     if (total >= 99 && total <= 101) {
         if (argila >= 60) classe = 'Muito Argilosa';
         else if (argila >= 35) classe = 'Argilosa';
