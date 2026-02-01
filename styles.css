@@ -204,6 +204,53 @@ select:focus {
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
+/* STATUS BADGE - CLASSIFICAÇÃO DO NUTRIENTE */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 70px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 11px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
+}
+
+.status-badge.muito-baixo {
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+    color: #991B1B;
+    border-color: #FCA5A5;
+}
+
+.status-badge.baixo {
+    background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%);
+    color: #9A3412;
+    border-color: #FB923C;
+}
+
+.status-badge.medio {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    color: #92400E;
+    border-color: #FCD34D;
+}
+
+.status-badge.adequado {
+    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    color: #065F46;
+    border-color: #6EE7B7;
+}
+
+.status-badge.alto {
+    background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+    color: #1E40AF;
+    border-color: #93C5FD;
+}
+
 .status-bar {
     flex: 1;
     height: 6px;
@@ -348,29 +395,54 @@ select:focus {
 }
 
 /* ========================================
-   TRIÂNGULO TEXTURAL
+   TRIÂNGULO TEXTURAL - LAYOUT HORIZONTAL
    ======================================== */
-/* Layout vertical dos inputs */
+
+/* Row principal: esquerda inputs, direita triângulo */
+.textura-layout-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+}
+
+/* Coluna esquerda: inputs + total/classe */
+.textura-col-inputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
 .textura-inputs-vertical {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
-.triangulo-textural-container-mini {
-    background: white;
-    border: 1px solid #E5E7EB;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 16px;
+/* Total + Classe em linha */
+.textura-info-row {
+    display: flex;
+    gap: 8px;
+}
+
+.textura-info-row .info-box {
+    flex: 1;
+}
+
+/* Coluna direita: triângulo sem espaço branco */
+.textura-col-triangulo {
+    flex: 0 0 auto;
+    width: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .triangulo-svg-mini {
     width: 100%;
-    max-width: 200px;
     height: auto;
-    margin: 0 auto;
     display: block;
 }
 
@@ -1439,6 +1511,234 @@ select:focus {
     background: #007AFF;
     border-color: #007AFF;
     color: white;
+}
+
+/* ========================================
+   GRUPOS DE MICRONUTRIENTES - CLEAN
+   ======================================== */
+.grupo-micro-card-clean {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-left: 4px solid #007AFF;
+}
+
+.grupo-micro-header-clean {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.grupo-micro-numero-badge {
+    background: #007AFF;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.grupo-micro-titulo-clean {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1D1D1F;
+    flex: 1;
+}
+
+.btn-edit-micro {
+    background: #F0F9FF;
+    border: 1px solid #BFDBFE;
+    color: #1E40AF;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-edit-micro:hover {
+    background: #DBEAFE;
+    border-color: #93C5FD;
+}
+
+.form-row-inline {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.form-field-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-field-inline label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #86868B;
+    font-weight: 500;
+}
+
+/* FONTES E DOSES - LAYOUT CLEAN */
+.fontes-doses-clean {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fonte-dose-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.micro-nome-badge {
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 42px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.fonte-select {
+    flex: 2;
+    padding: 8px 28px 8px 10px;
+    border: 1px solid #D1D1D6;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2386868B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
+}
+
+.dose-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #D1D1D6;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.dose-unit {
+    font-size: 11px;
+    color: #86868B;
+    font-weight: 500;
+    min-width: 40px;
+}
+
+/* MODAL SELETOR DE MICRONUTRIENTES */
+.micro-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.micro-selector-item {
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 14px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.micro-selector-item:hover {
+    border-color: #007AFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,122,255,0.15);
+}
+
+.micro-selector-item.selected {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-color: #007AFF;
+    box-shadow: 0 2px 6px rgba(0,122,255,0.2);
+}
+
+.micro-selector-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #D1D5DB;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: white;
+}
+
+.micro-selector-item.selected .micro-selector-check {
+    background: #007AFF;
+    border-color: #007AFF;
+}
+
+.checkmark-micro {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s;
+}
+
+.micro-selector-item.selected .checkmark-micro {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.micro-selector-item span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1D1D1F;
+}
+
+.btn-confirmar-micro {
+    width: 100%;
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirmar-micro:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,122,255,0.3);
 }
 
 /* AMOSTRA TAG */
