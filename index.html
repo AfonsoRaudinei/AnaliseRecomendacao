@@ -166,33 +166,35 @@
                 <!-- DIREITA: Triângulo GRÁFICO (muda conforme valores) -->
                 <div class="textura-col-triangulo">
                     <svg id="trianguloTextural" viewBox="0 0 500 435" class="triangulo-svg-mini">
-                        <!-- ZONAS DINÂMICAS (opacidade muda com os valores) -->
+                        <!-- ZONAS DINÂMICAS que cobrem as áreas corretas -->
                         
                         <!-- ZONA ARGILOSA (topo - marrom/terra) -->
                         <g id="zonaArgilosa">
-                            <polygon points="250,2 200,88.6 300,88.6" fill="#8B4513" opacity="0"/>
-                            <polygon points="200,88.6 150,175.2 350,175.2 300,88.6" fill="#A0522D" opacity="0"/>
+                            <!-- Ponta superior -->
+                            <polygon points="250,2 210,75 290,75" fill="#8B4513" opacity="0"/>
+                            <polygon points="210,75 170,150 330,150 290,75" fill="#A0522D" opacity="0"/>
+                            <polygon points="170,150 130,225 370,225 330,150" fill="#8B5A3C" opacity="0"/>
+                        </g>
+                        
+                        <!-- ZONA ARENOSA (base ESQUERDA - azul claro) -->
+                        <g id="zonaArenosa">
+                            <!-- Canto inferior esquerdo -->
+                            <polygon points="0,435 100,300 200,300 100,435" fill="#42A5F5" opacity="0"/>
+                            <polygon points="100,300 150,225 250,225 200,300" fill="#64B5F6" opacity="0"/>
+                        </g>
+                        
+                        <!-- ZONA SILTOSA (base DIREITA - laranja) -->
+                        <g id="zonaSiltosa">
+                            <!-- Canto inferior direito -->
+                            <polygon points="500,435 400,300 300,300 400,435" fill="#FFA726" opacity="0"/>
+                            <polygon points="400,300 350,225 250,225 300,300" fill="#FFB74D" opacity="0"/>
                         </g>
                         
                         <!-- ZONA MÉDIA (centro - verde neutro) -->
                         <g id="zonaMedio">
-                            <polygon points="150,175.2 100,261.8 400,261.8 350,175.2" fill="#7CB342" opacity="0"/>
+                            <polygon points="200,300 250,225 300,300" fill="#9CCC65" opacity="0"/>
+                            <polygon points="130,225 200,300 300,300 370,225" fill="#AED581" opacity="0"/>
                         </g>
-                        
-                        <!-- ZONA ARENOSA (base esquerda - azul claro) -->
-                        <g id="zonaArenosa">
-                            <polygon points="100,261.8 50,348.4 150,348.4 200,261.8" fill="#42A5F5" opacity="0"/>
-                            <polygon points="150,261.8 100,348.4 200,348.4" fill="#64B5F6" opacity="0"/>
-                        </g>
-                        
-                        <!-- ZONA SILTOSA (base direita - laranja) -->
-                        <g id="zonaSiltosa">
-                            <polygon points="300,261.8 350,348.4 450,348.4 400,261.8" fill="#FFA726" opacity="0"/>
-                            <polygon points="300,261.8 250,348.4 350,348.4" fill="#FFB74D" opacity="0"/>
-                        </g>
-                        
-                        <!-- BASE COMPLETA (triângulo cheio de fundo) -->
-                        <polygon points="50,348.4 0,435 500,435 450,348.4" fill="#E0E0E0" opacity="0.15"/>
 
                         <!-- Borda do triângulo -->
                         <polygon points="250,2 500,435 0,435" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
@@ -212,9 +214,9 @@
                         <text x="488" y="430" text-anchor="end" font-size="10" font-weight="600" fill="#6B7280">Areia</text>
                         
                         <!-- Valores grandes no centro (mostram os %) -->
-                        <text id="textoAreia" x="80" y="400" text-anchor="middle" font-size="20" font-weight="700" fill="#1976D2" opacity="0">0%</text>
-                        <text id="textoSilte" x="420" y="400" text-anchor="middle" font-size="20" font-weight="700" fill="#F57C00" opacity="0">0%</text>
-                        <text id="textoArgila" x="250" y="100" text-anchor="middle" font-size="20" font-weight="700" fill="#6D4C41" opacity="0">0%</text>
+                        <text id="textoAreia" x="100" y="390" text-anchor="middle" font-size="20" font-weight="700" fill="#1976D2" opacity="0">0%</text>
+                        <text id="textoSilte" x="400" y="390" text-anchor="middle" font-size="20" font-weight="700" fill="#F57C00" opacity="0">0%</text>
+                        <text id="textoArgila" x="250" y="80" text-anchor="middle" font-size="20" font-weight="700" fill="#6D4C41" opacity="0">0%</text>
                     </svg>
                 </div>
             </div>
