@@ -1817,6 +1817,32 @@ select:focus {
     transform: scale(1);
 }
 
+.micro-selector-item.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #F5F5F7;
+    border-color: #E5E5EA;
+}
+
+.micro-usado-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #FF3B30;
+    color: white;
+    font-size: 7px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.micro-selector-item {
+    position: relative;
+}
+
 .micro-selector-item span {
     font-size: 13px;
     font-weight: 600;
