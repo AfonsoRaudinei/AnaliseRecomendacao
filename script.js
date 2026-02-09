@@ -396,26 +396,81 @@ function atualizarTrianguloTextural(areia, silte, argila) {
     
     const total = areia + silte + argila;
     
-    // Mostrar/ocultar marcador
+    // ====== ATUALIZAR INTENSIDADE DAS ZONAS (GRÁFICO DINÂMICO) ======
+    const zonaArenosa = document.getElementById('zonaArenosa');
+    const zonaSiltosa = document.getElementById('zonaSiltosa');
+    const zonaArgilosa = document.getElementById('zonaArgilosa');
+    const zonaMedio = document.getElementById('zonaMedio');
+    
+    if (total > 0) {
+        // Calcular intensidades proporcionais (0 a 1)
+        const intensidadeAreia = areia / 100;
+        const intensidadeSilte = silte / 100;
+        const intensidadeArgila = argila / 100;
+        
+        // Atualizar opacidade de cada zona (quanto maior o valor, mais intensa a cor)
+        if (zonaArenosa) {
+            const polys = zonaArenosa.querySelectorAll('polygon');
+            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeAreia * 1.2, 0.85)));
+        }
+        
+        if (zonaSiltosa) {
+            const polys = zonaSiltosa.querySelectorAll('polygon');
+            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeSilte * 1.2, 0.85)));
+        }
+        
+        if (zonaArgilosa) {
+            const polys = zonaArgilosa.querySelectorAll('polygon');
+            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeArgila * 1.2, 0.85)));
+        }
+        
+        if (zonaMedio) {
+            // Zona média usa intensidade balanceada
+            const mediaIntensidade = (intensidadeAreia + intensidadeSilte + intensidadeArgila) / 3;
+            const polys = zonaMedio.querySelectorAll('polygon');
+            polys.forEach(p => p.setAttribute('opacity', Math.min(mediaIntensidade * 0.6, 0.4)));
+        }
+        
+        // Atualizar textos com valores grandes (aparecem quando > 10%)
+        const textoAreia = document.getElementById('textoAreia');
+        const textoSilte = document.getElementById('textoSilte');
+        const textoArgila = document.getElementById('textoArgila');
+        
+        if (textoAreia) {
+            textoAreia.textContent = areia.toFixed(0) + '%';
+            textoAreia.setAttribute('opacity', areia > 10 ? 0.9 : 0);
+        }
+        if (textoSilte) {
+            textoSilte.textContent = silte.toFixed(0) + '%';
+            textoSilte.setAttribute('opacity', silte > 10 ? 0.9 : 0);
+        }
+        if (textoArgila) {
+            textoArgila.textContent = argila.toFixed(0) + '%';
+            textoArgila.setAttribute('opacity', argila > 10 ? 0.9 : 0);
+        }
+    } else {
+        // Reset - triângulo vazio (cinza neutro)
+        if (zonaArenosa) zonaArenosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
+        if (zonaSiltosa) zonaSiltosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
+        if (zonaArgilosa) zonaArgilosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
+        if (zonaMedio) zonaMedio.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
+        
+        document.getElementById('textoAreia')?.setAttribute('opacity', 0);
+        document.getElementById('textoSilte')?.setAttribute('opacity', 0);
+        document.getElementById('textoArgila')?.setAttribute('opacity', 0);
+    }
+    
+    // ====== MARCADOR AMARELO DE POSIÇÃO ======
     if (total >= 99 && total <= 101) {
         marcador.style.opacity = '1';
         
-        // Converter porcentagens para coordenadas do triângulo
-        // Triângulo: topo (250,0), base esquerda (0,433), base direita (500,433)
-        // Argila = altura (0% embaixo, 100% em cima)
-        // Areia = eixo horizontal esquerdo (0% direita, 100% esquerda)
-        // Silte = eixo horizontal direito (0% esquerda, 100% direita)
-        
         const percArgila = argila / 100;
         const percAreia = areia / 100;
-        const percSilte = silte / 100;
         
         // Posição Y (altura baseada na argila)
-        // Topo = y:2, Base = y:435
         const y = 435 - (percArgila * 433);
         
         // Posição X (interpolação entre silte e areia)
-        // Base esquerda (0,435), base direita (500,435), topo (250,2)
         const baseWidth = 500;
         const topX = 250;
         const width = baseWidth * (1 - percArgila);
@@ -424,8 +479,6 @@ function atualizarTrianguloTextural(areia, silte, argila) {
         
         marcador.setAttribute('cx', x);
         marcador.setAttribute('cy', y);
-        
-        // Animar pulsação quando válido
         marcador.style.animation = 'pulse 2s infinite';
     } else {
         marcador.style.opacity = '0';
