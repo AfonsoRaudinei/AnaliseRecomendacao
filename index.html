@@ -163,41 +163,58 @@
                     </div>
                 </div>
 
-                <!-- DIREITA: Triângulo maior -->
+                <!-- DIREITA: Triângulo GRÁFICO (muda conforme valores) -->
                 <div class="textura-col-triangulo">
                     <svg id="trianguloTextural" viewBox="0 0 500 435" class="triangulo-svg-mini">
-                        <!-- Zonas com MESMAS cores das barras -->
-                        <!-- Muito Argilosa: verde escuro (= barra Argila) -->
-                        <polygon points="250,2 200,88.6 300,88.6" fill="#166534" opacity="0.55"/>
-                        <!-- Argilosa -->
-                        <polygon points="200,88.6 150,175.2 350,175.2 300,88.6" fill="#15803D" opacity="0.5"/>
-                        <!-- Média -->
-                        <polygon points="150,175.2 100,261.8 400,261.8 350,175.2" fill="#16A34A" opacity="0.45"/>
-                        <!-- Arenosa: verde claro (= barra Areia) -->
-                        <polygon points="100,261.8 50,348.4 150,348.4 200,261.8" fill="#4ADE80" opacity="0.5"/>
-                        <!-- Siltosa: lima (= barra Silte) -->
-                        <polygon points="300,261.8 350,348.4 450,348.4 400,261.8" fill="#84CC16" opacity="0.5"/>
-                        <!-- Centro inferior -->
-                        <polygon points="200,261.8 150,348.4 350,348.4 300,261.8" fill="#22C55E" opacity="0.25"/>
-                        <!-- Base completa -->
-                        <polygon points="50,348.4 0,435 500,435 450,348.4" fill="#4ADE80" opacity="0.2"/>
+                        <!-- ZONAS DINÂMICAS (opacidade muda com os valores) -->
+                        
+                        <!-- ZONA ARGILOSA (topo - marrom/terra) -->
+                        <g id="zonaArgilosa">
+                            <polygon points="250,2 200,88.6 300,88.6" fill="#8B4513" opacity="0"/>
+                            <polygon points="200,88.6 150,175.2 350,175.2 300,88.6" fill="#A0522D" opacity="0"/>
+                        </g>
+                        
+                        <!-- ZONA MÉDIA (centro - verde neutro) -->
+                        <g id="zonaMedio">
+                            <polygon points="150,175.2 100,261.8 400,261.8 350,175.2" fill="#7CB342" opacity="0"/>
+                        </g>
+                        
+                        <!-- ZONA ARENOSA (base esquerda - azul claro) -->
+                        <g id="zonaArenosa">
+                            <polygon points="100,261.8 50,348.4 150,348.4 200,261.8" fill="#42A5F5" opacity="0"/>
+                            <polygon points="150,261.8 100,348.4 200,348.4" fill="#64B5F6" opacity="0"/>
+                        </g>
+                        
+                        <!-- ZONA SILTOSA (base direita - laranja) -->
+                        <g id="zonaSiltosa">
+                            <polygon points="300,261.8 350,348.4 450,348.4 400,261.8" fill="#FFA726" opacity="0"/>
+                            <polygon points="300,261.8 250,348.4 350,348.4" fill="#FFB74D" opacity="0"/>
+                        </g>
+                        
+                        <!-- BASE COMPLETA (triângulo cheio de fundo) -->
+                        <polygon points="50,348.4 0,435 500,435 450,348.4" fill="#E0E0E0" opacity="0.15"/>
 
                         <!-- Borda do triângulo -->
                         <polygon points="250,2 500,435 0,435" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
 
-                        <!-- Grade sutil -->
-                        <line x1="250" y1="2" x2="125" y2="218.5" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
-                        <line x1="250" y1="2" x2="175" y2="131.9" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
-                        <line x1="0" y1="435" x2="150" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
-                        <line x1="500" y1="435" x2="350" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.45"/>
+                        <!-- Grade de referência -->
+                        <line x1="250" y1="2" x2="125" y2="218.5" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
+                        <line x1="250" y1="2" x2="175" y2="131.9" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
+                        <line x1="0" y1="435" x2="150" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
+                        <line x1="500" y1="435" x2="350" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
 
-                        <!-- Marcador posição atual -->
-                        <circle id="marcadorPosicao" cx="250" cy="300" r="6" fill="#FBBF24" stroke="white" stroke-width="2.5" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(251,191,36,0.5));"/>
+                        <!-- Marcador posição atual (amarelo destaque) -->
+                        <circle id="marcadorPosicao" cx="250" cy="300" r="6" fill="#FFC107" stroke="white" stroke-width="2.5" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(255,193,7,0.6));"/>
 
                         <!-- Labels eixos -->
                         <text x="250" y="20" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280">Argila</text>
                         <text x="12" y="430" text-anchor="start" font-size="10" font-weight="600" fill="#6B7280">Silte</text>
                         <text x="488" y="430" text-anchor="end" font-size="10" font-weight="600" fill="#6B7280">Areia</text>
+                        
+                        <!-- Valores grandes no centro (mostram os %) -->
+                        <text id="textoAreia" x="80" y="400" text-anchor="middle" font-size="20" font-weight="700" fill="#1976D2" opacity="0">0%</text>
+                        <text id="textoSilte" x="420" y="400" text-anchor="middle" font-size="20" font-weight="700" fill="#F57C00" opacity="0">0%</text>
+                        <text id="textoArgila" x="250" y="100" text-anchor="middle" font-size="20" font-weight="700" fill="#6D4C41" opacity="0">0%</text>
                     </svg>
                 </div>
             </div>
@@ -205,17 +222,17 @@
             <!-- Cards de Tipos de Solo -->
             <div class="grid-3" style="margin-top:14px;">
                 <div id="cardArgiloso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('argiloso')">
-                    <span class="tipo-solo-dot" style="background:#166534;"></span>
+                    <span class="tipo-solo-dot" style="background:#8B4513;"></span>
                     <span class="tipo-solo-nome-micro">ARGILOSO</span>
                     <span class="tipo-solo-valores-micro">35–60%</span>
                 </div>
                 <div id="cardArenoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('arenoso')">
-                    <span class="tipo-solo-dot" style="background:#4ADE80;"></span>
+                    <span class="tipo-solo-dot" style="background:#42A5F5;"></span>
                     <span class="tipo-solo-nome-micro">ARENOSO</span>
                     <span class="tipo-solo-valores-micro">70–90%</span>
                 </div>
                 <div id="cardSiltoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('siltoso')">
-                    <span class="tipo-solo-dot" style="background:#84CC16;"></span>
+                    <span class="tipo-solo-dot" style="background:#FFA726;"></span>
                     <span class="tipo-solo-nome-micro">SILTOSO</span>
                     <span class="tipo-solo-valores-micro">60–80%</span>
                 </div>
