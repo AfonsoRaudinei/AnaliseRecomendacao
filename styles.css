@@ -477,13 +477,13 @@ select:focus {
 
 /* Cores das barras = zonas do triângulo */
 .textura-bar-areia .textura-bar-fill {
-    background: linear-gradient(90deg, #4ADE80, #22C55E);
+    background: linear-gradient(90deg, #42A5F5, #1976D2);
 }
 .textura-bar-silte .textura-bar-fill {
-    background: linear-gradient(90deg, #84CC16, #65A30D);
+    background: linear-gradient(90deg, #FFA726, #F57C00);
 }
 .textura-bar-argila .textura-bar-fill {
-    background: linear-gradient(90deg, #16A34A, #166534);
+    background: linear-gradient(90deg, #A0522D, #6D4C41);
 }
 
 /* Footer: total + classe em linha compacta */
