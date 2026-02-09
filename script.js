@@ -644,6 +644,17 @@ let contadorGrupos = 0;
 let grupoAtualEditando = null;
 let selecaoTemporariaMicro = [];
 
+function getNutrientesJaUsados() {
+    // Retorna array com todos os micronutrientes já usados em outros grupos
+    const usados = [];
+    gruposMicro.forEach(g => {
+        if (g.id !== grupoAtualEditando) { // Não conta o grupo sendo editado
+            usados.push(...g.nutrientes);
+        }
+    });
+    return usados;
+}
+
 function criarGrupoMicro() {
     contadorGrupos++;
     const grupoId = `grupo-${contadorGrupos}`;
@@ -668,18 +679,26 @@ function abrirModalMicro() {
     const modal = document.getElementById('modalMicronutrientes');
     const grid = document.getElementById('microSelectorGrid');
     
+    const nutrientesUsados = getNutrientesJaUsados();
+    
     // Preencher grid com micronutrientes
-    grid.innerHTML = micronutrientesDisponiveis.map(m => `
-        <div class="micro-selector-item ${selecaoTemporariaMicro.includes(m.id) ? 'selected' : ''}" 
-             onclick="toggleMicroSelecao('${m.id}')">
+    grid.innerHTML = micronutrientesDisponiveis.map(m => {
+        const jaUsado = nutrientesUsados.includes(m.id);
+        const selecionado = selecaoTemporariaMicro.includes(m.id);
+        
+        return `
+        <div class="micro-selector-item ${selecionado ? 'selected' : ''} ${jaUsado ? 'disabled' : ''}" 
+             onclick="${jaUsado ? '' : `toggleMicroSelecao('${m.id}')`}">
             <div class="micro-selector-check">
                 <svg class="checkmark-micro" width="14" height="11" viewBox="0 0 14 11" fill="none">
                     <path d="M1 5.5L5 9.5L13 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
             <span>${m.nome}</span>
+            ${jaUsado ? '<div class="micro-usado-badge">Em uso</div>' : ''}
         </div>
-    `).join('');
+        `;
+    }).join('');
     
     modal.classList.add('active');
 }
@@ -693,12 +712,17 @@ function toggleMicroSelecao(microId) {
     }
     
     // Atualizar visual
+    const nutrientesUsados = getNutrientesJaUsados();
     document.querySelectorAll('.micro-selector-item').forEach((item, i) => {
         const micro = micronutrientesDisponiveis[i];
-        if (selecaoTemporariaMicro.includes(micro.id)) {
-            item.classList.add('selected');
-        } else {
-            item.classList.remove('selected');
+        const jaUsado = nutrientesUsados.includes(micro.id);
+        
+        if (!jaUsado) {
+            if (selecaoTemporariaMicro.includes(micro.id)) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
         }
     });
 }
