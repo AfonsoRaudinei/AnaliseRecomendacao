@@ -396,72 +396,41 @@ function atualizarTrianguloTextural(areia, silte, argila) {
     
     const total = areia + silte + argila;
     
-    // ====== ATUALIZAR INTENSIDADE DAS ZONAS (GRÁFICO DINÂMICO) ======
-    const zonaArenosa = document.getElementById('zonaArenosa');
-    const zonaSiltosa = document.getElementById('zonaSiltosa');
-    const zonaArgilosa = document.getElementById('zonaArgilosa');
-    const zonaMedio = document.getElementById('zonaMedio');
+    // ====== COLORIR OS 20 MINI-TRIÂNGULOS PROPORCIONALMENTE ======
+    const totalTriangulos = 20;
     
-    if (total > 0) {
-        // Calcular intensidades proporcionais (0 a 1)
-        const intensidadeAreia = areia / 100;
-        const intensidadeSilte = silte / 100;
-        const intensidadeArgila = argila / 100;
-        
-        // Atualizar opacidade de cada zona com multiplicadores maiores para visibilidade
-        if (zonaArenosa) {
-            const polys = zonaArenosa.querySelectorAll('polygon');
-            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeAreia * 1.5, 0.95)));
-        }
-        
-        if (zonaSiltosa) {
-            const polys = zonaSiltosa.querySelectorAll('polygon');
-            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeSilte * 1.5, 0.95)));
-        }
-        
-        if (zonaArgilosa) {
-            const polys = zonaArgilosa.querySelectorAll('polygon');
-            polys.forEach(p => p.setAttribute('opacity', Math.min(intensidadeArgila * 1.5, 0.95)));
-        }
-        
-        if (zonaMedio) {
-            // Zona média usa intensidade balanceada
-            const mediaIntensidade = (intensidadeAreia + intensidadeSilte + intensidadeArgila) / 3;
-            const polys = zonaMedio.querySelectorAll('polygon');
-            polys.forEach(p => p.setAttribute('opacity', Math.min(mediaIntensidade * 0.8, 0.5)));
-        }
-        
-        // Atualizar textos com valores grandes (aparecem quando > 10%)
-        const textoAreia = document.getElementById('textoAreia');
-        const textoSilte = document.getElementById('textoSilte');
-        const textoArgila = document.getElementById('textoArgila');
-        
-        if (textoAreia) {
-            textoAreia.textContent = areia.toFixed(0) + '%';
-            textoAreia.setAttribute('opacity', areia > 10 ? 0.9 : 0);
-        }
-        if (textoSilte) {
-            textoSilte.textContent = silte.toFixed(0) + '%';
-            textoSilte.setAttribute('opacity', silte > 10 ? 0.9 : 0);
-        }
-        if (textoArgila) {
-            textoArgila.textContent = argila.toFixed(0) + '%';
-            textoArgila.setAttribute('opacity', argila > 10 ? 0.9 : 0);
-        }
-    } else {
-        // Reset - triângulo vazio (cinza neutro)
-        if (zonaArenosa) zonaArenosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
-        if (zonaSiltosa) zonaSiltosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
-        if (zonaArgilosa) zonaArgilosa.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
-        if (zonaMedio) zonaMedio.querySelectorAll('polygon').forEach(p => p.setAttribute('opacity', 0));
-        
-        document.getElementById('textoAreia')?.setAttribute('opacity', 0);
-        document.getElementById('textoSilte')?.setAttribute('opacity', 0);
-        document.getElementById('textoArgila')?.setAttribute('opacity', 0);
-    }
-    
-    // ====== MARCADOR AMARELO DE POSIÇÃO ======
     if (total >= 99 && total <= 101) {
+        // Calcular quantos triângulos para cada elemento
+        const numAreia = Math.round((areia / 100) * totalTriangulos);
+        const numSilte = Math.round((silte / 100) * totalTriangulos);
+        const numArgila = totalTriangulos - numAreia - numSilte; // Restante para argila
+        
+        // Cores
+        const corAreia = '#2196F3';    // Azul
+        const corSilte = '#E91E63';    // Rosa/Magenta (DESTAQUE!)
+        const corArgila = '#8B4513';   // Marrom
+        
+        // Criar array de cores na ordem: Areia, Silte, Argila
+        const cores = [];
+        for (let i = 0; i < numAreia; i++) cores.push(corAreia);
+        for (let i = 0; i < numSilte; i++) cores.push(corSilte);
+        for (let i = 0; i < numArgila; i++) cores.push(corArgila);
+        
+        // Embaralhar para distribuir aleatoriamente
+        for (let i = cores.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cores[i], cores[j]] = [cores[j], cores[i]];
+        }
+        
+        // Aplicar cores aos mini-triângulos
+        for (let i = 1; i <= totalTriangulos; i++) {
+            const tri = document.getElementById(`tri${i}`);
+            if (tri) {
+                tri.setAttribute('fill', cores[i-1] || '#E0E0E0');
+            }
+        }
+        
+        // Mostrar marcador amarelo
         marcador.style.opacity = '1';
         
         const percArgila = argila / 100;
@@ -481,6 +450,13 @@ function atualizarTrianguloTextural(areia, silte, argila) {
         marcador.setAttribute('cy', y);
         marcador.style.animation = 'pulse 2s infinite';
     } else {
+        // Reset - triângulos cinzas
+        for (let i = 1; i <= totalTriangulos; i++) {
+            const tri = document.getElementById(`tri${i}`);
+            if (tri) {
+                tri.setAttribute('fill', '#E0E0E0');
+            }
+        }
         marcador.style.opacity = '0';
         marcador.style.animation = 'none';
     }
