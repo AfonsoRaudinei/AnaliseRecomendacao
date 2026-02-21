@@ -163,60 +163,50 @@
                     </div>
                 </div>
 
-                <!-- DIREITA: Triângulo GRÁFICO (muda conforme valores) -->
+                <!-- DIREITA: Triângulo com MINI-TRIÂNGULOS (partículas) -->
                 <div class="textura-col-triangulo">
                     <svg id="trianguloTextural" viewBox="0 0 500 435" class="triangulo-svg-mini">
-                        <!-- ZONAS DINÂMICAS que cobrem as áreas corretas -->
-                        
-                        <!-- ZONA ARGILOSA (topo - marrom/terra) -->
-                        <g id="zonaArgilosa">
-                            <!-- Ponta superior -->
-                            <polygon points="250,2 210,75 290,75" fill="#8B4513" opacity="0"/>
-                            <polygon points="210,75 170,150 330,150 290,75" fill="#A0522D" opacity="0"/>
-                            <polygon points="170,150 130,225 370,225 330,150" fill="#8B5A3C" opacity="0"/>
-                        </g>
-                        
-                        <!-- ZONA ARENOSA (base ESQUERDA - azul claro) -->
-                        <g id="zonaArenosa">
-                            <!-- Canto inferior esquerdo -->
-                            <polygon points="0,435 100,300 200,300 100,435" fill="#2196F3" opacity="0"/>
-                            <polygon points="100,300 150,225 250,225 200,300" fill="#42A5F5" opacity="0"/>
-                        </g>
-                        
-                        <!-- ZONA SILTOSA (base DIREITA - laranja) -->
-                        <g id="zonaSiltosa">
-                            <!-- Canto inferior direito -->
-                            <polygon points="500,435 400,300 300,300 400,435" fill="#FF9800" opacity="0"/>
-                            <polygon points="400,300 350,225 250,225 300,300" fill="#FFA726" opacity="0"/>
-                        </g>
-                        
-                        <!-- ZONA MÉDIA (centro - verde neutro) -->
-                        <g id="zonaMedio">
-                            <polygon points="200,300 250,225 300,300" fill="#9CCC65" opacity="0"/>
-                            <polygon points="130,225 200,300 300,300 370,225" fill="#AED581" opacity="0"/>
-                        </g>
+                        <!-- Borda do triângulo principal -->
+                        <polygon points="250,2 500,435 0,435" fill="#F5F5F5" stroke="#9CA3AF" stroke-width="1.5"/>
 
-                        <!-- Borda do triângulo -->
-                        <polygon points="250,2 500,435 0,435" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+                        <!-- Grid de 20 mini-triângulos (4 linhas × 5 colunas aproximadamente) -->
+                        <!-- Linha 1 (topo) - 1 triângulo -->
+                        <polygon id="tri1" points="250,50 220,100 280,100" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        
+                        <!-- Linha 2 - 3 triângulos -->
+                        <polygon id="tri2" points="200,100 170,150 230,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri3" points="250,100 220,150 280,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri4" points="300,100 270,150 330,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        
+                        <!-- Linha 3 - 5 triângulos -->
+                        <polygon id="tri5" points="150,150 120,200 180,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri6" points="200,150 170,200 230,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri7" points="250,150 220,200 280,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri8" points="300,150 270,200 330,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri9" points="350,150 320,200 380,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        
+                        <!-- Linha 4 - 7 triângulos -->
+                        <polygon id="tri10" points="100,200 70,260 130,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri11" points="150,200 120,260 180,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri12" points="200,200 170,260 230,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri13" points="250,200 220,260 280,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri14" points="300,200 270,260 330,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri15" points="350,200 320,260 380,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri16" points="400,200 370,260 430,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        
+                        <!-- Linha 5 (base) - 4 triângulos -->
+                        <polygon id="tri17" points="100,260 60,340 140,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri18" points="200,260 160,340 240,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri19" points="300,260 260,340 340,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
+                        <polygon id="tri20" points="400,260 360,340 440,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
 
-                        <!-- Grade de referência -->
-                        <line x1="250" y1="2" x2="125" y2="218.5" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
-                        <line x1="250" y1="2" x2="175" y2="131.9" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
-                        <line x1="0" y1="435" x2="150" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
-                        <line x1="500" y1="435" x2="350" y2="348.4" stroke="#D1D5DB" stroke-width="0.6" opacity="0.3"/>
-
-                        <!-- Marcador posição atual (amarelo destaque) -->
+                        <!-- Marcador posição atual (amarelo) -->
                         <circle id="marcadorPosicao" cx="250" cy="300" r="6" fill="#FFC107" stroke="white" stroke-width="2.5" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(255,193,7,0.6));"/>
 
                         <!-- Labels eixos -->
-                        <text x="250" y="20" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280">Argila</text>
+                        <text x="250" y="25" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280">Argila</text>
                         <text x="12" y="430" text-anchor="start" font-size="10" font-weight="600" fill="#6B7280">Silte</text>
                         <text x="488" y="430" text-anchor="end" font-size="10" font-weight="600" fill="#6B7280">Areia</text>
-                        
-                        <!-- Valores grandes no centro (mostram os %) -->
-                        <text id="textoAreia" x="100" y="390" text-anchor="middle" font-size="20" font-weight="700" fill="#1976D2" opacity="0">0%</text>
-                        <text id="textoSilte" x="400" y="390" text-anchor="middle" font-size="20" font-weight="700" fill="#F57C00" opacity="0">0%</text>
-                        <text id="textoArgila" x="250" y="80" text-anchor="middle" font-size="20" font-weight="700" fill="#6D4C41" opacity="0">0%</text>
                     </svg>
                 </div>
             </div>
@@ -229,12 +219,12 @@
                     <span class="tipo-solo-valores-micro">35–60%</span>
                 </div>
                 <div id="cardArenoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('arenoso')">
-                    <span class="tipo-solo-dot" style="background:#42A5F5;"></span>
+                    <span class="tipo-solo-dot" style="background:#2196F3;"></span>
                     <span class="tipo-solo-nome-micro">ARENOSO</span>
                     <span class="tipo-solo-valores-micro">70–90%</span>
                 </div>
                 <div id="cardSiltoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('siltoso')">
-                    <span class="tipo-solo-dot" style="background:#FFA726;"></span>
+                    <span class="tipo-solo-dot" style="background:#E91E63;"></span>
                     <span class="tipo-solo-nome-micro">SILTOSO</span>
                     <span class="tipo-solo-valores-micro">60–80%</span>
                 </div>
