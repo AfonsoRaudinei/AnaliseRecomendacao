@@ -396,21 +396,21 @@ function atualizarTrianguloTextural(areia, silte, argila) {
     
     const total = areia + silte + argila;
     
-    // ====== COLORIR OS 20 MINI-TRIÂNGULOS PROPORCIONALMENTE ======
-    const totalTriangulos = 20;
+    // ====== COLORIR OS 25 CÍRCULOS PROPORCIONALMENTE ======
+    const totalCirculos = 25;
     
     if (total >= 99 && total <= 101) {
-        // Calcular quantos triângulos para cada elemento
-        const numAreia = Math.round((areia / 100) * totalTriangulos);
-        const numSilte = Math.round((silte / 100) * totalTriangulos);
-        const numArgila = totalTriangulos - numAreia - numSilte; // Restante para argila
+        // Calcular quantos círculos para cada elemento
+        const numAreia = Math.round((areia / 100) * totalCirculos);
+        const numSilte = Math.round((silte / 100) * totalCirculos);
+        const numArgila = totalCirculos - numAreia - numSilte;
         
         // Cores
-        const corAreia = '#2196F3';    // Azul
-        const corSilte = '#E91E63';    // Rosa/Magenta (DESTAQUE!)
-        const corArgila = '#8B4513';   // Marrom
+        const corAreia = '#42A5F5';    // Azul claro
+        const corSilte = '#E91E63';    // Rosa/Magenta forte
+        const corArgila = '#8D6E63';   // Marrom terra
         
-        // Criar array de cores na ordem: Areia, Silte, Argila
+        // Criar array de cores
         const cores = [];
         for (let i = 0; i < numAreia; i++) cores.push(corAreia);
         for (let i = 0; i < numSilte; i++) cores.push(corSilte);
@@ -422,11 +422,11 @@ function atualizarTrianguloTextural(areia, silte, argila) {
             [cores[i], cores[j]] = [cores[j], cores[i]];
         }
         
-        // Aplicar cores aos mini-triângulos
-        for (let i = 1; i <= totalTriangulos; i++) {
-            const tri = document.getElementById(`tri${i}`);
-            if (tri) {
-                tri.setAttribute('fill', cores[i-1] || '#E0E0E0');
+        // Aplicar cores aos círculos
+        for (let i = 1; i <= totalCirculos; i++) {
+            const circ = document.getElementById(`circ${i}`);
+            if (circ) {
+                circ.setAttribute('fill', cores[i-1] || '#E0E0E0');
             }
         }
         
@@ -436,11 +436,8 @@ function atualizarTrianguloTextural(areia, silte, argila) {
         const percArgila = argila / 100;
         const percAreia = areia / 100;
         
-        // Posição Y (altura baseada na argila)
-        const y = 435 - (percArgila * 433);
-        
-        // Posição X (interpolação entre silte e areia)
-        const baseWidth = 500;
+        const y = 425 - (percArgila * 415);
+        const baseWidth = 480;
         const topX = 250;
         const width = baseWidth * (1 - percArgila);
         const leftEdge = topX - (width / 2);
@@ -450,11 +447,11 @@ function atualizarTrianguloTextural(areia, silte, argila) {
         marcador.setAttribute('cy', y);
         marcador.style.animation = 'pulse 2s infinite';
     } else {
-        // Reset - triângulos cinzas
-        for (let i = 1; i <= totalTriangulos; i++) {
-            const tri = document.getElementById(`tri${i}`);
-            if (tri) {
-                tri.setAttribute('fill', '#E0E0E0');
+        // Reset - círculos cinzas
+        for (let i = 1; i <= totalCirculos; i++) {
+            const circ = document.getElementById(`circ${i}`);
+            if (circ) {
+                circ.setAttribute('fill', '#E0E0E0');
             }
         }
         marcador.style.opacity = '0';
