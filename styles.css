@@ -475,15 +475,15 @@ select:focus {
     transition: width 0.35s ease;
 }
 
-/* Cores das barras = mini-triângulos */
+/* Cores das barras = círculos */
 .textura-bar-areia .textura-bar-fill {
-    background: linear-gradient(90deg, #2196F3, #1976D2);
+    background: linear-gradient(90deg, #42A5F5, #2196F3);
 }
 .textura-bar-silte .textura-bar-fill {
     background: linear-gradient(90deg, #E91E63, #C2185B);
 }
 .textura-bar-argila .textura-bar-fill {
-    background: linear-gradient(90deg, #A0522D, #6D4C41);
+    background: linear-gradient(90deg, #8D6E63, #6D4C41);
 }
 
 /* Footer: total + classe em linha compacta */
