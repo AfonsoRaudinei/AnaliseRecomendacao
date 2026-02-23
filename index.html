@@ -163,50 +163,64 @@
                     </div>
                 </div>
 
-                <!-- DIREITA: Triângulo com MINI-TRIÂNGULOS (partículas) -->
+                <!-- DIREITA: Triângulo com CÍRCULOS (partículas do solo) -->
                 <div class="textura-col-triangulo">
                     <svg id="trianguloTextural" viewBox="0 0 500 435" class="triangulo-svg-mini">
-                        <!-- Borda do triângulo principal -->
-                        <polygon points="250,2 500,435 0,435" fill="#F5F5F5" stroke="#9CA3AF" stroke-width="1.5"/>
+                        <!-- Fundo do triângulo -->
+                        <defs>
+                            <clipPath id="triangleClip">
+                                <polygon points="250,10 490,425 10,425"/>
+                            </clipPath>
+                        </defs>
+                        
+                        <!-- Background suave -->
+                        <polygon points="250,10 490,425 10,425" fill="#FAFAFA" stroke="#BDBDBD" stroke-width="2"/>
+                        
+                        <!-- Grid de 25 círculos organizados em 5 linhas -->
+                        <g clip-path="url(#triangleClip)">
+                            <!-- Linha 1 (topo) - 1 círculo -->
+                            <circle id="circ1" cx="250" cy="60" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            
+                            <!-- Linha 2 - 3 círculos -->
+                            <circle id="circ2" cx="200" cy="120" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ3" cx="250" cy="120" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ4" cx="300" cy="120" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            
+                            <!-- Linha 3 - 5 círculos -->
+                            <circle id="circ5" cx="150" cy="180" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ6" cx="200" cy="180" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ7" cx="250" cy="180" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ8" cx="300" cy="180" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ9" cx="350" cy="180" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            
+                            <!-- Linha 4 - 7 círculos -->
+                            <circle id="circ10" cx="100" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ11" cx="150" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ12" cx="200" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ13" cx="250" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ14" cx="300" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ15" cx="350" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ16" cx="400" cy="250" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            
+                            <!-- Linha 5 (base) - 9 círculos -->
+                            <circle id="circ17" cx="70" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ18" cx="120" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ19" cx="170" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ20" cx="220" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ21" cx="270" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ22" cx="320" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ23" cx="370" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ24" cx="420" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                            <circle id="circ25" cx="470" cy="340" r="18" class="particula" fill="#E0E0E0" stroke="white" stroke-width="2"/>
+                        </g>
 
-                        <!-- Grid de 20 mini-triângulos (4 linhas × 5 colunas aproximadamente) -->
-                        <!-- Linha 1 (topo) - 1 triângulo -->
-                        <polygon id="tri1" points="250,50 220,100 280,100" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        
-                        <!-- Linha 2 - 3 triângulos -->
-                        <polygon id="tri2" points="200,100 170,150 230,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri3" points="250,100 220,150 280,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri4" points="300,100 270,150 330,150" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        
-                        <!-- Linha 3 - 5 triângulos -->
-                        <polygon id="tri5" points="150,150 120,200 180,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri6" points="200,150 170,200 230,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri7" points="250,150 220,200 280,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri8" points="300,150 270,200 330,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri9" points="350,150 320,200 380,200" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        
-                        <!-- Linha 4 - 7 triângulos -->
-                        <polygon id="tri10" points="100,200 70,260 130,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri11" points="150,200 120,260 180,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri12" points="200,200 170,260 230,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri13" points="250,200 220,260 280,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri14" points="300,200 270,260 330,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri15" points="350,200 320,260 380,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri16" points="400,200 370,260 430,260" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        
-                        <!-- Linha 5 (base) - 4 triângulos -->
-                        <polygon id="tri17" points="100,260 60,340 140,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri18" points="200,260 160,340 240,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri19" points="300,260 260,340 340,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-                        <polygon id="tri20" points="400,260 360,340 440,340" class="mini-triangulo" fill="#E0E0E0" stroke="white" stroke-width="1"/>
-
-                        <!-- Marcador posição atual (amarelo) -->
-                        <circle id="marcadorPosicao" cx="250" cy="300" r="6" fill="#FFC107" stroke="white" stroke-width="2.5" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(255,193,7,0.6));"/>
+                        <!-- Marcador posição (opcional) -->
+                        <circle id="marcadorPosicao" cx="250" cy="300" r="8" fill="#FFC107" stroke="white" stroke-width="3" opacity="0" style="transition: all 0.3s; filter: drop-shadow(0 2px 4px rgba(255,193,7,0.7));"/>
 
                         <!-- Labels eixos -->
-                        <text x="250" y="25" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280">Argila</text>
-                        <text x="12" y="430" text-anchor="start" font-size="10" font-weight="600" fill="#6B7280">Silte</text>
-                        <text x="488" y="430" text-anchor="end" font-size="10" font-weight="600" fill="#6B7280">Areia</text>
+                        <text x="250" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#757575">Argila</text>
+                        <text x="15" y="423" text-anchor="start" font-size="11" font-weight="600" fill="#757575">Silte</text>
+                        <text x="485" y="423" text-anchor="end" font-size="11" font-weight="600" fill="#757575">Areia</text>
                     </svg>
                 </div>
             </div>
@@ -214,12 +228,12 @@
             <!-- Cards de Tipos de Solo -->
             <div class="grid-3" style="margin-top:14px;">
                 <div id="cardArgiloso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('argiloso')">
-                    <span class="tipo-solo-dot" style="background:#8B4513;"></span>
+                    <span class="tipo-solo-dot" style="background:#8D6E63;"></span>
                     <span class="tipo-solo-nome-micro">ARGILOSO</span>
                     <span class="tipo-solo-valores-micro">35–60%</span>
                 </div>
                 <div id="cardArenoso" class="card-tipo-solo-micro" onclick="aplicarTipoSolo('arenoso')">
-                    <span class="tipo-solo-dot" style="background:#2196F3;"></span>
+                    <span class="tipo-solo-dot" style="background:#42A5F5;"></span>
                     <span class="tipo-solo-nome-micro">ARENOSO</span>
                     <span class="tipo-solo-valores-micro">70–90%</span>
                 </div>
